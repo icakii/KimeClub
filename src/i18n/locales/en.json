@@ -1,5 +1,59 @@
 {
+  "nav": {
+    "schedule": "Schedule",
+    "coaches": "Coaches",
+    "contact": "Contact"
+  },
+  "hero": {
+    "line1": "DISCIPLINE.",
+    "line2": "FOCUS.",
+    "line3": "BELT BY BELT.",
+    "ctaTrial": "Book a trial class",
+    "ctaSchedule": "See the schedule"
+  },
+  "features": {
+    "title": "Why Kime",
+    "signup": {
+      "title": "Online sign-up",
+      "desc": "Book a trial class in minutes, no calls or waiting around."
+    },
+    "progress": {
+      "title": "Belts & progress",
+      "desc": "Every student can see their belt and what's next."
+    },
+    "news": {
+      "title": "News from the coach",
+      "desc": "Schedule changes and announcements land straight on your phone."
+    }
+  },
+  "schedule": {
+    "title": "Class schedule",
+    "weekdays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "duration": "{{minutes}} min",
+    "beltRange": "Belts: {{min}} - {{max}}"
+  },
+  "beltLadder": {
+    "title": "Belt ladder"
+  },
+  "coaches": {
+    "title": "Coaches"
+  },
+  "contact": {
+    "title": "Contact",
+    "address": "[dojo address]",
+    "phone": "[phone number]",
+    "email": "[email address]"
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "rights": "All rights reserved."
+  },
   "landing": {
     "scaffoldNotice": "Site scaffold is up. The real landing page comes in a later step."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "body": "This page is a temporary placeholder. A full privacy policy will be added before the club collects real personal data from students.",
+    "back": "Home"
   }
 }
