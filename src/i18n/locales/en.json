@@ -48,12 +48,62 @@
     "privacy": "Privacy",
     "rights": "All rights reserved."
   },
-  "landing": {
-    "scaffoldNotice": "Site scaffold is up. The real landing page comes in a later step."
-  },
   "privacy": {
     "title": "Privacy",
     "body": "This page is a temporary placeholder. A full privacy policy will be added before the club collects real personal data from students.",
     "back": "Home"
+  },
+  "auth": {
+    "navLink": "Log in",
+    "title": "Log in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Log in",
+    "submitting": "Signing in...",
+    "error": "Wrong email or password.",
+    "noAccount": "Don't have an account?",
+    "noAccountLink": "Contact your coach",
+    "modalTitle": "How to get access",
+    "modalBody": "Access is only ever created by your coach. Tell them your email in person or by message and they'll set up an account with a password for you. Nobody can register on this site themselves, to keep students' accounts safe.",
+    "modalClose": "Got it"
+  },
+  "tabs": {
+    "home": "Home",
+    "schedule": "Schedule",
+    "payments": "Payments",
+    "profile": "Profile"
+  },
+  "studentHome": {
+    "greeting": "Hi, {{name}}",
+    "nextClass": "Next class",
+    "changed": "CHANGED",
+    "newTime": "New start time: {{time}}",
+    "latestMessage": "Latest message",
+    "inbox": "Messages",
+    "noMessages": "No messages yet.",
+    "noNextClass": "No classes scheduled.",
+    "install": {
+      "title": "Install the app",
+      "ios": "iPhone: Share -> Add to Home Screen",
+      "android": "Android: browser menu -> Install app",
+      "dismiss": "Got it"
+    }
+  },
+  "paymentStatus": {
+    "trial": "Trial",
+    "paid": "Paid",
+    "due": "Due",
+    "overdue": "Overdue",
+    "waived": "Waived",
+    "unknown": "No data"
+  },
+  "paymentsPage": {
+    "title": "Payments",
+    "empty": "No payments recorded yet."
+  },
+  "profilePage": {
+    "title": "Profile",
+    "belt": "Belt",
+    "logout": "Log out"
   }
 }

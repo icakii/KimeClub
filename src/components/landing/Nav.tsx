@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { Enso } from './Enso'
 
 export function Nav() {
@@ -53,6 +54,12 @@ export function Nav() {
           >
             EN
           </button>
+          <Link
+            to="/login"
+            className="ml-3 min-h-11 rounded-md border border-line px-3 py-2 normal-case tracking-normal text-shiro transition-colors hover:border-aka-text hover:text-aka-text"
+          >
+            {t('auth.navLink')}
+          </Link>
         </div>
       </div>
     </header>
