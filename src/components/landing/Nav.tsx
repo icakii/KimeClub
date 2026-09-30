@@ -30,6 +30,9 @@ export function Nav() {
           <a href="#contact" className="transition-colors hover:text-aka-text">
             {t('nav.contact')}
           </a>
+          <Link to="/store" className="transition-colors hover:text-aka-text">
+            {t('store.navLink')}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-1 font-display text-xs uppercase tracking-wide">

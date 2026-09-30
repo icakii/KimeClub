@@ -6,6 +6,7 @@ import { AppLayout } from './layouts/AppLayout'
 import { Landing } from './pages/Landing'
 import { Login } from './pages/Login'
 import { Privacy } from './pages/Privacy'
+import { Store } from './pages/Store'
 import { Members } from './pages/admin/Members'
 import { Home } from './pages/app/Home'
 import { Payments } from './pages/app/Payments'
@@ -17,6 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/store" element={<Store />} />
       <Route path="/login" element={<Login />} />
       <Route
         path="/app"

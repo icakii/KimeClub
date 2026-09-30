@@ -47,6 +47,13 @@ export function Profile() {
         </button>
       </div>
 
+      <Link
+        to="/store"
+        className="mt-6 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-shiro"
+      >
+        {t('store.navLink')}
+      </Link>
+
       {(member?.role === 'owner' || member?.role === 'coach') && (
         <Link
           to="/admin"

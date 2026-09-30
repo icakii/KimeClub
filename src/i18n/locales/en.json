@@ -53,6 +53,11 @@
     "body": "This page is a temporary placeholder. A full privacy policy will be added before the club collects real personal data from students.",
     "back": "Home"
   },
+  "store": {
+    "navLink": "Store",
+    "title": "The store is coming soon",
+    "body": "Soon you'll be able to order club clothing and gear here."
+  },
   "auth": {
     "navLink": "Log in",
     "title": "Log in",

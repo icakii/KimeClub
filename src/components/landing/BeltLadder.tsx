@@ -22,17 +22,17 @@ export function BeltLadder({ clubId }: { clubId: string | undefined }) {
   const [ref, inView] = useInView<HTMLDivElement>()
 
   return (
-    <section className="px-6 py-16">
-      <div className="mx-auto max-w-4xl">
-        <h2 className="text-center font-display text-2xl uppercase tracking-wide">
+    <section className="px-6 py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="text-center font-display text-2xl uppercase tracking-wide sm:text-3xl">
           {t('beltLadder.title')}
         </h2>
 
-        <div ref={ref} className="mt-8 flex flex-wrap justify-center gap-2">
+        <div ref={ref} className="mt-10 flex flex-wrap justify-center gap-3">
           {belts?.map((belt, index) => (
             <span
               key={belt.id}
-              className={`belt-chip rounded-full border border-line/60 px-4 py-2 font-display text-xs uppercase tracking-wide ${
+              className={`belt-chip rounded-full border border-line/60 px-5 py-2.5 font-display text-xs uppercase tracking-wide sm:text-sm ${
                 inView ? 'is-visible' : ''
               }`}
               style={{
