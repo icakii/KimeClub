@@ -1,9 +1,12 @@
 import { Route, Routes } from 'react-router-dom'
+import { AdminRoute } from './components/AdminRoute'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { AdminLayout } from './layouts/AdminLayout'
 import { AppLayout } from './layouts/AppLayout'
 import { Landing } from './pages/Landing'
 import { Login } from './pages/Login'
 import { Privacy } from './pages/Privacy'
+import { Members } from './pages/admin/Members'
 import { Home } from './pages/app/Home'
 import { Payments } from './pages/app/Payments'
 import { Profile } from './pages/app/Profile'
@@ -27,6 +30,18 @@ function App() {
         <Route path="schedule" element={<Schedule />} />
         <Route path="payments" element={<Payments />} />
         <Route path="profile" element={<Profile />} />
+      </Route>
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Members />} />
       </Route>
     </Routes>
   )

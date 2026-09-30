@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { BeltChip } from '../../components/BeltChip'
 import { useClub } from '../../hooks/useClub'
 import { useAuth } from '../../hooks/useAuth'
@@ -46,10 +47,19 @@ export function Profile() {
         </button>
       </div>
 
+      {(member?.role === 'owner' || member?.role === 'coach') && (
+        <Link
+          to="/admin"
+          className="mt-6 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-shiro"
+        >
+          {t('admin.title')}
+        </Link>
+      )}
+
       <button
         type="button"
         onClick={() => signOut()}
-        className="mt-6 min-h-11 w-full rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-aka-text"
+        className="mt-4 min-h-11 w-full rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-aka-text"
       >
         {t('profilePage.logout')}
       </button>

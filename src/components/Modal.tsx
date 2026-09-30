@@ -7,7 +7,7 @@ export function Modal({
   children,
 }: {
   title: string
-  closeLabel: string
+  closeLabel?: string
   onClose: () => void
   children: ReactNode
 }) {
@@ -29,19 +29,21 @@ export function Modal({
         aria-modal="true"
         aria-labelledby="modal-title"
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm rounded-lg border border-line bg-surface p-6"
+        className="max-h-[85vh] w-full max-w-md overflow-y-auto rounded-lg border border-line bg-surface p-6"
       >
         <h2 id="modal-title" className="font-display text-lg uppercase tracking-wide">
           {title}
         </h2>
         <div className="mt-3 text-sm leading-relaxed text-muted">{children}</div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="mt-6 min-h-11 w-full rounded-md bg-aka px-4 font-display text-sm uppercase tracking-wide text-shiro"
-        >
-          {closeLabel}
-        </button>
+        {closeLabel && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="mt-6 min-h-11 w-full rounded-md bg-aka px-4 font-display text-sm uppercase tracking-wide text-shiro"
+          >
+            {closeLabel}
+          </button>
+        )}
       </div>
     </div>
   )
