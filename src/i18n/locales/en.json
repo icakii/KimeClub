@@ -110,8 +110,6 @@
     "title": "Admin panel",
     "noAccess": "You don't have access to this page.",
     "backToApp": "Back to app",
-    "cancel": "Cancel",
-    "saving": "Saving...",
     "status": {
       "active": "Active",
       "trial": "Trial",
@@ -125,35 +123,12 @@
     },
     "members": {
       "title": "Members",
-      "add": "Add member",
+      "viewOnlyNote": "View only. To add a member or change an account, contact us.",
       "searchPlaceholder": "Search by name",
       "allBelts": "All belts",
       "allStatuses": "All statuses",
-      "name": "Name",
-      "belt": "Belt",
-      "status": "Status",
-      "login": "Login",
-      "hasLogin": "Has an account",
-      "createLogin": "Create login"
-    },
-    "addMember": {
-      "title": "New member",
-      "fullName": "Full name",
-      "email": "Email",
-      "password": "Password",
-      "regenerate": "New",
-      "belt": "Belt",
-      "birthYear": "Birth year",
-      "phone": "Phone",
-      "guardianConsent": "Guardian consent for data processing",
-      "submit": "Create",
-      "error": "Something went wrong. Please try again.",
-      "successTitle": "Account created",
-      "successBody": "Save these details and send them to the student — the password won't be shown again.",
-      "done": "Done"
-    },
-    "createLogin": {
-      "title": "Login for {{name}}"
+      "contact": "Contact",
+      "guardian": "Parent / guardian"
     }
   }
 }
