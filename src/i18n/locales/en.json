@@ -70,7 +70,15 @@
     "noAccountLink": "Contact your coach",
     "modalTitle": "How to get access",
     "modalBody": "Access is only ever created by your coach. Tell them your email in person or by message and they'll set up an account with a password for you. Nobody can register on this site themselves, to keep students' accounts safe.",
-    "modalClose": "Got it"
+    "modalClose": "Got it",
+    "forgotLink": "Forgot password?",
+    "forgotTitle": "Forgot password",
+    "forgotSubmit": "Send reset link",
+    "forgotSent": "If that email exists, we've sent a password reset link.",
+    "forgotError": "Something went wrong. Please try again.",
+    "resetTitle": "New password",
+    "resetNewPassword": "New password",
+    "resetSubmit": "Save password"
   },
   "tabs": {
     "home": "Home",
@@ -135,5 +143,8 @@
       "contact": "Contact",
       "guardian": "Parent / guardian"
     }
+  },
+  "offline": {
+    "banner": "No connection — showing the last data that loaded."
   }
 }

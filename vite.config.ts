@@ -8,6 +8,22 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        runtimeCaching: [
+          {
+            // Schedule, belts, own payment status, notifications, etc. all
+            // go through this one Supabase REST endpoint. Caching it lets
+            // the student home open offline with the last-known data.
+            urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/.*/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'supabase-api-cache',
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+      },
       manifest: {
         name: 'Kime Karate Club',
         short_name: 'Kime',

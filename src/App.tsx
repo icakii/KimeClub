@@ -3,9 +3,11 @@ import { AdminRoute } from './components/AdminRoute'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AdminLayout } from './layouts/AdminLayout'
 import { AppLayout } from './layouts/AppLayout'
+import { ForgotPassword } from './pages/ForgotPassword'
 import { Landing } from './pages/Landing'
 import { Login } from './pages/Login'
 import { Privacy } from './pages/Privacy'
+import { ResetPassword } from './pages/ResetPassword'
 import { Store } from './pages/Store'
 import { Members } from './pages/admin/Members'
 import { Home } from './pages/app/Home'
@@ -20,6 +22,8 @@ function App() {
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/store" element={<Store />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route
         path="/app"
         element={

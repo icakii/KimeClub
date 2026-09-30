@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { NavLink, Outlet } from 'react-router-dom'
+import { OfflineBanner } from '../components/OfflineBanner'
 
 const TABS = [
   { to: '/app', end: true, key: 'home' },
@@ -13,6 +14,7 @@ export function AppLayout() {
 
   return (
     <div className="flex min-h-screen flex-col pb-16">
+      <OfflineBanner />
       <main className="flex-1">
         <Outlet />
       </main>

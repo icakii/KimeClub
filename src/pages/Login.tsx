@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { Modal } from '../components/Modal'
 import { useAuth } from '../hooks/useAuth'
 
@@ -82,6 +82,13 @@ export function Login() {
             {submitting ? t('auth.submitting') : t('auth.submit')}
           </button>
         </form>
+
+        <Link
+          to="/forgot-password"
+          className="mt-4 block text-center text-sm text-muted hover:text-aka-text"
+        >
+          {t('auth.forgotLink')}
+        </Link>
 
         <p className="mt-6 text-center text-sm text-muted">
           {t('auth.noAccount')}{' '}
