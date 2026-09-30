@@ -28,8 +28,8 @@ export default defineConfig({
         name: 'Kime Karate Club',
         short_name: 'Kime',
         description: 'Student portal for Kime Karate Club',
-        theme_color: '#0e0e10',
-        background_color: '#0e0e10',
+        theme_color: '#121113',
+        background_color: '#121113',
         display: 'standalone',
         icons: [
           {

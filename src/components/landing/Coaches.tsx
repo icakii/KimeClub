@@ -22,13 +22,14 @@ export function Coaches({ coaches }: { coaches: CoachBio[] | undefined }) {
         <h2 className="text-center font-display text-2xl uppercase tracking-wide sm:text-3xl">
           {t('coaches.title')}
         </h2>
+        <div className="mx-auto mt-4 h-px w-12 bg-gold" />
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
           {coaches.map((coach) => (
             <div
               key={coach.name}
               className="flex gap-5 rounded-lg border border-line bg-surface p-6 sm:p-8"
             >
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-aka-text/40 font-display text-lg text-aka-text">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-gold/50 font-display text-lg text-gold">
                 {initials(coach.name)}
               </span>
               <div>

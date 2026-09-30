@@ -11,6 +11,7 @@ export function FeatureCards() {
         <h2 className="text-center font-display text-2xl uppercase tracking-wide sm:text-3xl">
           {t('features.title')}
         </h2>
+        <div className="mx-auto mt-4 h-px w-12 bg-gold" />
         <div className="mt-12 grid gap-4 sm:grid-cols-3 sm:gap-6">
           {FEATURES.map((key, index) => (
             <div

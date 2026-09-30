@@ -12,6 +12,7 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
         <h2 className="text-center font-display text-2xl uppercase tracking-wide sm:text-3xl">
           {t('schedule.title')}
         </h2>
+        <div className="mx-auto mt-4 h-px w-12 bg-gold" />
 
         {isLoading && <p className="mt-8 text-center text-muted">...</p>}
         {!isLoading && classes?.length === 0 && <p className="mt-8 text-center text-muted">-</p>}
