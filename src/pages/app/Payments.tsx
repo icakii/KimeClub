@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { PaymentStatusChip } from '../../components/PaymentStatusChip'
 import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
@@ -36,6 +37,13 @@ export function Payments() {
           <p className="p-4 text-sm text-muted">{t('paymentsPage.empty')}</p>
         )}
       </div>
+
+      <Link
+        to="/store"
+        className="mt-4 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-ink"
+      >
+        {t('store.navLink')}
+      </Link>
     </div>
   )
 }
