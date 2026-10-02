@@ -40,7 +40,7 @@ export function InstallHintCard() {
 
   return (
     <div className="rounded-lg border border-line bg-surface p-4">
-      <p className="font-display text-sm uppercase tracking-wide text-shiro">
+      <p className="font-display text-sm uppercase tracking-wide text-ink">
         {t('studentHome.install.title')}
       </p>
       <p className="mt-2 text-sm text-muted">

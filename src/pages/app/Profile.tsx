@@ -17,7 +17,7 @@ export function Profile() {
 
       {member && (
         <div className="mt-4 space-y-4 rounded-lg border border-line bg-surface p-4">
-          <p className="font-display uppercase tracking-wide text-shiro">{member.full_name}</p>
+          <p className="font-display uppercase tracking-wide text-ink">{member.full_name}</p>
           {member.belt && (
             <div>
               <p className="text-xs uppercase tracking-wide text-muted">{t('profilePage.belt')}</p>
@@ -49,7 +49,7 @@ export function Profile() {
 
       <Link
         to="/store"
-        className="mt-6 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-shiro"
+        className="mt-6 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-ink"
       >
         {t('store.navLink')}
       </Link>
@@ -57,7 +57,7 @@ export function Profile() {
       {(member?.role === 'owner' || member?.role === 'coach') && (
         <Link
           to="/admin"
-          className="mt-6 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-shiro"
+          className="mt-6 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-ink"
         >
           {t('admin.title')}
         </Link>

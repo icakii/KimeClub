@@ -37,12 +37,12 @@ export function Members() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t('admin.members.searchPlaceholder')}
-          className="min-h-11 flex-1 rounded-md border border-line bg-surface px-3 text-shiro outline-none focus:border-aka-text"
+          className="min-h-11 flex-1 rounded-md border border-line bg-surface px-3 text-ink outline-none focus:border-aka-text"
         />
         <select
           value={beltFilter}
           onChange={(e) => setBeltFilter(e.target.value)}
-          className="min-h-11 rounded-md border border-line bg-surface px-3 text-shiro outline-none focus:border-aka-text"
+          className="min-h-11 rounded-md border border-line bg-surface px-3 text-ink outline-none focus:border-aka-text"
         >
           <option value="">{t('admin.members.allBelts')}</option>
           {belts?.map((b) => (
@@ -54,7 +54,7 @@ export function Members() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="min-h-11 rounded-md border border-line bg-surface px-3 text-shiro outline-none focus:border-aka-text"
+          className="min-h-11 rounded-md border border-line bg-surface px-3 text-ink outline-none focus:border-aka-text"
         >
           <option value="">{t('admin.members.allStatuses')}</option>
           {STATUSES.map((s) => (
@@ -72,7 +72,7 @@ export function Members() {
           <div key={m.id} className="rounded-lg border border-line bg-surface p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <p className="font-display uppercase tracking-wide text-shiro">{m.full_name}</p>
+                <p className="font-display uppercase tracking-wide text-ink">{m.full_name}</p>
                 <p className="text-xs text-muted">{t(`admin.role.${m.role}`)}</p>
               </div>
               <div className="flex items-center gap-2">
@@ -95,8 +95,8 @@ export function Members() {
                 <p className="text-xs uppercase tracking-wide text-muted">
                   {t('admin.members.contact')}
                 </p>
-                <p className="text-shiro">{m.email ?? '-'}</p>
-                <p className="text-shiro">{m.phone ?? '-'}</p>
+                <p className="text-ink">{m.email ?? '-'}</p>
+                <p className="text-ink">{m.phone ?? '-'}</p>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wide text-muted">
@@ -104,11 +104,11 @@ export function Members() {
                 </p>
                 {m.guardian_first_name ? (
                   <>
-                    <p className="text-shiro">
+                    <p className="text-ink">
                       {[m.guardian_first_name, m.guardian_last_name].filter(Boolean).join(' ')}
                     </p>
-                    <p className="text-shiro">{m.guardian_phone ?? '-'}</p>
-                    {m.guardian_email && <p className="text-shiro">{m.guardian_email}</p>}
+                    <p className="text-ink">{m.guardian_phone ?? '-'}</p>
+                    {m.guardian_email && <p className="text-ink">{m.guardian_email}</p>}
                   </>
                 ) : (
                   <p className="text-muted">-</p>

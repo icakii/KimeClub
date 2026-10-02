@@ -32,14 +32,14 @@ export function Hero() {
             </a>
             <a
               href="#schedule"
-              className="min-h-11 rounded-md border border-line px-6 py-3 font-display text-sm uppercase tracking-wide text-shiro transition-colors hover:border-aka-text hover:text-aka-text"
+              className="min-h-11 rounded-md border border-line px-6 py-3 font-display text-sm uppercase tracking-wide text-ink transition-colors hover:border-aka-text hover:text-aka-text"
             >
               {t('hero.ctaSchedule')}
             </a>
           </div>
         </div>
 
-        <Enso className="pointer-events-none h-56 w-56 shrink-0 opacity-40 sm:h-72 sm:w-72 lg:h-96 lg:w-96 lg:opacity-60" />
+        <Enso className="pointer-events-none h-56 w-56 shrink-0 sm:h-72 sm:w-72 lg:h-96 lg:w-96" />
       </div>
     </section>
   )

@@ -19,7 +19,7 @@ export function Payments() {
           payments.map((p) => (
             <div key={p.id} className="flex items-center justify-between p-4">
               <div>
-                <p className="text-sm text-shiro">
+                <p className="text-sm text-ink">
                   {new Date(p.period_start).toLocaleDateString(i18n.resolvedLanguage, {
                     month: 'long',
                     year: 'numeric',

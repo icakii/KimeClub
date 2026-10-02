@@ -9,7 +9,7 @@ export function AdminLayout() {
   return (
     <div className="min-h-screen">
       <header className="flex items-center justify-between border-b border-line px-6 py-4">
-        <p className="font-display text-sm uppercase tracking-[3px] text-shiro">
+        <p className="font-display text-sm uppercase tracking-[3px] text-ink">
           {t('admin.title')}
         </p>
         <div className="flex items-center gap-4 font-display text-xs uppercase tracking-wide">

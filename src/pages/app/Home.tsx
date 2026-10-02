@@ -46,7 +46,7 @@ export function Home() {
         {nextClass ? (
           <div className="mt-2">
             <div className="flex items-center gap-2">
-              <p className="font-display uppercase tracking-wide text-shiro">
+              <p className="font-display uppercase tracking-wide text-ink">
                 {nextClass.class.title}
               </p>
               {nextClass.notice && (
@@ -74,7 +74,7 @@ export function Home() {
         </h2>
         {latestMessage ? (
           <div className="mt-2">
-            <p className="font-display uppercase tracking-wide text-shiro">
+            <p className="font-display uppercase tracking-wide text-ink">
               {latestMessage.title}
             </p>
             <p className="mt-1 text-sm text-muted">{latestMessage.body}</p>
@@ -92,7 +92,7 @@ export function Home() {
           {notifications && notifications.length > 0 ? (
             notifications.map((n) => (
               <div key={n.id} className="p-3">
-                <p className="font-display text-sm uppercase tracking-wide text-shiro">
+                <p className="font-display text-sm uppercase tracking-wide text-ink">
                   {n.title}
                 </p>
                 <p className="mt-1 text-sm text-muted">{n.body}</p>

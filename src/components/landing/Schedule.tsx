@@ -23,9 +23,9 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
               key={cls.id}
               className="rounded-lg border border-line bg-surface p-6 transition-colors hover:border-aka-text/60"
             >
-              <p className="font-display uppercase tracking-wide text-shiro">{cls.title}</p>
+              <p className="font-display uppercase tracking-wide text-ink">{cls.title}</p>
               <p className="mt-1 text-sm text-muted">{weekdays[cls.weekday]}</p>
-              <p className="mt-4 font-display text-lg text-shiro">
+              <p className="mt-4 font-display text-lg text-ink">
                 {cls.start_time.slice(0, 5)}
               </p>
               <p className="text-sm text-muted">

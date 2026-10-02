@@ -1,15 +1,18 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-kuro: #121113;
-  --color-shiro: #f5f1e7;
-  --color-aka: #a6242a;
-  --color-aka-text: #de5257;
-  --color-gold: #c7a252;
-  --color-muted: #c9c5bb;
-  --color-muted-2: #9c9a94;
-  --color-surface: #19181a;
-  --color-line: #2a2826;
+  /* "Traditional dojo": warm rice-paper background, sumi-ink text, a
+     hanko-stamp red used sparingly, wood-tone accents. Light theme. */
+  --color-kuro: #f3ecdd;
+  --color-ink: #231f1a;
+  --color-shiro: #fbf6ea;
+  --color-aka: #9c3328;
+  --color-aka-text: #8f2e24;
+  --color-gold: #6b5436;
+  --color-muted: #5e5648;
+  --color-muted-2: #6a6150;
+  --color-surface: #ece1c8;
+  --color-line: #d4c49c;
 
   --color-belt-white: #f6f3ec;
   --color-belt-yellow: #f2c230;
@@ -26,9 +29,9 @@
 body {
   margin: 0;
   background: var(--color-kuro);
-  color: var(--color-shiro);
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @keyframes enso-draw {

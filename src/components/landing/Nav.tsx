@@ -11,7 +11,7 @@ export function Nav() {
         <a href="#top" className="flex items-center gap-2">
           <Enso className="h-9 w-9" />
           <span className="flex flex-col leading-none">
-            <span className="font-display text-lg font-semibold uppercase tracking-[3px] text-shiro">
+            <span className="font-display text-lg font-semibold uppercase tracking-[3px] text-ink">
               Kime
             </span>
             <span className="font-display text-[10px] uppercase tracking-[2px] text-muted-2">
@@ -41,7 +41,7 @@ export function Nav() {
             onClick={() => i18n.changeLanguage('bg')}
             aria-pressed={i18n.resolvedLanguage === 'bg'}
             className={`rounded px-2 py-1 transition-colors ${
-              i18n.resolvedLanguage === 'bg' ? 'text-aka-text' : 'text-muted hover:text-shiro'
+              i18n.resolvedLanguage === 'bg' ? 'text-aka-text' : 'text-muted hover:text-ink'
             }`}
           >
             BG
@@ -52,14 +52,14 @@ export function Nav() {
             onClick={() => i18n.changeLanguage('en')}
             aria-pressed={i18n.resolvedLanguage === 'en'}
             className={`rounded px-2 py-1 transition-colors ${
-              i18n.resolvedLanguage === 'en' ? 'text-aka-text' : 'text-muted hover:text-shiro'
+              i18n.resolvedLanguage === 'en' ? 'text-aka-text' : 'text-muted hover:text-ink'
             }`}
           >
             EN
           </button>
           <Link
             to="/login"
-            className="ml-3 min-h-11 rounded-md border border-line px-3 py-2 normal-case tracking-normal text-shiro transition-colors hover:border-aka-text hover:text-aka-text"
+            className="ml-3 min-h-11 rounded-md border border-line px-3 py-2 normal-case tracking-normal text-ink transition-colors hover:border-aka-text hover:text-aka-text"
           >
             {t('auth.navLink')}
           </Link>

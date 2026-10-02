@@ -17,7 +17,7 @@ export function Schedule() {
         {classes?.map((cls) => (
           <div key={cls.id} className="flex items-center justify-between p-4">
             <div>
-              <p className="font-display uppercase tracking-wide text-shiro">{cls.title}</p>
+              <p className="font-display uppercase tracking-wide text-ink">{cls.title}</p>
               <p className="text-sm text-muted">{weekdays[cls.weekday]}</p>
             </div>
             <div className="text-right text-sm text-muted">

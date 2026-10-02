@@ -33,7 +33,7 @@ export function Coaches({ coaches }: { coaches: CoachBio[] | undefined }) {
                 {initials(coach.name)}
               </span>
               <div>
-                <p className="font-display text-lg uppercase tracking-wide text-shiro">
+                <p className="font-display text-lg uppercase tracking-wide text-ink">
                   {coach.name}
                 </p>
                 <p className="mt-1 text-sm uppercase tracking-wide text-aka-text">

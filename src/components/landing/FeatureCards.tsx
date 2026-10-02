@@ -21,7 +21,7 @@ export function FeatureCards() {
               <span className="font-display text-sm text-aka-text">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <h3 className="mt-3 font-display text-lg uppercase tracking-wide text-shiro">
+              <h3 className="mt-3 font-display text-lg uppercase tracking-wide text-ink">
                 {t(`features.${key}.title`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
