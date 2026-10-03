@@ -32,7 +32,7 @@ export function Home() {
           {t('studentHome.greeting', { name: member.full_name.split(' ')[0] })}
         </p>
         <div className="mt-2 flex items-center gap-2">
-          {member.belt && <BeltChip belt={member.belt} />}
+          {member.belt && <BeltChip belt={member.belt} showLabel={false} />}
           <PaymentStatusChip status={paymentStatus} />
         </div>
       </div>

@@ -1,4 +1,7 @@
 {
+  "common": {
+    "back": "Back"
+  },
   "nav": {
     "schedule": "Schedule",
     "coaches": "Coaches",

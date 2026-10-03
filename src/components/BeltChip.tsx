@@ -38,14 +38,16 @@ function BeltIcon({ color }: { color: string }) {
   )
 }
 
-export function BeltChip({ belt }: { belt: MemberBelt }) {
+export function BeltChip({ belt, showLabel = true }: { belt: MemberBelt; showLabel?: boolean }) {
   const { i18n } = useTranslation()
   return (
     <span className="inline-flex items-center gap-2">
       <BeltIcon color={belt.color_hex} />
-      <span className="font-display text-sm uppercase tracking-wide text-ink">
-        {i18n.resolvedLanguage === 'en' ? belt.name_en : belt.name_bg}
-      </span>
+      {showLabel && (
+        <span className="font-display text-sm uppercase tracking-wide text-ink">
+          {i18n.resolvedLanguage === 'en' ? belt.name_en : belt.name_bg}
+        </span>
+      )}
     </span>
   )
 }

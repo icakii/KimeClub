@@ -22,7 +22,7 @@ export function Profile() {
             <div>
               <p className="text-xs uppercase tracking-wide text-muted">{t('profilePage.belt')}</p>
               <div className="mt-1">
-                <BeltChip belt={member.belt} />
+                <BeltChip belt={member.belt} showLabel={false} />
               </div>
             </div>
           )}
