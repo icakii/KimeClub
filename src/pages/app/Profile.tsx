@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { BeltChip } from '../../components/BeltChip'
+import { LegalLinks } from '../../components/LegalLinks'
 import { useClub } from '../../hooks/useClub'
 import { useAuth } from '../../hooks/useAuth'
 import { useMember } from '../../hooks/useMember'
@@ -63,6 +64,8 @@ export function Profile() {
       >
         {t('profilePage.logout')}
       </button>
+
+      <LegalLinks className="mt-8" />
     </div>
   )
 }

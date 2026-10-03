@@ -10,9 +10,14 @@ export function Footer({ clubName }: { clubName: string }) {
         <p>
           {clubName} · {t('footer.rights')}
         </p>
-        <Link to="/privacy" className="transition-colors hover:text-aka-text">
-          {t('footer.privacy')}
-        </Link>
+        <div className="flex gap-4">
+          <Link to="/privacy" className="transition-colors hover:text-aka-text">
+            {t('footer.privacy')}
+          </Link>
+          <Link to="/terms" className="transition-colors hover:text-aka-text">
+            {t('footer.terms')}
+          </Link>
+        </div>
       </div>
     </footer>
   )

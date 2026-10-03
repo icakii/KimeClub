@@ -9,6 +9,7 @@ import { Login } from './pages/Login'
 import { Privacy } from './pages/Privacy'
 import { ResetPassword } from './pages/ResetPassword'
 import { Store } from './pages/Store'
+import { Terms } from './pages/Terms'
 import { Members } from './pages/admin/Members'
 import { Home } from './pages/app/Home'
 import { Payments } from './pages/app/Payments'
@@ -20,6 +21,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/store" element={<Store />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

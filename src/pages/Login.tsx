@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { LegalLinks } from '../components/LegalLinks'
 import { Modal } from '../components/Modal'
 import { useAuth } from '../hooks/useAuth'
 
@@ -100,6 +101,8 @@ export function Login() {
             {t('auth.noAccountLink')}
           </button>
         </p>
+
+        <LegalLinks className="mt-8" />
       </div>
 
       {showContactModal && (

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet } from 'react-router-dom'
+import { LegalLinks } from '../components/LegalLinks'
 import { useAuth } from '../hooks/useAuth'
 
 export function AdminLayout() {
@@ -22,6 +23,7 @@ export function AdminLayout() {
         </div>
       </header>
       <Outlet />
+      <LegalLinks className="py-8" />
     </div>
   )
 }
