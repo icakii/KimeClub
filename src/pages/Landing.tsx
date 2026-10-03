@@ -2,9 +2,11 @@ import { useClub } from '../hooks/useClub'
 import { Nav } from '../components/landing/Nav'
 import { Hero } from '../components/landing/Hero'
 import { FeatureCards } from '../components/landing/FeatureCards'
+import { AppShowcase } from '../components/landing/AppShowcase'
 import { Schedule } from '../components/landing/Schedule'
 import { BeltLadder } from '../components/landing/BeltLadder'
 import { Coaches } from '../components/landing/Coaches'
+import { ManagedService } from '../components/landing/ManagedService'
 import { Contact } from '../components/landing/Contact'
 import { Footer } from '../components/landing/Footer'
 
@@ -28,9 +30,11 @@ export function Landing() {
       <Nav />
       <Hero />
       <FeatureCards />
+      <AppShowcase />
       <Schedule clubId={club.id} />
       <BeltLadder clubId={club.id} />
       <Coaches coaches={club.theme.coaches} />
+      <ManagedService />
       <Contact />
       <Footer clubName={club.name} />
     </div>

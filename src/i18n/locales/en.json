@@ -42,6 +42,40 @@
   "beltLadder": {
     "title": "Belt ladder"
   },
+  "appShowcase": {
+    "title": "An app for every student",
+    "body": "Every student gets their own account — on their phone, installed like a real app — showing exactly what they need, no digging around.",
+    "points": {
+      "belt": "Current belt and progress toward the next",
+      "payments": "Payment status — paid, due soon, or overdue",
+      "calendar": "A class calendar with changes clearly marked",
+      "offline": "Still works with no connection — the last data stays on the phone"
+    },
+    "mock": {
+      "greeting": "Hi, Alex",
+      "nextClass": "Next class",
+      "className": "Advanced",
+      "classTime": "Thursday · 7:00 PM"
+    }
+  },
+  "managed": {
+    "title": "We run it all for you",
+    "body": "Coaches coach — the admin work stays with us.",
+    "points": {
+      "noAdmin": {
+        "title": "Zero admin work",
+        "desc": "Adding students, belt changes, payments — message us and it's done."
+      },
+      "humanSupport": {
+        "title": "Real people, not forms",
+        "desc": "A call or a message — no ticket systems, no waiting on a reply."
+      },
+      "growWithYou": {
+        "title": "Grows with your club",
+        "desc": "New groups, new features — we add them for you, no rebuild fees."
+      }
+    }
+  },
   "coaches": {
     "title": "Coaches"
   },
