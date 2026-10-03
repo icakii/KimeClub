@@ -46,8 +46,8 @@ export interface NextClass {
   notice: ClassNotice | null
 }
 
-export function useNextClass(clubId: string | undefined): NextClass | null {
-  const { data: classes } = useSchedule(clubId)
+export function useNextClass(clubId: string | undefined, groupId?: string | null): NextClass | null {
+  const { data: classes } = useSchedule(clubId, groupId)
   const { data: notices } = useUpcomingNotices(clubId)
 
   return useMemo(() => {

@@ -15,6 +15,7 @@ export interface Member {
   full_name: string
   role: 'owner' | 'coach' | 'student'
   status: 'active' | 'trial' | 'paused' | 'left'
+  group_id: string | null
   belt: MemberBelt | null
 }
 
@@ -27,7 +28,9 @@ export function useMember(clubId: string | undefined) {
     queryFn: async (): Promise<Member> => {
       const { data, error } = await supabase
         .from('members')
-        .select('id, full_name, role, status, belt:belts(id, rank, name_bg, name_en, color_hex)')
+        .select(
+          'id, full_name, role, status, group_id, belt:belts(id, rank, name_bg, name_en, color_hex)',
+        )
         .eq('club_id', clubId as string)
         .eq('user_id', userId as string)
         .single()

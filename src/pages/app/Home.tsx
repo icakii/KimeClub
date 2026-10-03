@@ -12,7 +12,7 @@ export function Home() {
   const { t, i18n } = useTranslation()
   const { data: club } = useClub()
   const { data: member } = useMember(club?.id)
-  const nextClass = useNextClass(club?.id)
+  const nextClass = useNextClass(club?.id, member?.group_id)
   const { data: payments } = usePayments(member?.id)
   const { data: notifications } = useNotifications(member?.id)
 

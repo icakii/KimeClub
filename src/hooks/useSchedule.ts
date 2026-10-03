@@ -9,18 +9,27 @@ export interface ClassRow {
   duration_min: number
   belt_min_rank: number | null
   belt_max_rank: number | null
+  group_id: string | null
 }
 
-export function useSchedule(clubId: string | undefined) {
+// groupId filters to that group's classes plus any ungrouped (visible to
+// everyone) class. Omit it to see every class regardless of group — used
+// by the public landing page, and as a fallback for a student who hasn't
+// been assigned a group yet.
+export function useSchedule(clubId: string | undefined, groupId?: string | null) {
   return useQuery({
-    queryKey: ['schedule', clubId],
+    queryKey: ['schedule', clubId, groupId],
     queryFn: async (): Promise<ClassRow[]> => {
-      const { data, error } = await supabase
+      let query = supabase
         .from('classes')
-        .select('id, title, weekday, start_time, duration_min, belt_min_rank, belt_max_rank')
+        .select('id, title, weekday, start_time, duration_min, belt_min_rank, belt_max_rank, group_id')
         .eq('club_id', clubId as string)
-        .order('weekday')
-        .order('start_time')
+
+      if (groupId) {
+        query = query.or(`group_id.is.null,group_id.eq.${groupId}`)
+      }
+
+      const { data, error } = await query.order('weekday').order('start_time')
       if (error) throw error
       return data
     },

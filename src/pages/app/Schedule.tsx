@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useClassNoticesInRange } from '../../hooks/useClassNotices'
 import { useClub } from '../../hooks/useClub'
+import { useMember } from '../../hooks/useMember'
+import { useNextClass } from '../../hooks/useNextClass'
 import { useSchedule } from '../../hooks/useSchedule'
 
 function startOfMonth(date: Date): Date {
@@ -26,7 +28,9 @@ function mondayIndex(date: Date): number {
 export function Schedule() {
   const { t, i18n } = useTranslation()
   const { data: club } = useClub()
-  const { data: classes } = useSchedule(club?.id)
+  const { data: member } = useMember(club?.id)
+  const { data: classes } = useSchedule(club?.id, member?.group_id)
+  const nextClass = useNextClass(club?.id, member?.group_id)
 
   const [viewMonth, setViewMonth] = useState(() => startOfMonth(new Date()))
   const todayISO = toISODate(new Date())
@@ -59,7 +63,36 @@ export function Schedule() {
     <div className="px-6 pb-6 pt-8">
       <h1 className="font-display text-xl uppercase tracking-wide">{t('schedule.title')}</h1>
 
-      <div className="mt-4 flex items-center justify-between">
+      {nextClass && (
+        <div className="mt-4 rounded-lg border border-line bg-surface p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-xs uppercase tracking-wide text-muted">
+              {t('studentHome.nextClass')}
+            </p>
+            {nextClass.notice && (
+              <span className="rounded-full bg-aka px-2 py-0.5 text-[10px] font-display uppercase tracking-wide text-shiro">
+                {t('studentHome.changed')}
+              </span>
+            )}
+          </div>
+          <p className="mt-1 font-display uppercase tracking-wide text-ink">
+            {nextClass.class.title}
+          </p>
+          <p className="text-sm text-muted">
+            {new Date(nextClass.date + 'T00:00:00').toLocaleDateString(i18n.resolvedLanguage, {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'long',
+            })}{' '}
+            · {(nextClass.notice?.new_start_time ?? nextClass.class.start_time).slice(0, 5)}
+          </p>
+          {nextClass.notice && (
+            <p className="mt-1 text-sm text-aka-text">{nextClass.notice.note}</p>
+          )}
+        </div>
+      )}
+
+      <div className="mt-6 flex items-center justify-between">
         <button
           type="button"
           onClick={() => setViewMonth(addDays(startOfMonth(viewMonth), -1))}
