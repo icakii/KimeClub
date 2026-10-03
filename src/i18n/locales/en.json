@@ -29,8 +29,12 @@
   "schedule": {
     "title": "Class schedule",
     "weekdays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "weekdaysShort": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     "duration": "{{minutes}} min",
-    "beltRange": "Belts: {{min}} - {{max}}"
+    "beltRange": "Belts: {{min}} - {{max}}",
+    "calendar": {
+      "noClasses": "No classes this day."
+    }
   },
   "beltLadder": {
     "title": "Belt ladder"
