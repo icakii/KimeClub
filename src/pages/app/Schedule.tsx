@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DayDetailSheet } from '../../components/DayDetailSheet'
 import { useClassNoticesInRange } from '../../hooks/useClassNotices'
 import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
@@ -34,7 +35,10 @@ export function Schedule() {
 
   const [viewMonth, setViewMonth] = useState(() => startOfMonth(new Date()))
   const todayISO = toISODate(new Date())
-  const [selectedDate, setSelectedDate] = useState(todayISO)
+  // null = sheet closed. Tapping a day opens it instead of pushing a panel
+  // below the grid, so you don't have to scroll down and back up to check
+  // another day.
+  const [openDate, setOpenDate] = useState<string | null>(null)
 
   const monthStart = startOfMonth(viewMonth)
   const monthEnd = endOfMonth(viewMonth)
@@ -53,11 +57,11 @@ export function Schedule() {
   }
 
   const weekdaysShort = t('schedule.weekdaysShort', { returnObjects: true }) as string[]
-  const weekdaysFull = t('schedule.weekdays', { returnObjects: true }) as string[]
 
-  const selectedWeekday = mondayIndex(new Date(selectedDate + 'T00:00:00'))
-  const selectedClasses = (classes ?? []).filter((c) => c.weekday === selectedWeekday)
-  const selectedNotices = (notices ?? []).filter((n) => n.effective_date === selectedDate)
+  const openWeekday = openDate ? mondayIndex(new Date(openDate + 'T00:00:00')) : null
+  const openClasses =
+    openWeekday === null ? [] : (classes ?? []).filter((c) => c.weekday === openWeekday)
+  const openNotices = openDate ? (notices ?? []).filter((n) => n.effective_date === openDate) : []
 
   return (
     <div className="px-6 pb-6 pt-8">
@@ -130,22 +134,22 @@ export function Schedule() {
           const hasClass = (classes ?? []).some((c) => c.weekday === weekday)
           const hasNotice = (notices ?? []).some((n) => n.effective_date === iso)
           const isToday = iso === todayISO
-          const isSelected = iso === selectedDate
+          const isOpen = iso === openDate
 
           return (
             <button
               key={iso}
               type="button"
-              onClick={() => setSelectedDate(iso)}
+              onClick={() => setOpenDate(iso)}
               className={`relative flex aspect-square flex-col items-center justify-center rounded-md text-sm transition-colors ${
-                isSelected ? 'bg-aka text-shiro' : isToday ? 'border border-aka-text text-ink' : 'text-ink'
+                isOpen ? 'bg-aka text-shiro' : isToday ? 'border border-aka-text text-ink' : 'text-ink'
               } ${!inMonth ? 'opacity-30' : ''}`}
             >
               {day.getDate()}
               {(hasClass || hasNotice) && (
                 <span
                   className={`absolute bottom-1 h-1.5 w-1.5 rounded-full ${
-                    isSelected ? 'bg-shiro' : hasNotice ? 'bg-aka' : 'bg-gold'
+                    isOpen ? 'bg-shiro' : hasNotice ? 'bg-aka' : 'bg-gold'
                   }`}
                 />
               )}
@@ -154,45 +158,12 @@ export function Schedule() {
         })}
       </div>
 
-      <div className="mt-6 rounded-lg border border-line bg-surface p-4">
-        <p className="font-display text-sm uppercase tracking-wide text-ink">
-          {new Date(selectedDate + 'T00:00:00').toLocaleDateString(i18n.resolvedLanguage, {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-          })}
-        </p>
-
-        {selectedClasses.length === 0 ? (
-          <p className="mt-2 text-sm text-muted">{t('schedule.calendar.noClasses')}</p>
-        ) : (
-          <div className="mt-3 space-y-3">
-            {selectedClasses.map((cls) => {
-              const notice = selectedNotices.find((n) => n.class_id === cls.id)
-              return (
-                <div key={cls.id} className="flex items-start justify-between gap-2">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-ink">{cls.title}</p>
-                      {notice && (
-                        <span className="rounded-full bg-aka px-2 py-0.5 text-[10px] font-display uppercase tracking-wide text-shiro">
-                          {t('studentHome.changed')}
-                        </span>
-                      )}
-                    </div>
-                    {notice && <p className="mt-1 text-sm text-aka-text">{notice.note}</p>}
-                  </div>
-                  <p className="shrink-0 text-sm text-muted">
-                    {(notice?.new_start_time ?? cls.start_time).slice(0, 5)}
-                  </p>
-                </div>
-              )
-            })}
-          </div>
-        )}
-
-        <p className="mt-3 text-xs text-muted-2">{weekdaysFull[selectedWeekday]}</p>
-      </div>
+      <DayDetailSheet
+        date={openDate}
+        classes={openClasses}
+        notices={openNotices}
+        onClose={() => setOpenDate(null)}
+      />
     </div>
   )
 }
