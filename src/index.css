@@ -34,6 +34,12 @@ body {
   color-scheme: light;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @keyframes enso-draw {
   from {
     stroke-dashoffset: var(--dash, 220);
