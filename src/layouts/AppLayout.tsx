@@ -15,25 +15,30 @@ export function AppLayout() {
   return (
     <div className="flex min-h-screen flex-col pb-16">
       <OfflineBanner />
-      <main className="flex-1">
+      {/* Capped width: this is a phone app, not a desktop dashboard — full-
+          bleed content (especially the calendar grid) looks fine on a phone
+          but explodes into oversized cells on a wide desktop viewport. */}
+      <main className="mx-auto w-full max-w-md flex-1">
         <Outlet />
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-10 flex border-t border-line bg-surface">
-        {TABS.map((tab) => (
-          <NavLink
-            key={tab.key}
-            to={tab.to}
-            end={tab.end}
-            className={({ isActive }) =>
-              `flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 font-display text-[11px] uppercase tracking-wide transition-colors ${
-                isActive ? 'text-aka-text' : 'text-muted'
-              }`
-            }
-          >
-            {t(`tabs.${tab.key}`)}
-          </NavLink>
-        ))}
+      <nav className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-surface">
+        <div className="mx-auto flex max-w-md">
+          {TABS.map((tab) => (
+            <NavLink
+              key={tab.key}
+              to={tab.to}
+              end={tab.end}
+              className={({ isActive }) =>
+                `flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 font-display text-[11px] uppercase tracking-wide transition-colors ${
+                  isActive ? 'text-aka-text' : 'text-muted'
+                }`
+              }
+            >
+              {t(`tabs.${tab.key}`)}
+            </NavLink>
+          ))}
+        </div>
       </nav>
     </div>
   )
