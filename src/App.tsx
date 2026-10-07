@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { AdminRoute } from './components/AdminRoute'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { useClub } from './hooks/useClub'
 import { AdminLayout } from './layouts/AdminLayout'
 import { AppLayout } from './layouts/AppLayout'
 import { ForgotPassword } from './pages/ForgotPassword'
@@ -8,6 +9,7 @@ import { Landing } from './pages/Landing'
 import { Login } from './pages/Login'
 import { Privacy } from './pages/Privacy'
 import { ResetPassword } from './pages/ResetPassword'
+import { ServicePaused } from './pages/ServicePaused'
 import { Store } from './pages/Store'
 import { Terms } from './pages/Terms'
 import { Members } from './pages/admin/Members'
@@ -17,6 +19,15 @@ import { Profile } from './pages/app/Profile'
 import { Schedule } from './pages/app/Schedule'
 
 function App() {
+  // Gate the whole app, not just the public landing page's own RLS-based
+  // filtering — a club's own members/staff could otherwise keep using the
+  // site after being suspended for non-payment (RLS still lets them read
+  // their own club regardless of status; only anonymous reads are filtered).
+  const { data: club } = useClub()
+  if (club && club.status !== 'live') {
+    return <ServicePaused />
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />

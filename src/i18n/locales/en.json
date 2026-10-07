@@ -344,5 +344,9 @@
   },
   "offline": {
     "banner": "No connection — showing the last data that loaded."
+  },
+  "suspended": {
+    "title": "Site temporarily unavailable",
+    "body": "This club's site is currently paused. If you're a member, please contact your coach for details."
   }
 }

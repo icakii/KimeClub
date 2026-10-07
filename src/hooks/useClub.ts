@@ -24,6 +24,7 @@ export interface Club {
   name: string
   default_locale: 'bg' | 'en'
   theme: ClubTheme
+  status: 'draft' | 'live' | 'paused'
 }
 
 async function fetchClub(): Promise<Club> {
@@ -32,7 +33,7 @@ async function fetchClub(): Promise<Club> {
   if (slugOverride) {
     const { data, error } = await supabase
       .from('clubs')
-      .select('id, slug, name, default_locale, theme')
+      .select('id, slug, name, default_locale, theme, status')
       .eq('slug', slugOverride)
       .single()
     if (error) throw error
@@ -48,7 +49,7 @@ async function fetchClub(): Promise<Club> {
 
   const { data, error } = await supabase
     .from('clubs')
-    .select('id, slug, name, default_locale, theme')
+    .select('id, slug, name, default_locale, theme, status')
     .eq('id', domain.club_id)
     .single()
   if (error) throw error
