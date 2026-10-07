@@ -19,7 +19,7 @@ export function AppShowcase() {
     <section className="px-6 py-16 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <h2 className="font-display text-2xl uppercase tracking-wide sm:text-3xl">
+          <h2 className="font-display text-2xl font-semibold uppercase tracking-wide sm:text-3xl">
             {t('appShowcase.title')}
           </h2>
           <div className="mt-4 h-px w-12 bg-gold" />

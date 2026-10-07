@@ -24,7 +24,7 @@ export function BeltLadder({ clubId }: { clubId: string | undefined }) {
   return (
     <section className="px-6 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-center font-display text-2xl uppercase tracking-wide sm:text-3xl">
+        <h2 className="text-center font-display text-2xl font-semibold uppercase tracking-wide sm:text-3xl">
           {t('beltLadder.title')}
         </h2>
         <div className="mx-auto mt-4 h-px w-12 bg-gold" />

@@ -9,7 +9,7 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
   return (
     <section id="schedule" className="px-6 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-center font-display text-2xl uppercase tracking-wide sm:text-3xl">
+        <h2 className="text-center font-display text-2xl font-semibold uppercase tracking-wide sm:text-3xl">
           {t('schedule.title')}
         </h2>
         <div className="mx-auto mt-4 h-px w-12 bg-gold" />
@@ -21,20 +21,22 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
           {classes?.map((cls) => (
             <div
               key={cls.id}
-              className="rounded-lg border border-line bg-surface p-6 transition-colors hover:border-aka-text/60"
+              className="rounded-lg border border-ink/20 bg-surface p-6 transition-colors hover:border-aka-text"
             >
-              <p className="font-display uppercase tracking-wide text-ink">{cls.title}</p>
+              <p className="font-display font-semibold uppercase tracking-wide text-ink">
+                {cls.title}
+              </p>
               <p className="mt-1 text-sm text-muted">{weekdays[cls.weekday]}</p>
-              <p className="mt-4 font-display text-lg text-ink">
+              <p className="mt-4 font-display text-lg font-semibold text-ink">
                 {cls.start_time.slice(0, 5)}
               </p>
               <p className="text-sm text-muted">
                 {t('schedule.duration', { minutes: cls.duration_min })}
               </p>
               {cls.belt_min_rank !== null && cls.belt_max_rank !== null && (
-                <p className="mt-2 text-xs uppercase tracking-wide text-muted-2">
+                <span className="mt-3 inline-block rounded-full border border-line px-3 py-0.5 text-[11px] uppercase tracking-wide text-muted-2">
                   {t('schedule.beltRange', { min: cls.belt_min_rank, max: cls.belt_max_rank })}
-                </p>
+                </span>
               )}
             </div>
           ))}
