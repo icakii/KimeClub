@@ -1,11 +1,18 @@
 import { useTranslation } from 'react-i18next'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import { LegalLinks } from '../components/LegalLinks'
 import { useAuth } from '../hooks/useAuth'
+import { useClub } from '../hooks/useClub'
+import { useMember } from '../hooks/useMember'
 
 export function AdminLayout() {
   const { t } = useTranslation()
   const { signOut } = useAuth()
+  const { data: club } = useClub()
+  const { data: member } = useMember(club?.id)
+
+  const tabClass = ({ isActive }: { isActive: boolean }) =>
+    `pb-2 ${isActive ? 'border-b-2 border-aka text-ink' : 'text-muted'}`
 
   return (
     <div className="min-h-screen">
@@ -22,6 +29,16 @@ export function AdminLayout() {
           </button>
         </div>
       </header>
+      <nav className="flex gap-4 border-b border-line px-6 font-display text-xs uppercase tracking-wide">
+        <NavLink to="/admin" end className={tabClass}>
+          {t('admin.nav.members')}
+        </NavLink>
+        {member?.role === 'owner' && (
+          <NavLink to="/admin/subscription" className={tabClass}>
+            {t('admin.nav.subscription')}
+          </NavLink>
+        )}
+      </nav>
       <Outlet />
       <LegalLinks className="py-8" />
     </div>

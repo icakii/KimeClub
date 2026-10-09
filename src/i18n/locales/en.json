@@ -340,6 +340,23 @@
       "allStatuses": "All statuses",
       "contact": "Contact",
       "guardian": "Parent / guardian"
+    },
+    "nav": {
+      "members": "Members",
+      "subscription": "Subscription"
+    },
+    "subscription": {
+      "title": "Subscription",
+      "ownerOnly": "Only the club owner can view this page.",
+      "plan": "Plan",
+      "monthlyPrice": "Monthly price",
+      "paidUntil": "Paid until",
+      "neverPaid": "Not paid yet",
+      "overdue": "Overdue",
+      "current": "Current",
+      "payButton": "Pay now",
+      "processing": "Opening checkout...",
+      "completedNote": "Payment received — your account will be updated shortly. Contact us if it isn't within a day."
     }
   },
   "offline": {
