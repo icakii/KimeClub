@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { Card, Eyebrow, PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { PaymentStatusChip } from '../../components/PaymentStatusChip'
 import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
@@ -18,53 +19,93 @@ export function Payments() {
   const overdue = !paidThrough || paidThrough < today
 
   return (
-    <div className="px-6 pb-6 pt-8">
-      <h1 className="font-display text-xl uppercase tracking-wide">{t('paymentsPage.title')}</h1>
+    <div className="px-5 pb-6 pt-5">
+      <PageHeader kanji="払" title={t('paymentsPage.title')} />
 
-      <div className="mt-4 rounded-lg border border-line bg-surface p-4">
-        <p className="text-xs uppercase tracking-wide text-muted">
-          {t('paymentsPage.paidThrough')}
-        </p>
-        <p className={`mt-1 font-display text-lg ${overdue ? 'text-aka-text' : 'text-ink'}`}>
-          {paidThrough
-            ? new Date(`${paidThrough}T00:00:00`).toLocaleDateString(i18n.resolvedLanguage, {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })
-            : t('paymentsPage.neverPaid')}
-        </p>
-      </div>
-
-      <div className="mt-4 divide-y divide-line rounded-lg border border-line bg-surface">
-        {payments && payments.length > 0 ? (
-          payments.map((p) => (
-            <div key={p.id} className="flex items-center justify-between p-4">
-              <div>
-                <p className="text-sm text-ink">
-                  {new Date(p.period_start).toLocaleDateString(i18n.resolvedLanguage, {
+      <Stagger className="mt-5 space-y-4">
+        <StaggerItem>
+          <div
+            className={`relative overflow-hidden rounded-3xl p-6 text-shiro ${
+              overdue
+                ? 'bg-linear-to-br from-aka to-aka-text shadow-[0_24px_48px_-24px_rgba(194,54,31,0.9)]'
+                : 'bg-linear-to-br from-jade to-[#1f4a36] shadow-[0_24px_48px_-24px_rgba(47,107,79,0.9)]'
+            }`}
+          >
+            <span
+              className="pointer-events-none absolute -bottom-8 -right-3 font-brush text-[8rem] leading-none text-shiro/10"
+              aria-hidden="true"
+            >
+              払
+            </span>
+            <p className="relative text-[10px] font-semibold uppercase tracking-[0.2em] text-shiro/70">
+              {t('paymentsPage.paidThrough')}
+            </p>
+            <p
+              className={`relative mt-2 font-display font-bold uppercase leading-tight ${
+                paidThrough ? 'text-3xl' : 'text-xl'
+              }`}
+            >
+              {paidThrough
+                ? new Date(`${paidThrough}T00:00:00`).toLocaleDateString(i18n.resolvedLanguage, {
+                    day: 'numeric',
                     month: 'long',
                     year: 'numeric',
-                  })}
-                </p>
-                <p className="text-sm text-muted">
-                  {(p.amount_cents / 100).toFixed(2)} {p.currency}
-                </p>
-              </div>
-              <PaymentStatusChip status={p.status} />
-            </div>
-          ))
-        ) : (
-          <p className="p-4 text-sm text-muted">{t('paymentsPage.empty')}</p>
-        )}
-      </div>
+                  })
+                : t('paymentsPage.neverPaid')}
+            </p>
+            {!overdue && (
+              <span
+                className="stamp-in absolute right-5 top-5 rounded-sm border-2 border-shiro px-2 py-1 font-display text-xs font-bold uppercase tracking-widest"
+                style={{ animationDelay: '0.45s' }}
+              >
+                {t('paymentStatus.paid')}
+              </span>
+            )}
+          </div>
+        </StaggerItem>
 
-      <Link
-        to="/store"
-        className="mt-4 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-ink"
-      >
-        {t('store.navLink')}
-      </Link>
+        <StaggerItem>
+          <Eyebrow className="px-1 pt-2">{t('paymentShowcase.mock.history')}</Eyebrow>
+        </StaggerItem>
+
+        {payments && payments.length > 0 ? (
+          <StaggerItem>
+            <Card className="divide-y divide-line p-0">
+              {payments.map((p) => (
+                <div key={p.id} className="flex items-center justify-between gap-3 px-4 py-3.5">
+                  <div>
+                    <p className="font-display text-sm font-semibold uppercase tracking-wide text-ink">
+                      {new Date(p.period_start).toLocaleDateString(i18n.resolvedLanguage, {
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </p>
+                    <p className="text-xs text-muted">
+                      {(p.amount_cents / 100).toFixed(2)} {p.currency}
+                    </p>
+                  </div>
+                  <PaymentStatusChip status={p.status} />
+                </div>
+              ))}
+            </Card>
+          </StaggerItem>
+        ) : (
+          <StaggerItem>
+            <Card>
+              <p className="text-sm text-muted">{t('paymentsPage.empty')}</p>
+            </Card>
+          </StaggerItem>
+        )}
+
+        <StaggerItem>
+          <Link
+            to="/store"
+            className="flex min-h-12 w-full items-center justify-center rounded-2xl border border-ink/15 bg-shiro/95 px-4 font-display text-sm uppercase tracking-wide text-ink transition-colors hover:border-aka-text hover:text-aka-text"
+          >
+            {t('store.navLink')}
+          </Link>
+        </StaggerItem>
+      </Stagger>
     </div>
   )
 }

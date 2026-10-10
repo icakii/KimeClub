@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Card, DAY_KANJI, Eyebrow, Stagger, StaggerItem } from '../../components/app/ui'
 import { BeltChip } from '../../components/BeltChip'
 import { InstallHintCard } from '../../components/InstallHintCard'
 import { PaymentStatusChip, type PaymentStatusKey } from '../../components/PaymentStatusChip'
@@ -17,95 +18,113 @@ export function Home() {
   const { data: notifications } = useNotifications(member?.id)
 
   if (!member) {
-    return <div className="flex min-h-screen items-center justify-center text-muted">...</div>
+    return <div className="flex min-h-[60vh] items-center justify-center text-muted">...</div>
   }
 
   const weekdays = t('schedule.weekdays', { returnObjects: true }) as string[]
   const paymentStatus: PaymentStatusKey =
     member.status === 'trial' ? 'trial' : (payments?.[0]?.status ?? 'unknown')
-  const latestMessage = notifications?.[0]
 
   return (
-    <div className="space-y-6 px-6 pb-6 pt-8">
-      <div>
-        <p className="font-display text-xl uppercase tracking-wide">
-          {t('studentHome.greeting', { name: member.full_name.split(' ')[0] })}
-        </p>
-        <div className="mt-2 flex items-center gap-2">
-          {member.belt && <BeltChip belt={member.belt} showLabel={false} />}
-          <PaymentStatusChip status={paymentStatus} />
+    <Stagger className="space-y-4 px-5 pb-6 pt-5">
+      <StaggerItem>
+        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-ai via-ai to-ai-soft p-6 text-shiro shadow-[0_24px_48px_-24px_rgba(31,51,82,0.8)]">
+          <span
+            className="pointer-events-none absolute -bottom-8 -right-4 font-brush text-[9rem] leading-none text-shiro/10"
+            aria-hidden="true"
+          >
+            極
+          </span>
+          <div
+            className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full"
+            style={{ background: 'radial-gradient(closest-side, rgba(194,54,31,0.45), transparent)' }}
+          />
+          <p className="relative text-[10px] uppercase tracking-[0.25em] text-shiro/60">{club?.name}</p>
+          <p className="relative mt-1 font-display text-3xl font-bold uppercase tracking-wide">
+            {t('studentHome.greeting', { name: member.full_name.split(' ')[0] })}
+          </p>
+          <div className="relative mt-4 flex flex-wrap items-center gap-2">
+            {member.belt && (
+              <span className="rounded-full bg-shiro/95 px-2 py-1">
+                <BeltChip belt={member.belt} showLabel={false} />
+              </span>
+            )}
+            <PaymentStatusChip status={paymentStatus} />
+          </div>
         </div>
-      </div>
+      </StaggerItem>
 
-      <InstallHintCard />
+      <StaggerItem>
+        <InstallHintCard />
+      </StaggerItem>
 
-      <section className="rounded-lg border border-line bg-surface p-4">
-        <h2 className="font-display text-xs uppercase tracking-wide text-muted">
-          {t('studentHome.nextClass')}
-        </h2>
+      <StaggerItem>
         {nextClass ? (
-          <div className="mt-2">
-            <div className="flex items-center gap-2">
-              <p className="font-display uppercase tracking-wide text-ink">
+          <div className="relative flex overflow-hidden rounded-3xl bg-aka text-shiro shadow-[0_20px_40px_-20px_rgba(194,54,31,0.85)]">
+            <div className="flex w-24 shrink-0 flex-col items-center justify-center bg-ink/15">
+              <span className="font-brush text-5xl leading-none">{DAY_KANJI[nextClass.class.weekday]}</span>
+            </div>
+            <div className="flex-1 p-5">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-shiro/70">
+                  {t('studentHome.nextClass')}
+                </p>
+                {nextClass.notice && (
+                  <span className="rounded-full bg-shiro px-2 py-0.5 font-display text-[10px] uppercase tracking-wide text-aka">
+                    {t('studentHome.changed')}
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 font-display text-xl font-bold uppercase tracking-wide">
                 {nextClass.class.title}
               </p>
-              {nextClass.notice && (
-                <span className="rounded-full bg-aka px-2 py-0.5 text-[10px] font-display uppercase tracking-wide text-shiro">
-                  {t('studentHome.changed')}
-                </span>
-              )}
+              <p className="mt-2 font-display text-3xl font-bold leading-none">
+                {(nextClass.notice?.new_start_time ?? nextClass.class.start_time).slice(0, 5)}
+              </p>
+              <p className="mt-1 text-xs text-shiro/80">{weekdays[nextClass.class.weekday]}</p>
+              {nextClass.notice && <p className="mt-2 text-sm text-shiro">{nextClass.notice.note}</p>}
             </div>
-            <p className="text-sm text-muted">
-              {weekdays[nextClass.class.weekday]} ·{' '}
-              {(nextClass.notice?.new_start_time ?? nextClass.class.start_time).slice(0, 5)}
-            </p>
-            {nextClass.notice && (
-              <p className="mt-1 text-sm text-aka-text">{nextClass.notice.note}</p>
-            )}
           </div>
         ) : (
-          <p className="mt-2 text-sm text-muted">{t('studentHome.noNextClass')}</p>
+          <Card>
+            <Eyebrow>{t('studentHome.nextClass')}</Eyebrow>
+            <p className="mt-2 text-sm text-muted">{t('studentHome.noNextClass')}</p>
+          </Card>
         )}
-      </section>
+      </StaggerItem>
 
-      <section className="rounded-lg border border-line bg-surface p-4">
-        <h2 className="font-display text-xs uppercase tracking-wide text-muted">
-          {t('studentHome.latestMessage')}
-        </h2>
-        {latestMessage ? (
-          <div className="mt-2">
-            <p className="font-display uppercase tracking-wide text-ink">
-              {latestMessage.title}
-            </p>
-            <p className="mt-1 text-sm text-muted">{latestMessage.body}</p>
-          </div>
-        ) : (
-          <p className="mt-2 text-sm text-muted">{t('studentHome.noMessages')}</p>
-        )}
-      </section>
+      <StaggerItem>
+        <Eyebrow className="px-1 pt-2">{t('studentHome.inbox')}</Eyebrow>
+      </StaggerItem>
 
-      <section>
-        <h2 className="font-display text-xs uppercase tracking-wide text-muted">
-          {t('studentHome.inbox')}
-        </h2>
-        <div className="mt-2 divide-y divide-line rounded-lg border border-line bg-surface">
-          {notifications && notifications.length > 0 ? (
-            notifications.map((n) => (
-              <div key={n.id} className="p-3">
-                <p className="font-display text-sm uppercase tracking-wide text-ink">
+      {notifications && notifications.length > 0 ? (
+        notifications.map((n, i) => (
+          <StaggerItem key={n.id}>
+            <Card className="flex gap-3">
+              <span
+                className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
+                  i === 0 ? 'bg-aka' : n.read_at ? 'bg-line' : 'bg-jade'
+                }`}
+              />
+              <div className="min-w-0">
+                <p className="font-display text-sm font-semibold uppercase tracking-wide text-ink">
                   {n.title}
                 </p>
                 <p className="mt-1 text-sm text-muted">{n.body}</p>
-                <p className="mt-1 text-xs text-muted-2">
+                <p className="mt-2 text-[11px] text-muted-2">
                   {new Date(n.created_at).toLocaleDateString(i18n.resolvedLanguage)}
                 </p>
               </div>
-            ))
-          ) : (
-            <p className="p-4 text-sm text-muted">{t('studentHome.noMessages')}</p>
-          )}
-        </div>
-      </section>
-    </div>
+            </Card>
+          </StaggerItem>
+        ))
+      ) : (
+        <StaggerItem>
+          <Card>
+            <p className="text-sm text-muted">{t('studentHome.noMessages')}</p>
+          </Card>
+        </StaggerItem>
+      )}
+    </Stagger>
   )
 }

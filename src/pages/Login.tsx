@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { KanjiBackdrop } from '../components/KanjiBackdrop'
+import { Emblem } from '../components/landing/Emblem'
 import { LegalLinks } from '../components/LegalLinks'
 import { Modal } from '../components/Modal'
 import { useAuth } from '../hooks/useAuth'
@@ -36,9 +38,14 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-6">
-      <div className="w-full max-w-sm">
-        <h1 className="text-center font-display text-2xl uppercase tracking-wide">
+    <div className="relative flex min-h-screen items-center justify-center px-6 py-10">
+      <KanjiBackdrop parallax={0} baseAlpha={0.08} />
+      <div className="kana-vignette" />
+      <div className="reveal-up w-full max-w-sm rounded-3xl border border-ink/10 bg-shiro/95 p-7 shadow-[0_30px_60px_-30px_rgba(31,27,22,0.6)]">
+        <Link to="/" className="mx-auto block w-fit" aria-label="Kime">
+          <Emblem animated className="h-20 w-20" />
+        </Link>
+        <h1 className="mt-4 text-center font-display text-2xl font-bold uppercase tracking-wide">
           {t('auth.title')}
         </h1>
 
@@ -54,7 +61,7 @@ export function Login() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 min-h-11 w-full rounded-md border border-line bg-surface px-3 text-ink outline-none focus:border-aka-text"
+              className="mt-1 min-h-11 w-full rounded-md border border-line bg-kuro px-3 text-ink outline-none transition-colors focus:border-aka-text focus:bg-shiro"
             />
           </div>
 
@@ -69,7 +76,7 @@ export function Login() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 min-h-11 w-full rounded-md border border-line bg-surface px-3 text-ink outline-none focus:border-aka-text"
+              className="mt-1 min-h-11 w-full rounded-md border border-line bg-kuro px-3 text-ink outline-none transition-colors focus:border-aka-text focus:bg-shiro"
             />
           </div>
 
@@ -78,7 +85,7 @@ export function Login() {
           <button
             type="submit"
             disabled={submitting}
-            className="min-h-11 w-full rounded-md bg-aka font-display text-sm uppercase tracking-wide text-shiro disabled:opacity-60"
+            className="min-h-12 w-full rounded-xl bg-aka font-display text-sm uppercase tracking-wide text-shiro shadow-[0_12px_24px_-12px_rgba(194,54,31,0.9)] transition-transform active:scale-[0.98] disabled:opacity-60"
           >
             {submitting ? t('auth.submitting') : t('auth.submit')}
           </button>

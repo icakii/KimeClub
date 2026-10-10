@@ -39,7 +39,7 @@ export function InstallHintCard() {
   }
 
   return (
-    <div className="rounded-lg border border-line bg-surface p-4">
+    <div className="rounded-2xl border border-jade/30 bg-shiro/95 p-4 shadow-[0_16px_32px_-24px_rgba(31,27,22,0.55)]">
       <p className="font-display text-sm uppercase tracking-wide text-ink">
         {t('studentHome.install.title')}
       </p>
@@ -49,7 +49,7 @@ export function InstallHintCard() {
       <button
         type="button"
         onClick={dismiss}
-        className="mt-3 min-h-11 rounded-md border border-line px-4 font-display text-xs uppercase tracking-wide text-muted"
+        className="mt-3 min-h-11 rounded-xl bg-jade px-4 font-display text-xs uppercase tracking-wide text-shiro"
       >
         {t('studentHome.install.dismiss')}
       </button>
