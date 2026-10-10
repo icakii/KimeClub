@@ -149,7 +149,8 @@
   "footer": {
     "privacy": "Privacy",
     "terms": "Terms",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "madeWith": "Site built by"
   },
   "privacy": {
     "title": "Privacy Policy",

@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Emblem } from './Emblem'
 
+const TATAMI_URL = (import.meta.env.VITE_TATAMI_URL as string | undefined) ?? 'https://tatami.onrender.com'
+
 export function Footer({ clubName }: { clubName: string }) {
   const { t } = useTranslation()
 
@@ -43,6 +45,17 @@ export function Footer({ clubName }: { clubName: string }) {
             </Link>
           </div>
         </div>
+        {/* Credit: this club site is built and run by Tatami. */}
+        <a
+          href={TATAMI_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group -mt-2 inline-flex items-center gap-2 rounded-full border border-shiro/10 px-4 py-2 text-xs text-shiro/50 transition-colors hover:border-kin/50 hover:text-shiro"
+        >
+          <span className="flex h-5 w-5 items-center justify-center rounded bg-aka font-brush text-[11px] text-shiro">畳</span>
+          {t('footer.madeWith')} <span className="font-display uppercase tracking-[0.25em] text-kin">Tatami</span>
+          <span className="transition-transform group-hover:translate-x-0.5">↗</span>
+        </a>
       </div>
     </footer>
   )
