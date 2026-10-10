@@ -1,6 +1,7 @@
 import { initializePaddle, type Paddle } from '@paddle/paddle-js'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../../hooks/useAuth'
 import { useClub } from '../../hooks/useClub'
 import { useClubBilling } from '../../hooks/useClubBilling'
@@ -19,6 +20,7 @@ export function Subscription() {
   const { data: billing, isLoading } = useClubBilling(club?.id)
   const [paddle, setPaddle] = useState<Paddle | null>(null)
   const [completed, setCompleted] = useState(false)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     const token = import.meta.env.VITE_PADDLE_CLIENT_TOKEN as string | undefined
@@ -29,10 +31,19 @@ export function Subscription() {
       token,
       environment,
       eventCallback: (event) => {
-        if (event.name === 'checkout.completed') setCompleted(true)
+        if (event.name === 'checkout.completed') {
+          setCompleted(true)
+          // The webhook that actually updates paid_until lands a moment
+          // after the client-side event, not before it — refetch a couple
+          // of times rather than once so the UI catches up once it arrives.
+          const queryKey = ['club-billing', club?.id]
+          queryClient.invalidateQueries({ queryKey })
+          setTimeout(() => queryClient.invalidateQueries({ queryKey }), 4000)
+          setTimeout(() => queryClient.invalidateQueries({ queryKey }), 10000)
+        }
       },
     }).then((p) => p && setPaddle(p))
-  }, [])
+  }, [club?.id, queryClient])
 
   if (member && member.role !== 'owner') {
     return <p className="px-6 py-6 text-sm text-muted">{t('admin.subscription.ownerOnly')}</p>
