@@ -321,7 +321,9 @@
   },
   "paymentsPage": {
     "title": "Плащания",
-    "empty": "Няма записани плащания."
+    "empty": "Няма записани плащания.",
+    "paidThrough": "Платено до",
+    "neverPaid": "Все още не е платено — свържи се с треньора си."
   },
   "profilePage": {
     "title": "Профил",
@@ -356,7 +358,17 @@
       "members": "Ученици",
       "subscription": "Абонамент",
       "attendance": "Присъствие",
-      "competitions": "Състезания"
+      "competitions": "Състезания",
+      "payments": "Плащания"
+    },
+    "payments": {
+      "title": "Плащания",
+      "name": "Име",
+      "fee": "Такса",
+      "paidThrough": "Платено до",
+      "neverPaid": "Все още не е платено",
+      "recordPayment": "Запиши плащане",
+      "methods": { "cash": "В брой", "card": "Карта", "bank": "Банков превод", "online": "Онлайн" }
     },
     "competitions": {
       "title": "Състезания",

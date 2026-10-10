@@ -11,9 +11,30 @@ export function Payments() {
   const { data: member } = useMember(club?.id)
   const { data: payments } = usePayments(member?.id)
 
+  const today = new Date().toISOString().slice(0, 10)
+  const paidThrough = (payments ?? [])
+    .filter((p) => p.status === 'paid')
+    .reduce<string | null>((max, p) => (!max || p.period_end > max ? p.period_end : max), null)
+  const overdue = !paidThrough || paidThrough < today
+
   return (
     <div className="px-6 pb-6 pt-8">
       <h1 className="font-display text-xl uppercase tracking-wide">{t('paymentsPage.title')}</h1>
+
+      <div className="mt-4 rounded-lg border border-line bg-surface p-4">
+        <p className="text-xs uppercase tracking-wide text-muted">
+          {t('paymentsPage.paidThrough')}
+        </p>
+        <p className={`mt-1 font-display text-lg ${overdue ? 'text-aka-text' : 'text-ink'}`}>
+          {paidThrough
+            ? new Date(`${paidThrough}T00:00:00`).toLocaleDateString(i18n.resolvedLanguage, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })
+            : t('paymentsPage.neverPaid')}
+        </p>
+      </div>
 
       <div className="mt-4 divide-y divide-line rounded-lg border border-line bg-surface">
         {payments && payments.length > 0 ? (

@@ -15,6 +15,7 @@ import { Terms } from './pages/Terms'
 import { Attendance } from './pages/admin/Attendance'
 import { Competitions as AdminCompetitions } from './pages/admin/Competitions'
 import { Members } from './pages/admin/Members'
+import { Payments as AdminPayments } from './pages/admin/Payments'
 import { Subscription } from './pages/admin/Subscription'
 import { Competitions } from './pages/app/Competitions'
 import { Home } from './pages/app/Home'
@@ -68,6 +69,7 @@ function App() {
         <Route index element={<Members />} />
         <Route path="attendance" element={<Attendance />} />
         <Route path="competitions" element={<AdminCompetitions />} />
+        <Route path="payments" element={<AdminPayments />} />
         <Route path="subscription" element={<Subscription />} />
       </Route>
     </Routes>

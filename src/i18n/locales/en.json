@@ -321,7 +321,9 @@
   },
   "paymentsPage": {
     "title": "Payments",
-    "empty": "No payments recorded yet."
+    "empty": "No payments recorded yet.",
+    "paidThrough": "Paid through",
+    "neverPaid": "Not paid yet — contact your coach."
   },
   "profilePage": {
     "title": "Profile",
@@ -356,7 +358,17 @@
       "members": "Members",
       "subscription": "Subscription",
       "attendance": "Attendance",
-      "competitions": "Competitions"
+      "competitions": "Competitions",
+      "payments": "Payments"
+    },
+    "payments": {
+      "title": "Payments",
+      "name": "Name",
+      "fee": "Fee",
+      "paidThrough": "Paid through",
+      "neverPaid": "Never paid",
+      "recordPayment": "Record payment",
+      "methods": { "cash": "Cash", "card": "Card", "bank": "Bank", "online": "Online" }
     },
     "competitions": {
       "title": "Competitions",
