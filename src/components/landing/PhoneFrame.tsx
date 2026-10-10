@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { useRef, type ReactNode } from 'react'
 
 const GLOWS = {
@@ -20,7 +20,8 @@ export function PhoneFrame({
   tilt?: 1 | -1
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const { scrollYProgress: rawProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const scrollYProgress = useSpring(rawProgress, { stiffness: 100, damping: 26, mass: 0.5 })
   const rotate = useTransform(scrollYProgress, [0, 0.5, 1], [tilt * 8, 0, tilt * -6])
   const y = useTransform(scrollYProgress, [0, 1], [60, -60])
 
@@ -30,7 +31,7 @@ export function PhoneFrame({
         className="pointer-events-none absolute left-1/2 top-1/2 h-[130%] w-[170%] -translate-x-1/2 -translate-y-1/2"
         style={{ background: GLOWS[glow] }}
       />
-      <motion.div style={{ rotate, y }} className="relative">
+      <motion.div style={{ rotate, y }} className="relative will-change-transform">
         <div className="float-y">
           <div className="relative aspect-[9/18.5] rounded-[2.6rem] border-[9px] border-ink bg-ink p-1 shadow-[0_40px_80px_-30px_rgba(31,27,22,0.55)]">
             <div className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-ink" />

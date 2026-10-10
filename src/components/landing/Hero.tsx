@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
@@ -63,7 +63,7 @@ function CloudBank({
   return (
     <motion.div
       style={{ x: scrollX, opacity: scrollOpacity }}
-      className={`pointer-events-none absolute inset-y-0 z-20 w-[80%] ${
+      className={`pointer-events-none absolute inset-y-0 z-20 w-[80%] will-change-transform ${
         side === 'left' ? 'left-0' : 'right-0'
       }`}
     >
@@ -77,9 +77,9 @@ function CloudBank({
             same element flips the axis framer-motion's translateX runs in,
             sending the right bank left across the page instead of out. */}
         <div className={`relative h-full w-full ${side === 'right' ? '-scale-x-100' : ''}`}>
-          <Kumo className="absolute left-[-10%] top-[-4%] w-full drop-shadow-[0_12px_24px_rgba(122,92,46,0.15)]" />
-          <Kumo className="absolute left-0 top-[30%] w-full drop-shadow-[0_12px_24px_rgba(122,92,46,0.15)]" />
-          <Kumo className="absolute left-[-15%] top-[63%] w-full drop-shadow-[0_12px_24px_rgba(122,92,46,0.15)]" />
+          <Kumo className="absolute left-[-10%] top-[-4%] w-full" />
+          <Kumo className="absolute left-0 top-[30%] w-full" />
+          <Kumo className="absolute left-[-15%] top-[63%] w-full" />
         </div>
       </motion.div>
     </motion.div>
@@ -90,7 +90,9 @@ export function Hero() {
   const { t } = useTranslation()
   const reducedMotion = useReducedMotion()
   const ref = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const { scrollYProgress: rawProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  // Spring-smoothed so parallax eases instead of tracking scroll jitter 1:1.
+  const scrollYProgress = useSpring(rawProgress, { stiffness: 120, damping: 28, mass: 0.4 })
 
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 140])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
@@ -197,7 +199,7 @@ export function Hero() {
           </a>
           <a
             href="#schedule"
-            className="min-h-11 rounded-md border border-ink/25 bg-shiro/60 px-7 py-3 font-display text-sm uppercase tracking-wide text-ink backdrop-blur transition-colors hover:border-aka-text hover:text-aka-text"
+            className="min-h-11 rounded-md border border-ink/25 bg-shiro/90 px-7 py-3 font-display text-sm uppercase tracking-wide text-ink transition-colors hover:border-aka-text hover:text-aka-text"
           >
             {t('hero.ctaSchedule')}
           </a>

@@ -26,7 +26,7 @@ export function Coaches({ coaches }: { coaches: CoachBio[] | undefined }) {
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {coaches.map((coach, i) => (
             <Reveal key={coach.name} delay={i * 0.12}>
-              <div className="group relative flex h-full gap-6 overflow-hidden rounded-2xl border border-ink/10 bg-shiro/85 p-7 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 sm:p-8">
+              <div className="group relative flex h-full gap-6 overflow-hidden rounded-2xl border border-ink/10 bg-shiro/95 p-7 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] transition-all duration-300 hover:-translate-y-1.5 sm:p-8">
                 <span
                   className="pointer-events-none absolute -bottom-8 -right-2 font-brush text-[9rem] leading-none text-ink/5"
                   aria-hidden="true"

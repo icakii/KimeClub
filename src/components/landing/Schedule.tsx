@@ -22,7 +22,7 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {classes?.map((cls, i) => (
             <Reveal key={cls.id} delay={i * 0.08}>
-              <div className="group flex h-full items-stretch overflow-hidden rounded-2xl border border-ink/10 bg-shiro/85 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5">
+              <div className="group flex h-full items-stretch overflow-hidden rounded-2xl border border-ink/10 bg-shiro/95 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] transition-all duration-300 hover:-translate-y-1.5">
                 <div className="flex w-24 shrink-0 flex-col items-center justify-center border-r border-ink/10 bg-kuro/60">
                   <span
                     className={`font-brush text-5xl leading-none transition-transform duration-500 group-hover:scale-110 ${DAY_TONE[cls.weekday]}`}

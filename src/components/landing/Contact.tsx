@@ -14,7 +14,7 @@ export function Contact() {
         <SectionHeading kanji="連絡" title={t('contact.title')} tone="aka" />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-          <Reveal className="rounded-2xl border border-ink/10 bg-shiro/85 p-8 text-center shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] backdrop-blur-sm lg:text-left">
+          <Reveal className="rounded-2xl border border-ink/10 bg-shiro/95 p-8 text-center shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] lg:text-left">
             <div className="pin-badge inline-flex items-center gap-2 rounded-full border border-gold/50 bg-surface px-4 py-1.5">
               <span>📍</span>
               <span className="font-display text-xs uppercase tracking-wide text-ink">Sofia</span>

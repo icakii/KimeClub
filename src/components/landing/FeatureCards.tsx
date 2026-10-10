@@ -21,7 +21,7 @@ export function FeatureCards() {
           {FEATURES.map((f, i) => (
             <Reveal key={f.key} delay={i * 0.1}>
               <div
-                className={`group relative h-full overflow-hidden rounded-2xl border border-ink/10 bg-shiro/85 p-7 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-28px_rgba(31,27,22,0.55)] ${
+                className={`group relative h-full overflow-hidden rounded-2xl border border-ink/10 bg-shiro/95 p-7 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-28px_rgba(31,27,22,0.55)] ${
                   f.key === 'payments' ? 'shimmer-card' : ''
                 }`}
               >

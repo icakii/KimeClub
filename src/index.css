@@ -187,57 +187,34 @@ body {
 
 /* ---------- Sitewide kanji field ---------- */
 
-/* Dense, faint backdrop running the full page height (KanaField), in four
-   dye colors. The "central ones a bit clearer, scroll driven" effect is
-   .kana-vignette: fixed to the viewport while the field scrolls under it. */
-@keyframes kana-pulse-kin {
+/* KanjiBackdrop: a faint base tile plus three sparse "glow" tiles of the
+   same cells, each fading in and out on its own offset cycle -- so scattered
+   characters shimmer, while the browser only animates opacity on three
+   composited layers instead of thousands of individual glyphs. The "central
+   ones a bit clearer" effect is .kana-vignette, pinned to the viewport. */
+@keyframes kanji-glow {
   0%,
   100% {
-    opacity: 0.1;
+    opacity: 0;
   }
   50% {
-    opacity: 0.32;
+    opacity: 1;
   }
 }
 
-.kana-char {
-  opacity: 0.1;
-  line-height: 1;
+.kanji-glow {
+  opacity: 0;
+  will-change: opacity;
 }
-
-.kana-tone-0 {
-  color: var(--color-gold);
+.kanji-glow-1 {
+  animation: kanji-glow 7s ease-in-out infinite;
 }
-.kana-tone-1 {
-  color: var(--color-aka-text);
+.kanji-glow-2 {
+  animation: kanji-glow 9s ease-in-out infinite 2.4s;
 }
-.kana-tone-2 {
-  color: var(--color-ai-soft);
+.kanji-glow-3 {
+  animation: kanji-glow 11s ease-in-out infinite 5s;
 }
-.kana-tone-3 {
-  color: var(--color-jade);
-}
-
-.kana-beat-0 {
-  animation: kana-pulse-kin 7s ease-in-out infinite 0.1s;
-}
-.kana-beat-1 {
-  animation: kana-pulse-kin 8.2s ease-in-out infinite 1.3s;
-}
-.kana-beat-2 {
-  animation: kana-pulse-kin 6.4s ease-in-out infinite 0.6s;
-}
-.kana-beat-3 {
-  animation: kana-pulse-kin 9.1s ease-in-out infinite 2s;
-}
-.kana-beat-4 {
-  animation: kana-pulse-kin 7.7s ease-in-out infinite 0.9s;
-}
-.kana-beat-5 {
-  animation: kana-pulse-kin 10.4s ease-in-out infinite 3.1s;
-}
-/* Beats 6+ (most characters) stay still -- only a scattered few pulse, so
-   the field shimmers instead of strobing. */
 
 .kana-vignette {
   position: fixed;
@@ -406,7 +383,7 @@ body {
   .sun-breathe,
   .float-y,
   .pin-badge,
-  .kana-char,
+  .kanji-glow,
   .shimmer-card::after {
     animation: none !important;
   }

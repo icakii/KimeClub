@@ -39,7 +39,7 @@ export function ManagedService() {
         <div className="mt-14 grid gap-5 sm:grid-cols-3">
           {POINTS.map((p, i) => (
             <Reveal key={p.key} delay={0.2 + i * 0.1}>
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-shiro/10 bg-shiro/5 p-7 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-shiro/10">
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-shiro/10 bg-shiro/5 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:bg-shiro/10">
                 <span className={`font-brush text-4xl leading-none ${p.accent}`} aria-hidden="true">
                   {p.kanji}
                 </span>

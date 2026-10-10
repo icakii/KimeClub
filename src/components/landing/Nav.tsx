@@ -6,7 +6,7 @@ export function Nav() {
   const { t, i18n } = useTranslation()
 
   return (
-    <header className="sticky top-0 z-40 h-16 border-b border-line/60 bg-kuro/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 h-16 border-b border-line/60 bg-kuro/95">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-6">
         <a href="#top" className="flex items-center gap-2">
           <Emblem className="h-10 w-10" />

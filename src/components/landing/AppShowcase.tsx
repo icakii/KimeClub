@@ -30,7 +30,7 @@ export function AppShowcase() {
           <ul className="mt-8 space-y-4">
             {POINTS.map((key, i) => (
               <Reveal key={key} delay={0.2 + i * 0.08} y={16}>
-                <li className="flex items-start gap-4 rounded-xl border border-ink/10 bg-shiro/70 px-4 py-3 backdrop-blur-sm">
+                <li className="flex items-start gap-4 rounded-xl border border-ink/10 bg-shiro/90 px-4 py-3">
                   <span className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${POINT_DOTS[i]}`} />
                   <span className="text-sm text-ink/80">{t(`appShowcase.points.${key}`)}</span>
                 </li>
