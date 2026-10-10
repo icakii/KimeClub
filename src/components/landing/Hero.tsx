@@ -1,11 +1,24 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Enso } from './Enso'
+import { KanaField } from './KanaField'
 
 export function Hero() {
   const { t } = useTranslation()
+  const [burst, setBurst] = useState(false)
+
+  function handleBurst() {
+    setBurst(true)
+    window.setTimeout(() => setBurst(false), 1200)
+  }
 
   return (
-    <section id="top" className="relative overflow-hidden px-6 pb-20 pt-16 sm:pt-24">
+    <section
+      id="top"
+      onClick={handleBurst}
+      className="relative overflow-hidden px-6 pb-20 pt-16 sm:pt-24"
+    >
+      <KanaField burst={burst} />
       <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
         <div className="text-center lg:max-w-xl lg:text-left">
           <h1 className="font-display text-4xl font-semibold uppercase leading-tight tracking-wide sm:text-6xl">

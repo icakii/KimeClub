@@ -83,6 +83,62 @@ body {
   animation: pin-drop 0.7s ease-out both;
 }
 
+/* Hero background: faint dojo-kanji field (space.KanaField), pulsing
+   gently so it reads as atmosphere, not a cyberpunk matrix effect. */
+@keyframes kana-pulse {
+  0%,
+  100% {
+    opacity: 0.12;
+    color: var(--color-gold);
+  }
+  50% {
+    opacity: 0.4;
+    color: var(--color-aka-text);
+  }
+}
+
+.kana-char {
+  opacity: 0.12;
+  color: var(--color-gold);
+}
+
+.kana-char-0 {
+  animation: kana-pulse 6s ease-in-out infinite 0.1s;
+}
+.kana-char-1 {
+  animation: kana-pulse 7.2s ease-in-out infinite 1.3s;
+}
+.kana-char-2 {
+  animation: kana-pulse 5.4s ease-in-out infinite 0.6s;
+}
+.kana-char-3 {
+  animation: kana-pulse 8.1s ease-in-out infinite 2s;
+}
+.kana-char-4 {
+  animation: kana-pulse 6.7s ease-in-out infinite 0.9s;
+}
+.kana-char-5 {
+  animation: kana-pulse 7.8s ease-in-out infinite 1.6s;
+}
+.kana-char-6 {
+  animation: kana-pulse 5.9s ease-in-out infinite 0.3s;
+}
+.kana-char-7 {
+  animation: kana-pulse 9s ease-in-out infinite 2.4s;
+}
+.kana-char-8 {
+  animation: kana-pulse 6.3s ease-in-out infinite 1.1s;
+}
+.kana-char-9 {
+  animation: kana-pulse 7.5s ease-in-out infinite 0.4s;
+}
+
+/* Click burst: same pulse, compressed into a quick, shared-phase flash. */
+.kana-field-burst .kana-char {
+  animation-duration: 0.9s !important;
+  animation-delay: 0s !important;
+}
+
 .belt-chip {
   transform: scaleX(0);
   transform-origin: left;
@@ -104,6 +160,10 @@ body {
   }
 
   .pin-badge {
+    animation: none;
+  }
+
+  .kana-char {
     animation: none;
   }
 }
