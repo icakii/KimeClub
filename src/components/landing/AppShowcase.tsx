@@ -10,6 +10,9 @@ const EXAMPLE_BELT = {
   name_bg: 'Зелено',
   name_en: 'Green',
   color_hex: '#2e9e5b',
+  color2_hex: null,
+  grade_bg: '6 кю',
+  grade_en: '6th kyu',
 }
 
 const POINTS = ['belt', 'payments', 'calendar', 'offline'] as const

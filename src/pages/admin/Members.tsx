@@ -6,6 +6,7 @@ import { Pill, StatCard } from '../../components/admin/ui'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { useAdminMembers, type AdminMember } from '../../hooks/useAdminMembers'
 import { useBelts } from '../../hooks/useBelts'
+import { beltLabel } from '../../lib/belts'
 import { useClub } from '../../hooks/useClub'
 
 const STATUSES = ['active', 'trial', 'paused', 'left'] as const
@@ -72,7 +73,7 @@ export function Members() {
           <option value="">{t('admin.members.allBelts')}</option>
           {belts?.map((b) => (
             <option key={b.id} value={b.id}>
-              {i18n.resolvedLanguage === 'en' ? b.name_en : b.name_bg}
+              {beltLabel(b, i18n.resolvedLanguage)}
             </option>
           ))}
         </select>
@@ -118,10 +119,14 @@ export function Members() {
                 <div className="mt-3 flex items-center gap-2">
                   <span
                     className="h-2.5 w-10 rounded-full ring-1 ring-ink/15"
-                    style={{ background: m.belt.color_hex }}
+                    style={{
+                      background: m.belt.color2_hex
+                        ? `linear-gradient(${m.belt.color_hex} 38%, ${m.belt.color2_hex} 38% 62%, ${m.belt.color_hex} 62%)`
+                        : m.belt.color_hex,
+                    }}
                   />
                   <span className="text-xs uppercase tracking-wide text-muted">
-                    {i18n.resolvedLanguage === 'en' ? m.belt.name_en : m.belt.name_bg}
+                    {beltLabel(m.belt, i18n.resolvedLanguage)}
                   </span>
                 </div>
               )}

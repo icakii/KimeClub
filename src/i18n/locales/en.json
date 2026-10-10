@@ -51,7 +51,7 @@
       "Sun"
     ],
     "duration": "{{minutes}} min",
-    "beltRange": "Belts: {{min}} - {{max}}",
+    "beltRange": "Belts: {{range}}",
     "calendar": {
       "noClasses": "No classes this day."
     },
@@ -60,7 +60,8 @@
     "signedUp": "You're signed up"
   },
   "beltLadder": {
-    "title": "Belt ladder"
+    "title": "Belt ladder",
+    "showGrades": "Show grades"
   },
   "appShowcase": {
     "title": "An app for every student",

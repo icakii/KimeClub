@@ -51,7 +51,7 @@
       "Нед"
     ],
     "duration": "{{minutes}} мин",
-    "beltRange": "Колани: {{min}} - {{max}}",
+    "beltRange": "Колани: {{range}}",
     "calendar": {
       "noClasses": "Няма тренировки този ден."
     },
@@ -60,7 +60,8 @@
     "signedUp": "Записан си"
   },
   "beltLadder": {
-    "title": "Стълбата на коланите"
+    "title": "Стълбата на коланите",
+    "showGrades": "Покажи степените"
   },
   "appShowcase": {
     "title": "Приложение за всеки ученик",

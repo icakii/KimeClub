@@ -8,6 +8,9 @@ export interface MemberBelt {
   name_bg: string
   name_en: string
   color_hex: string
+  color2_hex: string | null
+  grade_bg: string | null
+  grade_en: string | null
 }
 
 export interface Member {
@@ -30,7 +33,7 @@ export function useMember(clubId: string | undefined) {
       const { data, error } = await supabase
         .from('members')
         .select(
-          'id, full_name, role, status, group_id, photo_path, belt:belts(id, rank, name_bg, name_en, color_hex)',
+          'id, full_name, role, status, group_id, photo_path, belt:belts(id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en)',
         )
         .eq('club_id', clubId as string)
         .eq('user_id', userId as string)

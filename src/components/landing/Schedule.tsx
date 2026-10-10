@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
+import { useBelts } from '../../hooks/useBelts'
 import { useSchedule } from '../../hooks/useSchedule'
+import { rankRangeLabel } from '../../lib/belts'
 import { Reveal, SectionHeading } from './Section'
 
 // Japanese weekday kanji, Monday-first to match classes.weekday (0 = Mon).
@@ -7,8 +9,9 @@ const DAY_KANJI = ['月', '火', '水', '木', '金', '土', '日']
 const DAY_TONE = ['text-ai', 'text-aka', 'text-ai-soft', 'text-jade', 'text-kin', 'text-gold', 'text-aka-text']
 
 export function Schedule({ clubId }: { clubId: string | undefined }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { data: classes, isLoading } = useSchedule(clubId)
+  const { data: belts } = useBelts(clubId)
   const weekdays = t('schedule.weekdays', { returnObjects: true }) as string[]
 
   return (
@@ -52,7 +55,7 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
                     </div>
                     {cls.belt_min_rank !== null && cls.belt_max_rank !== null && (
                       <span className="rounded-full bg-ink px-3 py-1 text-[10px] uppercase tracking-wide text-shiro">
-                        {t('schedule.beltRange', { min: cls.belt_min_rank, max: cls.belt_max_rank })}
+                        {t('schedule.beltRange', { range: rankRangeLabel(belts, cls.belt_min_rank, cls.belt_max_rank, i18n.resolvedLanguage) })}
                       </span>
                     )}
                   </div>

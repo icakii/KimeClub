@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabaseClient'
+import type { MemberBelt } from './useMember'
 
 export interface AdminMember {
   id: string
@@ -16,7 +17,7 @@ export interface AdminMember {
   guardian_phone: string | null
   guardian_email: string | null
   photo_path: string | null
-  belt: { id: string; rank: number; name_bg: string; name_en: string; color_hex: string } | null
+  belt: MemberBelt | null
 }
 
 // Club staff see their own club's members. They can update contact details,
@@ -29,7 +30,7 @@ export function useAdminMembers(clubId: string | undefined) {
       const { data, error } = await supabase
         .from('members')
         .select(
-          'id, full_name, email, phone, role, status, group_id, monthly_fee_cents, birth_year, guardian_first_name, guardian_last_name, guardian_phone, guardian_email, photo_path, belt:belts(id, rank, name_bg, name_en, color_hex)',
+          'id, full_name, email, phone, role, status, group_id, monthly_fee_cents, birth_year, guardian_first_name, guardian_last_name, guardian_phone, guardian_email, photo_path, belt:belts(id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en)',
         )
         .eq('club_id', clubId as string)
         .order('full_name')

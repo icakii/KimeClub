@@ -7,6 +7,9 @@ export interface Belt {
   name_bg: string
   name_en: string
   color_hex: string
+  color2_hex: string | null
+  grade_bg: string | null
+  grade_en: string | null
 }
 
 export function useBelts(clubId: string | undefined) {
@@ -15,7 +18,7 @@ export function useBelts(clubId: string | undefined) {
     queryFn: async (): Promise<Belt[]> => {
       const { data, error } = await supabase
         .from('belts')
-        .select('id, rank, name_bg, name_en, color_hex')
+        .select('id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en')
         .eq('club_id', clubId as string)
         .order('rank')
       if (error) throw error
