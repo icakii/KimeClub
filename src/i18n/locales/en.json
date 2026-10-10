@@ -34,7 +34,10 @@
     "beltRange": "Belts: {{min}} - {{max}}",
     "calendar": {
       "noClasses": "No classes this day."
-    }
+    },
+    "signUp": "Sign up",
+    "cancelSignUp": "Cancel",
+    "signedUp": "You're signed up"
   },
   "beltLadder": {
     "title": "Belt ladder"

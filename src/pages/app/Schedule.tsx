@@ -6,6 +6,7 @@ import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
 import { useNextClass } from '../../hooks/useNextClass'
 import { useSchedule } from '../../hooks/useSchedule'
+import { useDaySignups, useToggleSignup } from '../../hooks/useSessionSignup'
 
 function startOfMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), 1)
@@ -62,6 +63,10 @@ export function Schedule() {
   const openClasses =
     openWeekday === null ? [] : (classes ?? []).filter((c) => c.weekday === openWeekday)
   const openNotices = openDate ? (notices ?? []).filter((n) => n.effective_date === openDate) : []
+
+  const { data: signedUpClassIds } = useDaySignups(club?.id, member?.id, openDate)
+  const toggleSignup = useToggleSignup(club?.id, member?.id, openDate)
+  const canSignUp = !!openDate && openDate >= todayISO
 
   return (
     <div className="px-6 pb-6 pt-8">
@@ -163,6 +168,9 @@ export function Schedule() {
         classes={openClasses}
         notices={openNotices}
         onClose={() => setOpenDate(null)}
+        signedUpClassIds={signedUpClassIds ?? []}
+        onToggleSignup={(classId, signedUp) => toggleSignup.mutate({ classId, signedUp })}
+        canSignUp={canSignUp}
       />
     </div>
   )

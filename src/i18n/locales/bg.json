@@ -34,7 +34,10 @@
     "beltRange": "Колани: {{min}} - {{max}}",
     "calendar": {
       "noClasses": "Няма тренировки този ден."
-    }
+    },
+    "signUp": "Записване",
+    "cancelSignUp": "Отказ",
+    "signedUp": "Записан си"
   },
   "beltLadder": {
     "title": "Стълбата на коланите"

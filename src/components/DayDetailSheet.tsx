@@ -8,11 +8,17 @@ export function DayDetailSheet({
   classes,
   notices,
   onClose,
+  signedUpClassIds,
+  onToggleSignup,
+  canSignUp,
 }: {
   date: string | null
   classes: ClassRow[]
   notices: ClassNotice[]
   onClose: () => void
+  signedUpClassIds: string[]
+  onToggleSignup: (classId: string, signedUp: boolean) => void
+  canSignUp: boolean
 }) {
   const { t, i18n } = useTranslation()
 
@@ -61,6 +67,7 @@ export function DayDetailSheet({
                 <div className="space-y-4">
                   {classes.map((cls) => {
                     const notice = notices.find((n) => n.class_id === cls.id)
+                    const signedUp = signedUpClassIds.includes(cls.id)
                     return (
                       <div key={cls.id} className="flex items-start justify-between gap-2">
                         <div>
@@ -73,6 +80,26 @@ export function DayDetailSheet({
                             )}
                           </div>
                           {notice && <p className="mt-1 text-sm text-aka-text">{notice.note}</p>}
+                          {canSignUp && (
+                            <div className="mt-2 flex items-center gap-2">
+                              {signedUp && (
+                                <span className="text-xs text-aka-text">
+                                  {t('schedule.signedUp')}
+                                </span>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => onToggleSignup(cls.id, signedUp)}
+                                className={`min-h-9 rounded-md border px-3 text-xs uppercase tracking-wide ${
+                                  signedUp
+                                    ? 'border-line text-muted'
+                                    : 'border-aka bg-aka text-shiro'
+                                }`}
+                              >
+                                {signedUp ? t('schedule.cancelSignUp') : t('schedule.signUp')}
+                              </button>
+                            </div>
+                          )}
                         </div>
                         <p className="shrink-0 text-sm text-muted">
                           {(notice?.new_start_time ?? cls.start_time).slice(0, 5)}
