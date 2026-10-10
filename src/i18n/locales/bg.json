@@ -381,7 +381,6 @@
       "members": "Ученици",
       "subscription": "Абонамент",
       "attendance": "Присъствие",
-      "competitions": "Състезания",
       "payments": "Плащания"
     },
     "payments": {
@@ -392,20 +391,6 @@
       "neverPaid": "Все още не е платено",
       "recordPayment": "Запиши плащане",
       "methods": { "cash": "В брой", "card": "Карта", "bank": "Банков превод", "online": "Онлайн" }
-    },
-    "competitions": {
-      "title": "Състезания",
-      "name": "Име",
-      "location": "Място",
-      "date": "Дата",
-      "add": "Добави състезание",
-      "pickStudent": "Избери ученик",
-      "category": "Категория",
-      "addEntry": "Добави",
-      "placement": "Класиране",
-      "noMedal": "Без медал",
-      "medals": { "gold": "Злато", "silver": "Сребро", "bronze": "Бронз" },
-      "remove": "Премахни"
     },
     "attendance": {
       "title": "Присъствие",

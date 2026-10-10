@@ -381,7 +381,6 @@
       "members": "Members",
       "subscription": "Subscription",
       "attendance": "Attendance",
-      "competitions": "Competitions",
       "payments": "Payments"
     },
     "payments": {
@@ -392,20 +391,6 @@
       "neverPaid": "Never paid",
       "recordPayment": "Record payment",
       "methods": { "cash": "Cash", "card": "Card", "bank": "Bank", "online": "Online" }
-    },
-    "competitions": {
-      "title": "Competitions",
-      "name": "Name",
-      "location": "Location",
-      "date": "Date",
-      "add": "Add competition",
-      "pickStudent": "Pick a student",
-      "category": "Category",
-      "addEntry": "Add",
-      "placement": "Placement",
-      "noMedal": "No medal",
-      "medals": { "gold": "Gold", "silver": "Silver", "bronze": "Bronze" },
-      "remove": "Remove"
     },
     "attendance": {
       "title": "Attendance",

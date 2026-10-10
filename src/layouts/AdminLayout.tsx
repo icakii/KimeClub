@@ -44,9 +44,6 @@ export function AdminLayout() {
         <NavLink to="/admin/attendance" className={tabClass}>
           {t('admin.nav.attendance')}
         </NavLink>
-        <NavLink to="/admin/competitions" className={tabClass}>
-          {t('admin.nav.competitions')}
-        </NavLink>
         <NavLink to="/admin/payments" className={tabClass}>
           {t('admin.nav.payments')}
         </NavLink>
