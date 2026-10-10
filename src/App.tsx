@@ -12,6 +12,7 @@ import { ResetPassword } from './pages/ResetPassword'
 import { ServicePaused } from './pages/ServicePaused'
 import { Store } from './pages/Store'
 import { Terms } from './pages/Terms'
+import { Attendance } from './pages/admin/Attendance'
 import { Members } from './pages/admin/Members'
 import { Subscription } from './pages/admin/Subscription'
 import { Home } from './pages/app/Home'
@@ -62,6 +63,7 @@ function App() {
         }
       >
         <Route index element={<Members />} />
+        <Route path="attendance" element={<Attendance />} />
         <Route path="subscription" element={<Subscription />} />
       </Route>
     </Routes>

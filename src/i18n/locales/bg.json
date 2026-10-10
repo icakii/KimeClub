@@ -343,7 +343,17 @@
     },
     "nav": {
       "members": "Ученици",
-      "subscription": "Абонамент"
+      "subscription": "Абонамент",
+      "attendance": "Присъствие"
+    },
+    "attendance": {
+      "title": "Присъствие",
+      "date": "Дата",
+      "class": "Тренировка",
+      "noClassesThisDay": "Няма тренировки в този ден.",
+      "noRoster": "Все още няма ученици в тази тренировка.",
+      "present": "Присъства",
+      "absent": "Отсъства"
     },
     "subscription": {
       "title": "Абонамент",

@@ -343,7 +343,17 @@
     },
     "nav": {
       "members": "Members",
-      "subscription": "Subscription"
+      "subscription": "Subscription",
+      "attendance": "Attendance"
+    },
+    "attendance": {
+      "title": "Attendance",
+      "date": "Date",
+      "class": "Class",
+      "noClassesThisDay": "No classes scheduled on this day.",
+      "noRoster": "No members in this class yet.",
+      "present": "Present",
+      "absent": "Absent"
     },
     "subscription": {
       "title": "Subscription",
