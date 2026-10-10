@@ -328,6 +328,7 @@
   "profilePage": {
     "title": "Profile",
     "belt": "Belt",
+    "viewSite": "View public site",
     "logout": "Log out"
   },
   "admin": {

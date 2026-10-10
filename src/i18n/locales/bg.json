@@ -328,6 +328,7 @@
   "profilePage": {
     "title": "Профил",
     "belt": "Колан",
+    "viewSite": "Виж публичния сайт",
     "logout": "Изход"
   },
   "admin": {

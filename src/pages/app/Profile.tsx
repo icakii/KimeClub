@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BeltChip } from '../../components/BeltChip'
 import { LegalLinks } from '../../components/LegalLinks'
 import { useClub } from '../../hooks/useClub'
@@ -11,6 +11,7 @@ export function Profile() {
   const { data: club } = useClub()
   const { data: member } = useMember(club?.id)
   const { signOut } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <div className="px-6 pb-6 pt-8">
@@ -57,9 +58,19 @@ export function Profile() {
         </Link>
       )}
 
+      <Link
+        to="/"
+        className="mt-4 flex min-h-11 w-full items-center justify-center rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-ink"
+      >
+        {t('profilePage.viewSite')}
+      </Link>
+
       <button
         type="button"
-        onClick={() => signOut()}
+        onClick={async () => {
+          await signOut()
+          navigate('/')
+        }}
         className="mt-4 min-h-11 w-full rounded-md border border-line px-4 font-display text-sm uppercase tracking-wide text-aka-text"
       >
         {t('profilePage.logout')}

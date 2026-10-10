@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface LegalSection {
   title: string
@@ -8,6 +8,7 @@ interface LegalSection {
 
 export function LegalPage({ namespace }: { namespace: 'privacy' | 'terms' }) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const sections = t(`${namespace}.sections`, { returnObjects: true }) as LegalSection[]
 
   return (
@@ -35,9 +36,13 @@ export function LegalPage({ namespace }: { namespace: 'privacy' | 'terms' }) {
         ))}
       </div>
 
-      <Link to="/" className="mt-10 inline-block text-sm text-aka-text hover:underline">
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="mt-10 inline-block text-sm text-aka-text hover:underline"
+      >
         ← {t(`${namespace}.back`)}
-      </Link>
+      </button>
     </div>
   )
 }

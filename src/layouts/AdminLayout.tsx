@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { LegalLinks } from '../components/LegalLinks'
 import { useAuth } from '../hooks/useAuth'
 import { useClub } from '../hooks/useClub'
@@ -10,6 +10,7 @@ export function AdminLayout() {
   const { signOut } = useAuth()
   const { data: club } = useClub()
   const { data: member } = useMember(club?.id)
+  const navigate = useNavigate()
 
   const tabClass = ({ isActive }: { isActive: boolean }) =>
     `pb-2 ${isActive ? 'border-b-2 border-aka text-ink' : 'text-muted'}`
@@ -24,7 +25,14 @@ export function AdminLayout() {
           <Link to="/app" className="text-muted hover:text-aka-text">
             {t('admin.backToApp')}
           </Link>
-          <button type="button" onClick={() => signOut()} className="text-aka-text">
+          <button
+            type="button"
+            onClick={async () => {
+              await signOut()
+              navigate('/')
+            }}
+            className="text-aka-text"
+          >
             {t('profilePage.logout')}
           </button>
         </div>
