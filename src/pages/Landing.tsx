@@ -1,6 +1,7 @@
 import { useClub } from '../hooks/useClub'
 import { Nav } from '../components/landing/Nav'
 import { Hero } from '../components/landing/Hero'
+import { KanaField } from '../components/landing/KanaField'
 import { FeatureCards } from '../components/landing/FeatureCards'
 import { AppShowcase } from '../components/landing/AppShowcase'
 import { CompetitionsShowcase } from '../components/landing/CompetitionsShowcase'
@@ -27,7 +28,9 @@ export function Landing() {
   }
 
   return (
-    <div>
+    <div className="relative">
+      <KanaField />
+      <div className="kana-vignette" />
       <Nav />
       <Hero />
       <FeatureCards />
