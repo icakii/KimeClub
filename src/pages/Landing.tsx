@@ -5,6 +5,7 @@ import { KanaField } from '../components/landing/KanaField'
 import { FeatureCards } from '../components/landing/FeatureCards'
 import { AppShowcase } from '../components/landing/AppShowcase'
 import { CompetitionsShowcase } from '../components/landing/CompetitionsShowcase'
+import { PaymentShowcase } from '../components/landing/PaymentShowcase'
 import { Schedule } from '../components/landing/Schedule'
 import { BeltLadder } from '../components/landing/BeltLadder'
 import { Coaches } from '../components/landing/Coaches'
@@ -36,6 +37,7 @@ export function Landing() {
       <FeatureCards />
       <AppShowcase />
       <CompetitionsShowcase />
+      <PaymentShowcase />
       <Schedule clubId={club.id} />
       <BeltLadder clubId={club.id} />
       <Coaches coaches={club.theme.coaches} />

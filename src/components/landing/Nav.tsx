@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Enso } from './Enso'
+import { Emblem } from './Emblem'
 
 export function Nav() {
   const { t, i18n } = useTranslation()
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line/60 bg-kuro/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+    <header className="sticky top-0 z-40 h-16 border-b border-line/60 bg-kuro/85 backdrop-blur-md">
+      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-6">
         <a href="#top" className="flex items-center gap-2">
-          <Enso className="h-9 w-9" />
+          <Emblem className="h-10 w-10" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-lg font-semibold uppercase tracking-[3px] text-ink">
               Kime

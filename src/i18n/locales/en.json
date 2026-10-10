@@ -5,9 +5,9 @@
     "contact": "Contact"
   },
   "hero": {
-    "line1": "DISCIPLINE.",
-    "line2": "FOCUS.",
-    "line3": "BELT BY BELT.",
+    "subtitle": "Karate Club",
+    "tagline": "Traditional karate in the heart of Sofia — for kids, teens and adults, from first bow to black belt.",
+    "scroll": "Scroll",
     "ctaTrial": "Book a trial class",
     "ctaSchedule": "See the schedule"
   },
@@ -32,8 +32,24 @@
   },
   "schedule": {
     "title": "Class schedule",
-    "weekdays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    "weekdaysShort": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    "weekdays": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "weekdaysShort": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ],
     "duration": "{{minutes}} min",
     "beltRange": "Belts: {{min}} - {{max}}",
     "calendar": {
@@ -59,7 +75,30 @@
       "greeting": "Hi, Alex",
       "nextClass": "Next class",
       "className": "Advanced",
-      "classTime": "Thursday · 7:00 PM"
+      "classTime": "Thursday · 7:00 PM",
+      "inbox": "Inbox",
+      "msg1Title": "Thursday class moved to 19:30",
+      "msg1Body": "Hall B is booked — see you an hour later.",
+      "msg2Title": "Belt exam on 15 November",
+      "msg2Body": "Sign-up list is open with your coach."
+    }
+  },
+  "paymentShowcase": {
+    "title": "Pay your fee online",
+    "body": "Monthly fees are paid straight from the app or the website, in seconds — no cash in envelopes, no bank transfers to chase, no awkward reminders.",
+    "points": {
+      "instant": "Pay by card in a few taps, from your phone or computer",
+      "anywhere": "Works the same in the app and on the website",
+      "status": "Your status flips to paid the moment it goes through"
+    },
+    "mock": {
+      "label": "Monthly fee",
+      "period": "October · Advanced group",
+      "stamp": "Paid",
+      "cta": "Pay now",
+      "history": "History",
+      "sep": "September",
+      "aug": "August"
     }
   },
   "competitionsShowcase": {
@@ -390,7 +429,12 @@
       "paidThrough": "Paid through",
       "neverPaid": "Never paid",
       "recordPayment": "Record payment",
-      "methods": { "cash": "Cash", "card": "Card", "bank": "Bank", "online": "Online" }
+      "methods": {
+        "cash": "Cash",
+        "card": "Card",
+        "bank": "Bank",
+        "online": "Online"
+      }
     },
     "attendance": {
       "title": "Attendance",

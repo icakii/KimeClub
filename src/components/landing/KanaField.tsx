@@ -1,58 +1,64 @@
 import { useEffect, useRef, useState } from 'react'
 
 // Real dojo vocabulary, not decorative gibberish: karate, way/do, spirit,
-// power, kata, respect, dojo, technique, hard/soft (goju).
-const CHARACTERS = ['空', '手', '道', '気', '心', '力', '型', '礼', '場', '技', '柔', '剛']
-const CELL_SIZE = 56
+// power, kata, respect, dojo, technique, soft/hard (goju), kime, practice.
+const CHARACTERS = ['空', '手', '道', '気', '心', '力', '型', '礼', '場', '技', '柔', '剛', '極', '武']
+const CELL = 38
+
+// Cheap deterministic scatter so tones/beats don't line up in visible
+// stripes (i % n would repeat in perfect columns on a fixed-width grid).
+function hash(i: number): number {
+  let x = (i + 1) * 2654435761
+  x ^= x >>> 15
+  return Math.abs(x)
+}
 
 export function KanaField() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  // Sized dynamically from the real document height -- a fixed guess runs
-  // out of rows partway down any page taller than that guess, which is
-  // exactly the bug this replaced (the field visibly stopping mid-page).
-  const [cellCount, setCellCount] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
+    const parent = ref.current?.parentElement
+    if (!parent) return
+
+    // Sized from the parent's real height (the whole landing page), and the
+    // field itself is overflow-hidden -- so it can never push the page
+    // taller and feed back into its own measurement.
     function measure() {
-      const width = window.innerWidth
-      const height = Math.max(document.documentElement.scrollHeight, window.innerHeight)
-      const cols = Math.max(1, Math.floor(width / CELL_SIZE))
-      const rows = Math.ceil(height / CELL_SIZE) + 2
-      setCellCount(cols * rows)
+      if (!parent) return
+      const cols = Math.ceil(parent.clientWidth / CELL)
+      const rows = Math.ceil(parent.scrollHeight / CELL)
+      setCount(cols * rows)
     }
 
     measure()
-    window.addEventListener('resize', measure)
-    const resizeObserver = new ResizeObserver(measure)
-    resizeObserver.observe(document.body)
-
-    return () => {
-      window.removeEventListener('resize', measure)
-      resizeObserver.disconnect()
-    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(parent)
+    return () => observer.disconnect()
   }, [])
-
-  const grid = Array.from({ length: cellCount }, (_, i) => CHARACTERS[i % CHARACTERS.length])
 
   return (
     <div
-      ref={containerRef}
-      className="kana-field pointer-events-none absolute inset-x-0 top-0 -z-10 grid select-none justify-center"
+      ref={ref}
+      className="pointer-events-none absolute inset-0 -z-10 grid select-none overflow-hidden"
       style={{
-        gridTemplateColumns: `repeat(auto-fill, minmax(${CELL_SIZE}px, 1fr))`,
-        gridAutoRows: `${CELL_SIZE}px`,
-        height: '100%',
+        gridTemplateColumns: `repeat(auto-fill, ${CELL}px)`,
+        gridAutoRows: `${CELL}px`,
+        justifyContent: 'center',
       }}
       aria-hidden="true"
     >
-      {grid.map((ch, i) => (
-        <span
-          key={i}
-          className={`kana-char kana-char-${i % 10} flex items-center justify-center font-display text-lg`}
-        >
-          {ch}
-        </span>
-      ))}
+      {Array.from({ length: count }, (_, i) => {
+        const h = hash(i)
+        return (
+          <span
+            key={i}
+            className={`kana-char kana-tone-${h % 4} kana-beat-${(h >> 3) % 60} flex items-center justify-center font-brush text-[17px]`}
+          >
+            {CHARACTERS[(h >> 7) % CHARACTERS.length]}
+          </span>
+        )
+      })}
     </div>
   )
 }
