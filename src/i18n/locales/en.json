@@ -284,8 +284,16 @@
   "tabs": {
     "home": "Home",
     "schedule": "Schedule",
+    "competitions": "Competitions",
     "payments": "Payments",
     "profile": "Profile"
+  },
+  "competitions": {
+    "title": "Competitions",
+    "upcoming": "Upcoming",
+    "noUpcoming": "No upcoming competitions.",
+    "myResults": "My results",
+    "noResults": "No results yet."
   },
   "studentHome": {
     "greeting": "Hi, {{name}}",
@@ -347,7 +355,22 @@
     "nav": {
       "members": "Members",
       "subscription": "Subscription",
-      "attendance": "Attendance"
+      "attendance": "Attendance",
+      "competitions": "Competitions"
+    },
+    "competitions": {
+      "title": "Competitions",
+      "name": "Name",
+      "location": "Location",
+      "date": "Date",
+      "add": "Add competition",
+      "pickStudent": "Pick a student",
+      "category": "Category",
+      "addEntry": "Add",
+      "placement": "Placement",
+      "noMedal": "No medal",
+      "medals": { "gold": "Gold", "silver": "Silver", "bronze": "Bronze" },
+      "remove": "Remove"
     },
     "attendance": {
       "title": "Attendance",

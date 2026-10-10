@@ -5,6 +5,7 @@ import { OfflineBanner } from '../components/OfflineBanner'
 const TABS = [
   { to: '/app', end: true, key: 'home' },
   { to: '/app/schedule', end: false, key: 'schedule' },
+  { to: '/app/competitions', end: false, key: 'competitions' },
   { to: '/app/payments', end: false, key: 'payments' },
   { to: '/app/profile', end: false, key: 'profile' },
 ] as const

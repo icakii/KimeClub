@@ -36,6 +36,9 @@ export function AdminLayout() {
         <NavLink to="/admin/attendance" className={tabClass}>
           {t('admin.nav.attendance')}
         </NavLink>
+        <NavLink to="/admin/competitions" className={tabClass}>
+          {t('admin.nav.competitions')}
+        </NavLink>
         {member?.role === 'owner' && (
           <NavLink to="/admin/subscription" className={tabClass}>
             {t('admin.nav.subscription')}

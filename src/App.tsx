@@ -13,8 +13,10 @@ import { ServicePaused } from './pages/ServicePaused'
 import { Store } from './pages/Store'
 import { Terms } from './pages/Terms'
 import { Attendance } from './pages/admin/Attendance'
+import { Competitions as AdminCompetitions } from './pages/admin/Competitions'
 import { Members } from './pages/admin/Members'
 import { Subscription } from './pages/admin/Subscription'
+import { Competitions } from './pages/app/Competitions'
 import { Home } from './pages/app/Home'
 import { Payments } from './pages/app/Payments'
 import { Profile } from './pages/app/Profile'
@@ -49,6 +51,7 @@ function App() {
       >
         <Route index element={<Home />} />
         <Route path="schedule" element={<Schedule />} />
+        <Route path="competitions" element={<Competitions />} />
         <Route path="payments" element={<Payments />} />
         <Route path="profile" element={<Profile />} />
       </Route>
@@ -64,6 +67,7 @@ function App() {
       >
         <Route index element={<Members />} />
         <Route path="attendance" element={<Attendance />} />
+        <Route path="competitions" element={<AdminCompetitions />} />
         <Route path="subscription" element={<Subscription />} />
       </Route>
     </Routes>
