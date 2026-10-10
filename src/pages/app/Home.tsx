@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { AttendanceCard } from '../../components/app/AttendanceCard'
 import { Card, DAY_KANJI, Eyebrow, Stagger, StaggerItem } from '../../components/app/ui'
 import { BeltChip } from '../../components/BeltChip'
 import { InstallHintCard } from '../../components/InstallHintCard'
@@ -92,6 +93,12 @@ export function Home() {
           </Card>
         )}
       </StaggerItem>
+
+      {member.role === 'student' && (
+        <StaggerItem>
+          <AttendanceCard memberId={member.id} />
+        </StaggerItem>
+      )}
 
       <StaggerItem>
         <Eyebrow className="px-1 pt-2">{t('studentHome.inbox')}</Eyebrow>

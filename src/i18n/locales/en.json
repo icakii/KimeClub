@@ -371,6 +371,14 @@
       "ios": "iPhone: Share -> Add to Home Screen",
       "android": "Android: browser menu -> Install app",
       "dismiss": "Got it"
+    },
+    "attendance": {
+      "title": "Attendance",
+      "none": "Your coach hasn't marked any sessions yet.",
+      "last30": "{{present}} of {{total}} sessions in the last 30 days",
+      "streak_one": "{{count}} in a row",
+      "streak_other": "{{count}} in a row",
+      "lastSession": "Last session {{date}}: {{status}}"
     }
   },
   "paymentStatus": {
@@ -435,7 +443,14 @@
         "card": "Card",
         "bank": "Bank",
         "online": "Online"
-      }
+      },
+      "paidUp": "Paid up",
+      "behind": "Behind",
+      "expected": "Expected monthly",
+      "throughDate": "paid through {{date}}",
+      "statusPaid": "Paid",
+      "statusOverdue": "Overdue",
+      "noFee": "No fee set yet"
     },
     "attendance": {
       "title": "Attendance",
@@ -444,7 +459,12 @@
       "noClassesThisDay": "No classes scheduled on this day.",
       "noRoster": "No members in this class yet.",
       "present": "Present",
-      "absent": "Absent"
+      "absent": "Absent",
+      "today": "Today",
+      "marked": "{{present}} of {{total}} present",
+      "markRest": "Mark the rest present",
+      "last30": "Last 30 days",
+      "noHistory": "No sessions marked in the last 30 days yet."
     },
     "subscription": {
       "title": "Subscription",

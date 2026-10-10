@@ -7,6 +7,7 @@ import { useClub } from '../../hooks/useClub'
 import { useClubBilling } from '../../hooks/useClubBilling'
 import { useMember } from '../../hooks/useMember'
 import { PADDLE_MONTHLY_PRICE_ID } from '../../lib/paddle'
+import { PageHeader } from '../../components/app/ui'
 
 function formatPrice(cents: number): string {
   return `${(cents / 100).toFixed(2)} EUR`
@@ -60,49 +61,56 @@ export function Subscription() {
   const overdue = !billing?.paid_until || billing.paid_until < today
 
   return (
-    <div className="px-6 py-6">
-      <h1 className="font-display text-xl uppercase tracking-wide text-ink">
-        {t('admin.subscription.title')}
-      </h1>
+    <div className="px-5 py-6">
+      <PageHeader kanji="契" title={t('admin.subscription.title')} tone="bg-ink" />
 
       {isLoading && <p className="mt-4 text-sm text-muted">...</p>}
 
       {billing && (
-        <div className="mt-4 max-w-sm space-y-3 rounded-lg border border-line bg-surface p-4 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted">{t('admin.subscription.plan')}</span>
-            <span className="capitalize text-ink">{billing.plan}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted">{t('admin.subscription.monthlyPrice')}</span>
-            <span className="text-ink">{formatPrice(billing.monthly_price_cents)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted">{t('admin.subscription.paidUntil')}</span>
-            <span className={overdue ? 'text-aka-text' : 'text-ink'}>
-              {billing.paid_until ?? t('admin.subscription.neverPaid')}
-            </span>
-          </div>
-          <div className="flex justify-between border-t border-line pt-3">
-            <span className="text-muted">Status</span>
-            <span className={overdue ? 'text-aka-text' : 'text-ink'}>
+        <div className="relative mt-5 max-w-md overflow-hidden rounded-3xl bg-ink p-6 text-shiro shadow-[0_24px_48px_-24px_rgba(31,27,22,0.8)]">
+          <span
+            className="pointer-events-none absolute -bottom-10 -right-4 font-brush text-[9rem] leading-none text-shiro/5"
+            aria-hidden="true"
+          >
+            道
+          </span>
+          <div className="relative flex items-start justify-between gap-3">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-shiro/60">
+                {t('admin.subscription.plan')} · <span className="capitalize">{billing.plan}</span>
+              </p>
+              <p className="mt-2 font-display text-4xl font-bold leading-none">
+                {formatPrice(billing.monthly_price_cents)}
+              </p>
+              <p className="mt-1 text-xs text-shiro/60">{t('admin.subscription.monthlyPrice')}</p>
+            </div>
+            <span
+              className={`rounded-full px-3 py-1 font-display text-[11px] uppercase tracking-wide ${
+                overdue ? 'bg-aka text-shiro' : 'bg-jade text-shiro'
+              }`}
+            >
               {overdue ? t('admin.subscription.overdue') : t('admin.subscription.current')}
             </span>
           </div>
+          <div className="relative mt-6 flex items-center justify-between rounded-2xl bg-shiro/10 px-4 py-3 text-sm">
+            <span className="text-shiro/70">{t('admin.subscription.paidUntil')}</span>
+            <span className={`font-display tracking-wide ${overdue ? 'text-sakura' : 'text-shiro'}`}>
+              {billing.paid_until ?? t('admin.subscription.neverPaid')}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={openCheckout}
+            disabled={!paddle}
+            className="relative mt-4 min-h-12 w-full rounded-2xl bg-aka px-6 font-display text-sm uppercase tracking-wide text-shiro shadow-[0_12px_24px_-12px_rgba(194,54,31,0.9)] transition-transform active:scale-[0.98] disabled:opacity-60"
+          >
+            {paddle ? t('admin.subscription.payButton') : t('admin.subscription.processing')}
+          </button>
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={openCheckout}
-        disabled={!paddle}
-        className="mt-4 min-h-11 rounded-md bg-aka px-6 font-display text-sm uppercase tracking-wide text-shiro disabled:opacity-60"
-      >
-        {paddle ? t('admin.subscription.payButton') : t('admin.subscription.processing')}
-      </button>
-
       {completed && (
-        <p className="mt-3 max-w-sm text-sm text-muted">{t('admin.subscription.completedNote')}</p>
+        <p className="mt-3 max-w-md text-sm text-muted">{t('admin.subscription.completedNote')}</p>
       )}
     </div>
   )
