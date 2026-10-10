@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { initials, Pill, StatCard } from '../../components/admin/ui'
+import { EditMemberModal } from '../../components/admin/EditMemberModal'
+import { MemberAvatar } from '../../components/admin/MemberAvatar'
+import { Pill, StatCard } from '../../components/admin/ui'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { useAdminMembers, type AdminMember } from '../../hooks/useAdminMembers'
 import { useBelts } from '../../hooks/useBelts'
@@ -33,6 +35,7 @@ export function Members() {
   const [search, setSearch] = useState('')
   const [beltFilter, setBeltFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
+  const [editing, setEditing] = useState<AdminMember | null>(null)
 
   const filtered = useMemo(() => {
     return (members ?? []).filter((m) => {
@@ -91,11 +94,7 @@ export function Members() {
             <div className="h-full rounded-2xl border border-ink/10 bg-shiro/95 p-4 shadow-[0_16px_32px_-24px_rgba(31,27,22,0.55)]">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
-                  <span
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-display text-sm font-semibold text-shiro ${ROLE_AVATAR[m.role]}`}
-                  >
-                    {initials(m.full_name)}
-                  </span>
+                  <MemberAvatar name={m.full_name} photoPath={m.photo_path} tone={ROLE_AVATAR[m.role]} />
                   <div className="min-w-0">
                     <p className="truncate font-display font-semibold uppercase tracking-wide text-ink">
                       {m.full_name}
@@ -103,7 +102,16 @@ export function Members() {
                     <p className="text-xs text-muted">{t(`admin.role.${m.role}`)}</p>
                   </div>
                 </div>
-                <Pill tone={STATUS_TONE[m.status]}>{t(`admin.status.${m.status}`)}</Pill>
+                <div className="flex flex-col items-end gap-2">
+                  <Pill tone={STATUS_TONE[m.status]}>{t(`admin.status.${m.status}`)}</Pill>
+                  <button
+                    type="button"
+                    onClick={() => setEditing(m)}
+                    className="rounded-full border border-ink/15 px-3 py-1 font-display text-[11px] uppercase tracking-wide text-muted transition-colors hover:border-aka-text hover:text-aka-text"
+                  >
+                    ✎ {t('admin.edit.button')}
+                  </button>
+                </div>
               </div>
 
               {m.belt && (
@@ -147,6 +155,8 @@ export function Members() {
           </StaggerItem>
         ))}
       </Stagger>
+
+      {editing && <EditMemberModal clubId={club.id} member={editing} onClose={() => setEditing(null)} />}
     </div>
   )
 }

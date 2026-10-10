@@ -128,6 +128,7 @@ export function DayDetailSheet({
                                 </span>
                               )}
                             </div>
+                            {cls.room && <p className="mt-0.5 text-xs uppercase tracking-wide text-muted">{cls.room}</p>}
                             {notice && <p className="mt-1 text-sm text-aka-text">{notice.note}</p>}
                           </div>
                           <p className="shrink-0 font-display text-2xl font-bold leading-none text-ink">

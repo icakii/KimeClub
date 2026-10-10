@@ -10,6 +10,8 @@ export interface ClassRow {
   belt_min_rank: number | null
   belt_max_rank: number | null
   group_id: string | null
+  // Hall/room: the class's own, else its group's.
+  room: string | null
 }
 
 // groupId filters to that group's classes plus any ungrouped (visible to
@@ -22,7 +24,9 @@ export function useSchedule(clubId: string | undefined, groupId?: string | null)
     queryFn: async (): Promise<ClassRow[]> => {
       let query = supabase
         .from('classes')
-        .select('id, title, weekday, start_time, duration_min, belt_min_rank, belt_max_rank, group_id')
+        .select(
+          'id, title, weekday, start_time, duration_min, belt_min_rank, belt_max_rank, group_id, room, group:groups(room)',
+        )
         .eq('club_id', clubId as string)
 
       if (groupId) {
@@ -31,7 +35,9 @@ export function useSchedule(clubId: string | undefined, groupId?: string | null)
 
       const { data, error } = await query.order('weekday').order('start_time')
       if (error) throw error
-      return data
+      return (data as unknown as (Omit<ClassRow, 'room'> & { room: string | null; group: { room: string | null } | null })[]).map(
+        ({ group, ...cls }) => ({ ...cls, room: cls.room ?? group?.room ?? null }),
+      )
     },
     enabled: !!clubId,
   })

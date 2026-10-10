@@ -74,3 +74,30 @@ export function useRecordPayment(clubId: string | undefined) {
     },
   })
 }
+
+// Coaches fix their own mistakes: removes the most recent paid month for a
+// member (e.g. recorded for the wrong student). RLS limits this to staff
+// of the same club.
+export function useUndoLastPayment(clubId: string | undefined) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (memberId: string) => {
+      const { data, error } = await supabase
+        .from('payments')
+        .select('id')
+        .eq('club_id', clubId as string)
+        .eq('member_id', memberId)
+        .eq('status', 'paid')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+      if (error) throw error
+      if (!data) return
+      const { error: deleteError } = await supabase.from('payments').delete().eq('id', data.id)
+      if (deleteError) throw deleteError
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paid-through', clubId] })
+    },
+  })
+}

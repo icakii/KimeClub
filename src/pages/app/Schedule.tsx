@@ -129,6 +129,7 @@ export function Schedule() {
                 day: 'numeric',
                 month: 'long',
               })}
+              {nextClass.class.room && ` · ${nextClass.class.room}`}
             </p>
           </div>
           <p className="font-display text-2xl font-bold">

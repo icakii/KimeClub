@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { initials, Pill, StatCard } from '../../components/admin/ui'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { useAdminMembers } from '../../hooks/useAdminMembers'
-import { usePaidThrough, useRecordPayment } from '../../hooks/useAdminPayments'
+import { usePaidThrough, useRecordPayment, useUndoLastPayment } from '../../hooks/useAdminPayments'
 import { useClub } from '../../hooks/useClub'
 
 const METHODS = ['cash', 'card', 'bank', 'online'] as const
@@ -18,6 +18,7 @@ export function Payments() {
   const { data: members } = useAdminMembers(club?.id)
   const { data: paidThrough } = usePaidThrough(club?.id)
   const recordPayment = useRecordPayment(club?.id)
+  const undoPayment = useUndoLastPayment(club?.id)
   const [methodByMember, setMethodByMember] = useState<Record<string, (typeof METHODS)[number]>>(
     {},
   )
@@ -107,6 +108,20 @@ export function Payments() {
                   >
                     {t('admin.payments.recordPayment')}
                   </button>
+                  {through && (
+                    <button
+                      type="button"
+                      disabled={undoPayment.isPending}
+                      title={t('admin.payments.undoHint')}
+                      aria-label={t('admin.payments.undo')}
+                      onClick={() => {
+                        if (confirm(t('admin.payments.undoConfirm', { name: m.full_name }))) undoPayment.mutate(m.id)
+                      }}
+                      className="min-h-10 rounded-xl border border-ink/15 px-3 font-display text-[11px] uppercase tracking-wide text-muted transition-colors hover:border-aka-text hover:text-aka-text disabled:opacity-40"
+                    >
+                      ↺<span className="hidden sm:inline"> {t('admin.payments.undo')}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </StaggerItem>

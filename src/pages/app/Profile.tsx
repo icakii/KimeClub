@@ -3,19 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { BeltChip } from '../../components/BeltChip'
+import { MemberAvatar } from '../../components/admin/MemberAvatar'
 import { LegalLinks } from '../../components/LegalLinks'
 import { useAuth } from '../../hooks/useAuth'
 import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
-
-function initials(name: string): string {
-  return name
-    .split(' ')
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase()
-}
 
 const LANGS = ['bg', 'en'] as const
 
@@ -44,9 +36,7 @@ export function Profile() {
                 道
               </span>
               <div className="relative flex items-center gap-4">
-                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-aka font-display text-xl font-semibold ring-4 ring-shiro/15">
-                  {initials(member.full_name)}
-                </span>
+                <MemberAvatar name={member.full_name} photoPath={member.photo_path} className="h-16 w-16 text-xl ring-4 ring-shiro/15" />
                 <div className="min-w-0">
                   <p className="truncate font-display text-xl font-semibold uppercase tracking-wide">
                     {member.full_name}

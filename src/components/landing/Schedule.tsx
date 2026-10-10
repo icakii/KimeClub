@@ -37,7 +37,10 @@ export function Schedule({ clubId }: { clubId: string | undefined }) {
                   <p className="font-display text-lg font-semibold uppercase tracking-wide text-ink">
                     {cls.title}
                   </p>
-                  <p className="text-sm text-muted">{weekdays[cls.weekday]}</p>
+                  <p className="text-sm text-muted">
+                    {weekdays[cls.weekday]}
+                    {cls.room && <span className="ml-2 rounded-full bg-ai/10 px-2 py-0.5 text-[11px] uppercase tracking-wide text-ai">{cls.room}</span>}
+                  </p>
                   <div className="mt-auto flex items-end justify-between pt-4">
                     <div>
                       <p className="font-display text-3xl font-bold leading-none text-ink">

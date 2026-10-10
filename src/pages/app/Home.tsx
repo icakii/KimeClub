@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { AttendanceCard } from '../../components/app/AttendanceCard'
 import { Card, DAY_KANJI, Eyebrow, Stagger, StaggerItem } from '../../components/app/ui'
 import { BeltChip } from '../../components/BeltChip'
@@ -50,7 +51,7 @@ export function Home() {
                 <BeltChip belt={member.belt} showLabel={false} />
               </span>
             )}
-            <PaymentStatusChip status={paymentStatus} />
+            {member.role === 'student' && <PaymentStatusChip status={paymentStatus} />}
           </div>
         </div>
       </StaggerItem>
@@ -82,7 +83,10 @@ export function Home() {
               <p className="mt-2 font-display text-3xl font-bold leading-none">
                 {(nextClass.notice?.new_start_time ?? nextClass.class.start_time).slice(0, 5)}
               </p>
-              <p className="mt-1 text-xs text-shiro/80">{weekdays[nextClass.class.weekday]}</p>
+              <p className="mt-1 text-xs text-shiro/80">
+                {weekdays[nextClass.class.weekday]}
+                {nextClass.class.room && ` · ${nextClass.class.room}`}
+              </p>
               {nextClass.notice && <p className="mt-2 text-sm text-shiro">{nextClass.notice.note}</p>}
             </div>
           </div>
@@ -93,6 +97,21 @@ export function Home() {
           </Card>
         )}
       </StaggerItem>
+
+      {(member.role === 'owner' || member.role === 'coach') && (
+        <StaggerItem>
+          <Link
+            to="/admin/payments"
+            className="flex items-center justify-between gap-3 rounded-3xl bg-ink p-5 text-shiro shadow-[0_20px_40px_-24px_rgba(31,27,22,0.8)] transition-transform active:scale-[0.98]"
+          >
+            <div>
+              <p className="font-display text-lg font-semibold uppercase tracking-wide">{t('studentHome.staffCard.title')}</p>
+              <p className="text-xs text-shiro/65">{t('studentHome.staffCard.body')}</p>
+            </div>
+            <span className="rounded-full bg-aka px-3 py-2 font-display text-sm">→</span>
+          </Link>
+        </StaggerItem>
+      )}
 
       {member.role === 'student' && (
         <StaggerItem>

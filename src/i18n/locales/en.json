@@ -317,8 +317,33 @@
   },
   "store": {
     "navLink": "Store",
-    "title": "The store is coming soon",
-    "body": "Soon you'll be able to order club clothing and gear here."
+    "title": "Club store",
+    "body": "Gear and clothing with the Kime logo. Reserve online, pay and pick up at the dojo.",
+    "note": "Example products. The coach confirms availability.",
+    "reserve": "Reserve",
+    "reserved": "Reserved, pick up at the dojo",
+    "badge": {
+      "new": "New",
+      "popular": "Popular"
+    },
+    "items": {
+      "tee": {
+        "name": "Kime T-shirt",
+        "desc": "Cotton tee with the club emblem on the chest."
+      },
+      "gi": {
+        "name": "Karate gi",
+        "desc": "Sturdy gi for training and gradings, white belt included."
+      },
+      "bag": {
+        "name": "Gear bag",
+        "desc": "Light drawstring bag for your gi and pads."
+      },
+      "belt": {
+        "name": "Belt",
+        "desc": "Cotton belt in every rank color, sized to fit."
+      }
+    }
   },
   "auth": {
     "navLink": "Log in",
@@ -379,6 +404,10 @@
       "streak_one": "{{count}} in a row",
       "streak_other": "{{count}} in a row",
       "lastSession": "Last session {{date}}: {{status}}"
+    },
+    "staffCard": {
+      "title": "Admin panel",
+      "body": "Mark attendance and payments"
     }
   },
   "paymentStatus": {
@@ -418,7 +447,7 @@
     },
     "members": {
       "title": "Members",
-      "viewOnlyNote": "View only. To add a member or change an account, contact us.",
+      "viewOnlyNote": "You can update the photo, contact details and parent info. For a new student, belt, group or fee, message us.",
       "searchPlaceholder": "Search by name",
       "allBelts": "All belts",
       "allStatuses": "All statuses",
@@ -450,7 +479,10 @@
       "throughDate": "paid through {{date}}",
       "statusPaid": "Paid",
       "statusOverdue": "Overdue",
-      "noFee": "No fee set yet"
+      "noFee": "No fee set yet",
+      "undo": "Undo",
+      "undoHint": "Removes the last recorded month",
+      "undoConfirm": "Remove the last recorded payment for {{name}}?"
     },
     "attendance": {
       "title": "Attendance",
@@ -478,6 +510,19 @@
       "payButton": "Pay now",
       "processing": "Opening checkout...",
       "completedNote": "Payment received — your account will be updated shortly. Contact us if it isn't within a day."
+    },
+    "edit": {
+      "button": "Edit",
+      "changePhoto": "Change photo",
+      "uploading": "Uploading...",
+      "email": "Email",
+      "phone": "Phone",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "save": "Save",
+      "cancel": "Cancel",
+      "error": "Could not save. Try again.",
+      "photoError": "The photo was not uploaded. Try another one."
     }
   },
   "offline": {
