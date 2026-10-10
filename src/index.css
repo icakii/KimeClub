@@ -139,6 +139,34 @@ body {
   animation-delay: 0s !important;
 }
 
+/* A warm paper-sheen sweep, used to call out the "pay online" feature
+   card without resorting to a loud effect. */
+@keyframes card-shimmer {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(320%) skewX(-20deg);
+  }
+}
+
+.shimmer-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 35%;
+  background: linear-gradient(120deg, transparent, rgba(255, 250, 230, 0.55), transparent);
+  animation: card-shimmer 4.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-card::after {
+    animation: none;
+    display: none;
+  }
+}
+
 .belt-chip {
   transform: scaleX(0);
   transform-origin: left;

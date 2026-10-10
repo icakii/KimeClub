@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-const FEATURES = ['signup', 'progress', 'news'] as const
+const FEATURES = ['signup', 'progress', 'news', 'payments'] as const
 
 export function FeatureCards() {
   const { t } = useTranslation()
@@ -12,11 +12,13 @@ export function FeatureCards() {
           {t('features.title')}
         </h2>
         <div className="mx-auto mt-4 h-px w-12 bg-gold" />
-        <div className="mt-12 grid gap-4 sm:grid-cols-3 sm:gap-6">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {FEATURES.map((key, index) => (
             <div
               key={key}
-              className="rounded-lg border border-ink/20 bg-surface p-6 transition-colors hover:border-aka-text sm:p-8"
+              className={`relative overflow-hidden rounded-lg border border-ink/20 bg-surface p-6 transition-colors hover:border-aka-text sm:p-8 ${
+                key === 'payments' ? 'shimmer-card' : ''
+              }`}
             >
               <span className="font-display text-4xl font-semibold text-aka-text/25">
                 {String(index + 1).padStart(2, '0')}

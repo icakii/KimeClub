@@ -24,6 +24,10 @@
     "news": {
       "title": "News from the coach",
       "desc": "Schedule changes and announcements land straight on your phone."
+    },
+    "payments": {
+      "title": "Pay online",
+      "desc": "Pay your monthly fee straight from the app or the site — no cash, no bank transfers to chase."
     }
   },
   "schedule": {
