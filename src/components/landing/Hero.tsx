@@ -102,7 +102,7 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      className="relative isolate flex min-h-[calc(100svh-4rem)] items-center justify-center overflow-hidden px-6 py-20"
+      className="relative isolate flex min-h-[calc(100svh-4rem)] items-center justify-center overflow-hidden px-6 pb-12 pt-8 sm:py-20"
     >
       {/* Color: a vermilion rising sun behind the mark, with indigo and jade
           washes at the corners so the page isn't a single beige/red note. */}
@@ -142,9 +142,9 @@ export function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-30 flex flex-col items-center text-center"
       >
-        <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:gap-10">
+        <div className="flex flex-col items-center gap-3 sm:gap-6 lg:flex-row lg:items-center lg:gap-10">
           <div className="relative">
-            <Emblem animated className="h-40 w-40 sm:h-48 sm:w-48 lg:h-56 lg:w-56" />
+            <Emblem animated className="h-28 w-28 sm:h-48 sm:w-48 lg:h-56 lg:w-56" />
             <span
               className="stamp-in absolute -bottom-1 -right-3 flex flex-col items-center rounded-[3px] bg-aka px-1.5 py-1 font-brush text-sm leading-[1.05] text-shiro shadow-md sm:text-base"
               style={{ animationDelay: '1.9s' }}
@@ -157,7 +157,7 @@ export function Hero() {
 
           <div className="flex flex-col items-center lg:items-start">
             <h1
-              className="flex font-display text-[5.5rem] font-bold uppercase leading-[0.82] tracking-[0.06em] text-ink sm:text-[8rem] lg:text-[10.5rem]"
+              className="flex font-display text-[4.6rem] font-bold uppercase leading-[0.82] tracking-[0.06em] text-ink sm:text-[8rem] lg:text-[10.5rem]"
               aria-label="Kime Karate Club"
             >
               {WORDMARK.map((letter, i) => (
@@ -180,26 +180,26 @@ export function Hero() {
         </div>
 
         <p
-          className="reveal-up mt-10 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
+          className="reveal-up mt-6 max-w-xl text-[15px] leading-relaxed text-muted sm:mt-10 sm:text-lg"
           style={{ animationDelay: '1.75s' }}
         >
           {t('hero.tagline')}
         </p>
 
         <div
-          className="reveal-up mt-8 flex flex-col items-center gap-3 sm:flex-row"
+          className="reveal-up mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-8"
           style={{ animationDelay: '1.95s' }}
         >
           <a
             href="#contact"
-            className="group relative min-h-11 overflow-hidden rounded-md bg-aka px-7 py-3 font-display text-sm uppercase tracking-wide text-shiro shadow-[0_10px_30px_-10px_rgba(194,54,31,0.7)] transition-transform hover:-translate-y-0.5"
+            className="group relative min-h-11 overflow-hidden rounded-md bg-aka px-5 py-3 sm:px-7 font-display text-sm uppercase tracking-wide text-shiro shadow-[0_10px_30px_-10px_rgba(194,54,31,0.7)] transition-transform hover:-translate-y-0.5"
           >
             <span className="relative z-10">{t('hero.ctaTrial')}</span>
             <span className="absolute inset-0 -translate-x-full bg-ai transition-transform duration-500 group-hover:translate-x-0" />
           </a>
           <a
             href="#schedule"
-            className="min-h-11 rounded-md border border-ink/25 bg-shiro/90 px-7 py-3 font-display text-sm uppercase tracking-wide text-ink transition-colors hover:border-aka-text hover:text-aka-text"
+            className="min-h-11 rounded-md border border-ink/25 bg-shiro/90 px-5 py-3 sm:px-7 font-display text-sm uppercase tracking-wide text-ink transition-colors hover:border-aka-text hover:text-aka-text"
           >
             {t('hero.ctaSchedule')}
           </a>
@@ -207,7 +207,7 @@ export function Hero() {
       </motion.div>
 
       <div
-        className="fade-in absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2"
+        className="fade-in absolute bottom-6 left-1/2 z-30 hidden -translate-x-1/2 sm:flex flex-col items-center gap-2"
         style={{ animationDelay: '2.4s' }}
         aria-hidden="true"
       >
