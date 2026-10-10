@@ -29,7 +29,7 @@ export function Landing() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative overflow-x-clip">
       <KanjiBackdrop />
       <div className="kana-vignette" />
       <Nav />

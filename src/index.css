@@ -39,7 +39,13 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   color-scheme: light;
-  overflow-x: hidden;
+}
+
+/* clip, not hidden: mobile Safari ignores overflow-x:hidden on body, and
+   hidden would also break the sticky nav (it makes a scroll container). */
+html,
+body {
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: no-preference) {

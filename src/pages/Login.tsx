@@ -41,6 +41,16 @@ export function Login() {
     <div className="relative flex min-h-screen items-center justify-center px-6 py-10">
       <KanjiBackdrop parallax={0} baseAlpha={0.08} />
       <div className="kana-vignette" />
+      <button
+        type="button"
+        // 'default' = /login was the first page loaded (bookmark, typed URL),
+        // so there's no in-app history to go back to -- go to the site.
+        onClick={() => (location.key === 'default' ? navigate('/') : navigate(-1))}
+        className="absolute left-4 top-4 flex min-h-11 items-center gap-2 rounded-xl border border-ink/15 bg-shiro/95 px-4 font-display text-xs uppercase tracking-wide text-ink shadow-sm transition-colors hover:border-aka-text hover:text-aka-text active:scale-95"
+      >
+        <span aria-hidden="true">←</span>
+        {t('auth.back')}
+      </button>
       <div className="reveal-up w-full max-w-sm rounded-3xl border border-ink/10 bg-shiro/95 p-7 shadow-[0_30px_60px_-30px_rgba(31,27,22,0.6)]">
         <Link to="/" className="mx-auto block w-fit" aria-label="Kime">
           <Emblem animated className="h-20 w-20" />

@@ -340,7 +340,8 @@
     "forgotError": "Something went wrong. Please try again.",
     "resetTitle": "New password",
     "resetNewPassword": "New password",
-    "resetSubmit": "Save password"
+    "resetSubmit": "Save password",
+    "back": "Back"
   },
   "tabs": {
     "home": "Home",

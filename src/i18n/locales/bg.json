@@ -340,7 +340,8 @@
     "forgotError": "Възникна грешка. Опитай отново.",
     "resetTitle": "Нова парола",
     "resetNewPassword": "Нова парола",
-    "resetSubmit": "Запази паролата"
+    "resetSubmit": "Запази паролата",
+    "back": "Назад"
   },
   "tabs": {
     "home": "Начало",
