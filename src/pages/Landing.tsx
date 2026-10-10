@@ -3,13 +3,10 @@ import { Nav } from '../components/landing/Nav'
 import { Hero } from '../components/landing/Hero'
 import { KanjiBackdrop } from '../components/KanjiBackdrop'
 import { FeatureCards } from '../components/landing/FeatureCards'
-import { AppShowcase } from '../components/landing/AppShowcase'
-import { CompetitionsShowcase } from '../components/landing/CompetitionsShowcase'
-import { PaymentShowcase } from '../components/landing/PaymentShowcase'
 import { Schedule } from '../components/landing/Schedule'
 import { BeltLadder } from '../components/landing/BeltLadder'
 import { Coaches } from '../components/landing/Coaches'
-import { ManagedService } from '../components/landing/ManagedService'
+import { Gallery } from '../components/landing/Gallery'
 import { Contact } from '../components/landing/Contact'
 import { Footer } from '../components/landing/Footer'
 
@@ -35,13 +32,10 @@ export function Landing() {
       <Nav />
       <Hero />
       <FeatureCards />
-      <AppShowcase />
-      <CompetitionsShowcase />
-      <PaymentShowcase />
       <Schedule clubId={club.id} />
       <BeltLadder clubId={club.id} />
+      <Gallery />
       <Coaches coaches={club.theme.coaches} />
-      <ManagedService />
       <Contact />
       <Footer clubName={club.name} />
     </div>

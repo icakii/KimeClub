@@ -13,21 +13,21 @@
   },
   "features": {
     "title": "Why Kime",
-    "signup": {
-      "title": "Online sign-up",
-      "desc": "Book a trial class in minutes, no calls or waiting around."
+    "tradition": {
+      "title": "Traditional karate",
+      "desc": "Kihon, kata and kumite taught the way they are in Japan: respect for the style and care for every detail."
     },
-    "progress": {
-      "title": "Belts & progress",
-      "desc": "Every student can see their belt and what's next."
+    "allAges": {
+      "title": "For every age",
+      "desc": "Separate groups for kids from age 6, teens and adults, from complete beginners to black belt."
     },
-    "news": {
-      "title": "News from the coach",
-      "desc": "Schedule changes and announcements land straight on your phone."
+    "competition": {
+      "title": "Competition team",
+      "desc": "For those who want more: kata and kumite preparation and entries in national and international tournaments."
     },
-    "payments": {
-      "title": "Pay online",
-      "desc": "Pay your monthly fee straight from the app or the site — no cash, no bank transfers to chase."
+    "character": {
+      "title": "Discipline and character",
+      "desc": "Karate begins and ends with a bow. We teach focus, respect and confidence that stay with you outside the dojo."
     }
   },
   "schedule": {
@@ -486,5 +486,18 @@
   "suspended": {
     "title": "Site temporarily unavailable",
     "body": "This club's site is currently paused. If you're a member, please contact your coach for details."
+  },
+  "gallery": {
+    "title": "Inside the dojo",
+    "subtitle": "Training, belt gradings and tournaments: a little of what happens on the tatami.",
+    "placeholder": "Photo",
+    "one": {
+      "caption": "Training",
+      "alt": "Students training in the dojo"
+    },
+    "two": {
+      "caption": "The bow",
+      "alt": "Bowing before the start of class"
+    }
   }
 }

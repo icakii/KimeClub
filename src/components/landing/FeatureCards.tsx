@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import { Reveal, SectionHeading } from './Section'
 
-// Each feature owns one dye color and a kanji: apply 申, belt 帯, news 報,
-// payment 払 -- so the four cards read as distinct, not four beige boxes.
+// Each card owns one dye color and a kanji: tradition 伝, all ages 家,
+// competition team 勝, character 心 -- so the four read as distinct.
 const FEATURES = [
-  { key: 'signup', kanji: '申', bar: 'bg-ai', text: 'text-ai', mark: 'text-ai' },
-  { key: 'progress', kanji: '帯', bar: 'bg-jade', text: 'text-jade', mark: 'text-jade' },
-  { key: 'news', kanji: '報', bar: 'bg-kin', text: 'text-gold', mark: 'text-kin' },
-  { key: 'payments', kanji: '払', bar: 'bg-aka', text: 'text-aka-text', mark: 'text-aka' },
+  { key: 'tradition', kanji: '伝', bar: 'bg-ai', text: 'text-ai', mark: 'text-ai' },
+  { key: 'allAges', kanji: '家', bar: 'bg-jade', text: 'text-jade', mark: 'text-jade' },
+  { key: 'competition', kanji: '勝', bar: 'bg-kin', text: 'text-gold', mark: 'text-kin' },
+  { key: 'character', kanji: '心', bar: 'bg-aka', text: 'text-aka-text', mark: 'text-aka' },
 ] as const
 
 export function FeatureCards() {
@@ -22,7 +22,7 @@ export function FeatureCards() {
             <Reveal key={f.key} delay={i * 0.1}>
               <div
                 className={`group relative h-full overflow-hidden rounded-2xl border border-ink/10 bg-shiro/95 p-7 shadow-[0_20px_40px_-28px_rgba(31,27,22,0.5)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-28px_rgba(31,27,22,0.55)] ${
-                  f.key === 'payments' ? 'shimmer-card' : ''
+                  f.key === 'competition' ? 'shimmer-card' : ''
                 }`}
               >
                 <span className={`absolute inset-x-0 top-0 h-1.5 ${f.bar}`} />
