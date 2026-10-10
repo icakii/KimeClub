@@ -4,6 +4,7 @@ import { DayDetailSheet } from '../../components/DayDetailSheet'
 import { useClassNoticesInRange } from '../../hooks/useClassNotices'
 import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
+import { useMyCompetitionEntries } from '../../hooks/useCompetitions'
 import { useNextClass } from '../../hooks/useNextClass'
 import { useSchedule } from '../../hooks/useSchedule'
 import { useDaySignups, useToggleSignup } from '../../hooks/useSessionSignup'
@@ -33,6 +34,7 @@ export function Schedule() {
   const { data: member } = useMember(club?.id)
   const { data: classes } = useSchedule(club?.id, member?.group_id)
   const nextClass = useNextClass(club?.id, member?.group_id)
+  const { data: myCompetitionEntries } = useMyCompetitionEntries(club?.id, member?.id)
 
   const [viewMonth, setViewMonth] = useState(() => startOfMonth(new Date()))
   const todayISO = toISODate(new Date())
@@ -63,6 +65,9 @@ export function Schedule() {
   const openClasses =
     openWeekday === null ? [] : (classes ?? []).filter((c) => c.weekday === openWeekday)
   const openNotices = openDate ? (notices ?? []).filter((n) => n.effective_date === openDate) : []
+  const openCompetitionEntries = openDate
+    ? (myCompetitionEntries ?? []).filter((e) => e.competition.event_date === openDate)
+    : []
 
   const { data: signedUpClassIds } = useDaySignups(club?.id, member?.id, openDate)
   const toggleSignup = useToggleSignup(club?.id, member?.id, openDate)
@@ -138,6 +143,9 @@ export function Schedule() {
           const inMonth = day.getMonth() === viewMonth.getMonth()
           const hasClass = (classes ?? []).some((c) => c.weekday === weekday)
           const hasNotice = (notices ?? []).some((n) => n.effective_date === iso)
+          const hasCompetition = (myCompetitionEntries ?? []).some(
+            (e) => e.competition.event_date === iso,
+          )
           const isToday = iso === todayISO
           const isOpen = iso === openDate
 
@@ -151,6 +159,7 @@ export function Schedule() {
               } ${!inMonth ? 'opacity-30' : ''}`}
             >
               {day.getDate()}
+              {hasCompetition && <span className="absolute right-0.5 top-0.5 text-[10px]">🏆</span>}
               {(hasClass || hasNotice) && (
                 <span
                   className={`absolute bottom-1 h-1.5 w-1.5 rounded-full ${
@@ -171,6 +180,7 @@ export function Schedule() {
         signedUpClassIds={signedUpClassIds ?? []}
         onToggleSignup={(classId, signedUp) => toggleSignup.mutate({ classId, signedUp })}
         canSignUp={canSignUp}
+        myCompetitionEntries={openCompetitionEntries}
       />
     </div>
   )

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import type { MyCompetitionEntry } from '../hooks/useCompetitions'
 import type { ClassNotice } from '../hooks/useNextClass'
 import type { ClassRow } from '../hooks/useSchedule'
 
@@ -11,6 +12,7 @@ export function DayDetailSheet({
   signedUpClassIds,
   onToggleSignup,
   canSignUp,
+  myCompetitionEntries,
 }: {
   date: string | null
   classes: ClassRow[]
@@ -19,6 +21,7 @@ export function DayDetailSheet({
   signedUpClassIds: string[]
   onToggleSignup: (classId: string, signedUp: boolean) => void
   canSignUp: boolean
+  myCompetitionEntries: MyCompetitionEntry[]
 }) {
   const { t, i18n } = useTranslation()
 
@@ -59,10 +62,30 @@ export function DayDetailSheet({
                 </button>
               </div>
 
+              {myCompetitionEntries.length > 0 && (
+                <div className="mb-4 space-y-2">
+                  {myCompetitionEntries.map((entry) => (
+                    <div
+                      key={entry.id}
+                      className="rounded-md border border-gold bg-ink/5 p-3 text-sm"
+                    >
+                      <p className="font-display uppercase tracking-wide text-ink">
+                        🏆 {entry.competition.name}
+                      </p>
+                      {entry.competition.location && (
+                        <p className="mt-0.5 text-muted">{entry.competition.location}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {classes.length === 0 ? (
-                <p className="py-6 text-center text-sm text-muted">
-                  {t('schedule.calendar.noClasses')}
-                </p>
+                myCompetitionEntries.length === 0 && (
+                  <p className="py-6 text-center text-sm text-muted">
+                    {t('schedule.calendar.noClasses')}
+                  </p>
+                )
               ) : (
                 <div className="space-y-4">
                   {classes.map((cls) => {
