@@ -81,9 +81,10 @@
   },
   "contact": {
     "title": "Contact",
-    "address": "[dojo address]",
-    "phone": "[phone number]",
-    "email": "[email address]"
+    "address": "Bul. Todor Kableshkov, near Mall Bulgaria, Sofia",
+    "phone": "+359 88 123 4567",
+    "email": "info@kime.demo",
+    "viewOnMaps": "View on Google Maps"
   },
   "footer": {
     "privacy": "Privacy",

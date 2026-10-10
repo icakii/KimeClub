@@ -81,9 +81,10 @@
   },
   "contact": {
     "title": "Контакти",
-    "address": "[адрес на залата]",
-    "phone": "[телефон]",
-    "email": "[имейл]"
+    "address": "Бул. Тодор Каблешков, до Mall Bulgaria, София",
+    "phone": "+359 88 123 4567",
+    "email": "info@kime.demo",
+    "viewOnMaps": "Виж в Google Maps"
   },
   "footer": {
     "privacy": "Поверителност",
