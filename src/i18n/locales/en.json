@@ -62,6 +62,23 @@
       "classTime": "Thursday · 7:00 PM"
     }
   },
+  "competitionsShowcase": {
+    "title": "Competitions and medals",
+    "body": "Every competition the club enters shows up in the app — who's competing, how it went, and what they won.",
+    "points": {
+      "entries": "See upcoming competitions, marked right on your schedule",
+      "results": "Placements recorded as soon as the coach enters them",
+      "medals": "A running record of every medal, kept for the whole season"
+    },
+    "mock": {
+      "title": "My results",
+      "eventName": "Regional Championship",
+      "eventDate": "March 15",
+      "placement": "1st place — Kata, U16",
+      "eventName2": "Sofia Open",
+      "eventDate2": "January 20"
+    }
+  },
   "managed": {
     "title": "We run it all for you",
     "body": "Coaches coach — the admin work stays with us.",

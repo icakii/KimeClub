@@ -3,6 +3,7 @@ import { Nav } from '../components/landing/Nav'
 import { Hero } from '../components/landing/Hero'
 import { FeatureCards } from '../components/landing/FeatureCards'
 import { AppShowcase } from '../components/landing/AppShowcase'
+import { CompetitionsShowcase } from '../components/landing/CompetitionsShowcase'
 import { Schedule } from '../components/landing/Schedule'
 import { BeltLadder } from '../components/landing/BeltLadder'
 import { Coaches } from '../components/landing/Coaches'
@@ -31,6 +32,7 @@ export function Landing() {
       <Hero />
       <FeatureCards />
       <AppShowcase />
+      <CompetitionsShowcase />
       <Schedule clubId={club.id} />
       <BeltLadder clubId={club.id} />
       <Coaches coaches={club.theme.coaches} />
