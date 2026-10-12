@@ -6,6 +6,7 @@ import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { useAdminMembers } from '../../hooks/useAdminMembers'
 import { usePaidThrough, useRecordPayment, useUndoLastPayment } from '../../hooks/useAdminPayments'
 import { useClub } from '../../hooks/useClub'
+import { localISODate } from '../../lib/date'
 
 function formatEur(cents: number): string {
   return `${(cents / 100).toFixed(2)} EUR`
@@ -27,7 +28,7 @@ export function Payments() {
   const undoPayment = useUndoLastPayment(club?.id)
 
   const now = new Date()
-  const today = now.toISOString().slice(0, 10)
+  const today = localISODate(now)
   const students = (members ?? []).filter((m) => m.role === 'student' && m.status !== 'left')
   const isPaid = (id: string) => (paidThrough?.get(id) ?? '') >= today
   const paidUp = students.filter((m) => isPaid(m.id)).length

@@ -5,6 +5,7 @@ import { PaymentStatusChip } from '../../components/PaymentStatusChip'
 import { useClub } from '../../hooks/useClub'
 import { useMember } from '../../hooks/useMember'
 import { usePayments } from '../../hooks/usePayments'
+import { localISODate } from '../../lib/date'
 
 export function Payments() {
   const { t, i18n } = useTranslation()
@@ -12,7 +13,7 @@ export function Payments() {
   const { data: member } = useMember(club?.id)
   const { data: payments } = usePayments(member?.id)
 
-  const today = new Date().toISOString().slice(0, 10)
+  const today = localISODate()
   const paidThrough = (payments ?? [])
     .filter((p) => p.status === 'paid')
     .reduce<string | null>((max, p) => (!max || p.period_end > max ? p.period_end : max), null)

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabaseClient'
+import { localISODate } from '../lib/date'
 
 export interface PaidThrough {
   member_id: string
@@ -62,8 +63,8 @@ export function useRecordPayment(clubId: string | undefined) {
         amount_cents: amountCents,
         currency: 'EUR',
         method,
-        period_start: periodStart.toISOString().slice(0, 10),
-        period_end: periodEnd.toISOString().slice(0, 10),
+        period_start: localISODate(periodStart),
+        period_end: localISODate(periodEnd),
         status: 'paid',
         recorded_by: user?.id ?? null,
       })

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useMyAttendance } from '../../hooks/useAttendance'
 import { Card, Eyebrow } from './ui'
+import { localISODate } from '../../lib/date'
 
 // Student's own attendance: rate over the last 30 days, current streak and
 // the last dozen marked sessions as dots (oldest left, newest right).
@@ -21,7 +22,7 @@ export function AttendanceCard({ memberId }: { memberId: string }) {
 
   const since = new Date()
   since.setDate(since.getDate() - 30)
-  const sinceIso = since.toISOString().slice(0, 10)
+  const sinceIso = localISODate(since)
   const recent = rows.filter((r) => r.session_date >= sinceIso)
   const present = recent.filter((r) => r.status === 'present').length
   const rate = recent.length ? Math.round((present / recent.length) * 100) : null

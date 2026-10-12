@@ -5,6 +5,7 @@ import { Card, Eyebrow, PageHeader, Stagger, StaggerItem } from '../../component
 import { useClub } from '../../hooks/useClub'
 import { useCompetitions, useMyCompetitionEntries } from '../../hooks/useCompetitions'
 import { useMember } from '../../hooks/useMember'
+import { localISODate } from '../../lib/date'
 
 const MEDAL_EMOJI: Record<string, string> = { gold: '🥇', silver: '🥈', bronze: '🥉' }
 const MEDAL_CARD: Record<string, string> = {
@@ -31,7 +32,7 @@ export function Competitions() {
   const { data: competitions } = useCompetitions(club?.id)
   const { data: myEntries } = useMyCompetitionEntries(club?.id, member?.id)
 
-  const todayISO = new Date().toISOString().slice(0, 10)
+  const todayISO = localISODate()
   const upcoming = (competitions ?? [])
     .filter((c) => c.event_date >= todayISO)
     .sort((a, b) => (a.event_date < b.event_date ? -1 : 1))

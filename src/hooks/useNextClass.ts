@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { useSchedule, type ClassRow } from './useSchedule'
+import { localISODate } from '../lib/date'
 
 export interface ClassNotice {
   class_id: string
@@ -14,7 +15,7 @@ function useUpcomingNotices(clubId: string | undefined) {
   return useQuery({
     queryKey: ['class_notices', clubId],
     queryFn: async (): Promise<ClassNotice[]> => {
-      const today = new Date().toISOString().slice(0, 10)
+      const today = localISODate()
       const { data, error } = await supabase
         .from('class_notices')
         .select('class_id, effective_date, new_start_time, note')
@@ -60,7 +61,7 @@ export function useNextClass(clubId: string | undefined, groupId?: string | null
     }))
     withDates.sort((a, b) => a.date.getTime() - b.date.getTime())
     const soonest = withDates[0]
-    const dateStr = soonest.date.toISOString().slice(0, 10)
+    const dateStr = localISODate(soonest.date)
 
     const notice =
       notices?.find((n) => n.class_id === soonest.cls.id && n.effective_date === dateStr) ?? null

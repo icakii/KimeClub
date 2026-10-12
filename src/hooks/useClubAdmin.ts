@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabaseClient'
+import { localISODate } from '../lib/date'
 
 // Self-service admin for clubs on the "Клуб" plan (clubs.self_service). RLS
 // only allows these writes for staff of such clubs; on "Клуб Pro" the Hub
@@ -48,7 +49,7 @@ export function useAddStudent(clubId: string | undefined) {
         club_id: clubId,
         role: 'student',
         status: 'active',
-        joined_at: new Date().toISOString().slice(0, 10),
+        joined_at: localISODate(),
       })
       if (error) throw error
     },

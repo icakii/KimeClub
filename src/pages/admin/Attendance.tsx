@@ -9,6 +9,7 @@ import { useAdminMembers } from '../../hooks/useAdminMembers'
 import { useAttendance, useAttendanceHistory, useMarkAttendance } from '../../hooks/useAttendance'
 import { useClub } from '../../hooks/useClub'
 import { useSchedule } from '../../hooks/useSchedule'
+import { localISODate } from '../../lib/date'
 
 // 0 = Monday, matching the classes.weekday convention used everywhere else.
 function mondayIndex(date: Date): number {
@@ -16,7 +17,7 @@ function mondayIndex(date: Date): number {
 }
 
 function toISODate(date: Date): string {
-  return date.toISOString().slice(0, 10)
+  return localISODate(date)
 }
 
 function shiftDays(iso: string, days: number): string {
