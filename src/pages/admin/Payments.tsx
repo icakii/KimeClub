@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MemberAvatar } from '../../components/admin/MemberAvatar'
 import { Pill, StatCard } from '../../components/admin/ui'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { useAdminMembers } from '../../hooks/useAdminMembers'
-import { usePaidThrough, useRecordPayment, useUndoLastPayment } from '../../hooks/useAdminPayments'
+import { usePaidThrough, useRecordPayment, useSendDuesReminder, useUndoLastPayment } from '../../hooks/useAdminPayments'
 import { useClub } from '../../hooks/useClub'
 import { localISODate } from '../../lib/date'
 
@@ -26,6 +27,8 @@ export function Payments() {
   const { data: paidThrough } = usePaidThrough(club?.id)
   const recordPayment = useRecordPayment(club?.id)
   const undoPayment = useUndoLastPayment(club?.id)
+  const sendReminder = useSendDuesReminder(club?.id)
+  const [reminderNote, setReminderNote] = useState<Record<string, string>>({})
 
   const now = new Date()
   const today = localISODate(now)
@@ -53,7 +56,7 @@ export function Payments() {
           const through = paidThrough?.get(m.id)
           const paid = isPaid(m.id)
           // Behind for 3+ months: last paid period ended over ~90 days ago.
-          const longBehind = !paid && !!through && daysBetween(through, now) >= 90
+          const longBehind = !paid && daysBetween(through ?? m.joined_at ?? localISODate(now), now) >= 90
           return (
             <StaggerItem key={m.id}>
               <motion.div
@@ -74,8 +77,25 @@ export function Payments() {
                     {m.monthly_fee_cents != null && <span className="text-muted"> · {formatEur(m.monthly_fee_cents)}</span>}
                   </p>
                   {longBehind && (
-                    <span className="mt-1.5 inline-block">
+                    <span className="mt-1.5 flex flex-wrap items-center gap-2">
                       <Pill tone="kin">{t('admin.payments.longBehind')}</Pill>
+                      <button
+                        type="button"
+                        disabled={sendReminder.isPending || !(m.guardian_email || m.email)}
+                        title={!(m.guardian_email || m.email) ? t('admin.payments.reminder.no_email') : undefined}
+                        onClick={async () => {
+                          const r = await sendReminder.mutateAsync(m.id)
+                          setReminderNote((n) => ({ ...n, [m.id]: 'sent' in r ? t('admin.payments.reminder.sent', { to: r.to }) : t(`admin.payments.reminder.${r.error}`, { defaultValue: t('admin.payments.reminder.send_failed') }) }))
+                        }}
+                        className="rounded-full border border-ink/15 bg-shiro px-3 py-1 font-display text-[11px] uppercase tracking-wide text-ink transition-colors hover:border-aka-text hover:text-aka-text disabled:opacity-40"
+                      >
+                        ✉ {t('admin.payments.reminder.button')}
+                      </button>
+                      {(reminderNote[m.id] || m.last_reminder_at) && (
+                        <span className="text-[11px] text-muted">
+                          {reminderNote[m.id] ?? t('admin.payments.reminder.last', { date: new Date(m.last_reminder_at as string).toLocaleDateString() })}
+                        </span>
+                      )}
                     </span>
                   )}
                 </div>

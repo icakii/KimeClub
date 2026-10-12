@@ -102,3 +102,23 @@ export function useUndoLastPayment(clubId: string | undefined) {
     },
   })
 }
+
+export type ReminderResult = { sent: true; to: string } | { error: string }
+
+// Emails a student 3+ months behind (or their parent). The function checks
+// staff rights, that they really are behind, and throttles to one per 14 days.
+export function useSendDuesReminder(clubId: string | undefined) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (memberId: string): Promise<ReminderResult> => {
+      const { data, error } = await supabase.functions.invoke('send-dues-reminder', { body: { member_id: memberId } })
+      if (error) {
+        // Non-2xx: the body carries the reason code.
+        const body = await (error as { context?: Response }).context?.json?.().catch(() => null)
+        return { error: body?.error ?? 'send_failed' }
+      }
+      return data as ReminderResult
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-members', clubId] }),
+  })
+}

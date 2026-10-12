@@ -17,6 +17,8 @@ export interface AdminMember {
   guardian_phone: string | null
   guardian_email: string | null
   photo_path: string | null
+  last_reminder_at: string | null
+  joined_at: string | null
   belt: MemberBelt | null
 }
 
@@ -30,7 +32,7 @@ export function useAdminMembers(clubId: string | undefined) {
       const { data, error } = await supabase
         .from('members')
         .select(
-          'id, full_name, email, phone, role, status, group_id, monthly_fee_cents, birth_year, guardian_first_name, guardian_last_name, guardian_phone, guardian_email, photo_path, belt:belts(id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en)',
+          'id, full_name, email, phone, role, status, group_id, monthly_fee_cents, birth_year, guardian_first_name, guardian_last_name, guardian_phone, guardian_email, photo_path, last_reminder_at, joined_at, belt:belts(id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en)',
         )
         .eq('club_id', clubId as string)
         .order('full_name')

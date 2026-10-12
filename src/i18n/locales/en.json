@@ -491,7 +491,17 @@
       "paidUntil": "Paid until {{date}}",
       "unpaidSince": "Unpaid since {{date}}",
       "longBehind": "3+ months unpaid: have they quit?",
-      "markPaid": "Paid"
+      "markPaid": "Paid",
+      "reminder": {
+        "button": "Send email",
+        "sent": "Sent to {{to}}",
+        "last": "Last email: {{date}}",
+        "no_email": "No email for the student or parent",
+        "recently_sent": "An email was already sent in the last 2 weeks",
+        "not_behind": "The student is not 3 months behind",
+        "email_not_configured": "Email is not set up yet",
+        "send_failed": "The email was not sent"
+      }
     },
     "attendance": {
       "title": "Attendance",
@@ -549,7 +559,8 @@
       "birthYear": "Birth year",
       "parentName": "Parent",
       "parentPhone": "Parent phone",
-      "submit": "Add"
+      "submit": "Add",
+      "limit": "You have reached the 75-student limit of the Club plan. Message us about Club Pro."
     },
     "schedule": {
       "title": "Schedule",

@@ -52,8 +52,8 @@ export function AddStudentModal({ clubId, onClose }: { clubId: string; onClose: 
         guardian_phone: f.guardian_phone.trim() || null,
       })
       onClose()
-    } catch {
-      setError(t('admin.edit.error'))
+    } catch (err) {
+      setError(err instanceof Error && err.message.includes('limit') ? t('admin.add.limit') : t('admin.edit.error'))
     }
   }
 
