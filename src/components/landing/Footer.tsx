@@ -2,7 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Emblem } from './Emblem'
 
-const TATAMI_URL = (import.meta.env.VITE_TATAMI_URL as string | undefined) ?? 'https://tatami.onrender.com'
+// Set VITE_TATAMI_URL on the host; without it the credit is hidden rather
+// than pointing at a guessed address.
+const TATAMI_URL = import.meta.env.VITE_TATAMI_URL as string | undefined
 
 export function Footer({ clubName }: { clubName: string }) {
   const { t } = useTranslation()
@@ -46,6 +48,7 @@ export function Footer({ clubName }: { clubName: string }) {
           </div>
         </div>
         {/* Credit: this club site is built and run by Tatami. */}
+        {TATAMI_URL && (
         <a
           href={TATAMI_URL}
           target="_blank"
@@ -56,6 +59,7 @@ export function Footer({ clubName }: { clubName: string }) {
           {t('footer.madeWith')} <span className="font-display uppercase tracking-[0.25em] text-kin">Tatami</span>
           <span className="transition-transform group-hover:translate-x-0.5">↗</span>
         </a>
+        )}
       </div>
     </footer>
   )
