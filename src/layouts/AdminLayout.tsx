@@ -8,6 +8,8 @@ import { useAuth } from '../hooks/useAuth'
 import { useClub } from '../hooks/useClub'
 import { useMember } from '../hooks/useMember'
 
+const TATAMI_URL = (import.meta.env.VITE_TATAMI_URL as string | undefined) || 'https://tatamistudio.net'
+
 export function AdminLayout() {
   const { t } = useTranslation()
   const { signOut } = useAuth()
@@ -21,9 +23,7 @@ export function AdminLayout() {
     { to: '/admin', end: true, label: t('admin.nav.members') },
     { to: '/admin/attendance', end: false, label: t('admin.nav.attendance') },
     { to: '/admin/payments', end: false, label: t('admin.nav.payments') },
-    ...(member?.role === 'owner'
-      ? [{ to: '/admin/subscription', end: false, label: t('admin.nav.subscription') }]
-      : []),
+    ...(club?.self_service ? [{ to: '/admin/schedule', end: false, label: t('admin.nav.schedule') }] : []),
   ]
 
   return (
@@ -57,8 +57,10 @@ export function AdminLayout() {
             <button
               type="button"
               onClick={async () => {
+                // Leave the protected page first; signing out while still on it
+                // makes the route guard bounce to /login instead of the home page.
+                navigate('/', { replace: true })
                 await signOut()
-                navigate('/')
               }}
               className="rounded-full border border-aka/30 px-3 py-2 text-aka-text transition-colors hover:bg-aka hover:text-shiro"
             >
@@ -90,6 +92,17 @@ export function AdminLayout() {
               )}
             </NavLink>
           ))}
+          {/* The club's Tatami subscription is paid on the Tatami site only. */}
+          {member?.role === 'owner' && (
+            <a
+              href={`${TATAMI_URL}/account`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative flex min-h-10 shrink-0 items-center justify-center rounded-xl px-4 font-display text-xs uppercase tracking-wider text-muted transition-colors hover:text-ink sm:flex-1"
+            >
+              {t('admin.nav.subscription')} ↗
+            </a>
+          )}
         </nav>
       </div>
 

@@ -100,8 +100,10 @@ export function Profile() {
           <button
             type="button"
             onClick={async () => {
+              // Leave the protected page first; signing out while still on it
+              // makes the route guard bounce to /login instead of the home page.
+              navigate('/', { replace: true })
               await signOut()
-              navigate('/')
             }}
             className="min-h-12 w-full rounded-2xl bg-aka px-4 font-display text-sm uppercase tracking-wide text-shiro shadow-[0_12px_24px_-12px_rgba(194,54,31,0.9)] transition-transform active:scale-[0.98]"
           >

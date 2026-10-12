@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AddStudentModal } from '../../components/admin/AddStudentModal'
 import { EditMemberModal } from '../../components/admin/EditMemberModal'
 import { MemberAvatar } from '../../components/admin/MemberAvatar'
 import { Pill, StatCard } from '../../components/admin/ui'
@@ -37,6 +38,7 @@ export function Members() {
   const [beltFilter, setBeltFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
   const [editing, setEditing] = useState<AdminMember | null>(null)
+  const [adding, setAdding] = useState(false)
 
   const filtered = useMemo(() => {
     return (members ?? []).filter((m) => {
@@ -53,8 +55,20 @@ export function Members() {
 
   return (
     <div className="px-5 py-6">
-      <PageHeader kanji="人" title={t('admin.members.title')} tone="bg-ai" />
-      <p className="mt-2 text-sm text-muted">{t('admin.members.viewOnlyNote')}</p>
+      <PageHeader kanji="人" title={t('admin.members.title')} tone="bg-ai">
+        {club.self_service && (
+          <button
+            type="button"
+            onClick={() => setAdding(true)}
+            className="shrink-0 rounded-full bg-aka px-4 py-2.5 font-display text-xs uppercase tracking-wide text-shiro shadow-[0_10px_20px_-10px_rgba(194,54,31,0.9)] transition-transform active:scale-95"
+          >
+            + {t('admin.add.button')}
+          </button>
+        )}
+      </PageHeader>
+      <p className="mt-2 text-sm text-muted">
+        {club.self_service ? t('admin.members.selfServiceNote') : t('admin.members.viewOnlyNote')}
+      </p>
 
       <div className="mt-5 grid grid-cols-3 gap-3">
         <StatCard label={t('admin.status.active')} value={count('active')} kanji="活" tone="bg-jade" />
@@ -161,7 +175,10 @@ export function Members() {
         ))}
       </Stagger>
 
-      {editing && <EditMemberModal clubId={club.id} member={editing} onClose={() => setEditing(null)} />}
+      {editing && (
+        <EditMemberModal clubId={club.id} member={editing} selfService={club.self_service} onClose={() => setEditing(null)} />
+      )}
+      {adding && <AddStudentModal clubId={club.id} onClose={() => setAdding(false)} />}
     </div>
   )
 }

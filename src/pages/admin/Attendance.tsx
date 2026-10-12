@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { initials, StatCard } from '../../components/admin/ui'
+import { MemberAvatar } from '../../components/admin/MemberAvatar'
+import { StatCard } from '../../components/admin/ui'
+import { useGroups } from '../../hooks/useClubAdmin'
 import { DAY_KANJI, PageHeader } from '../../components/app/ui'
 import { useAdminMembers } from '../../hooks/useAdminMembers'
 import { useAttendance, useAttendanceHistory, useMarkAttendance } from '../../hooks/useAttendance'
@@ -31,11 +33,22 @@ export function Attendance() {
 
   const [date, setDate] = useState(() => toISODate(new Date()))
   const [classId, setClassId] = useState<string>('')
+  // Filter the day's classes and the 30-day summary by group and by hall.
+  const [groupFilter, setGroupFilter] = useState<string>('')
+  const [hallFilter, setHallFilter] = useState<string>('')
+  const { data: groups } = useGroups(club?.id)
+  const halls = useMemo(() => [...new Set((classes ?? []).map((c) => c.room).filter((r): r is string => !!r))], [classes])
 
   const weekday = mondayIndex(new Date(`${date}T00:00:00`))
   const classesThisDay = useMemo(
-    () => (classes ?? []).filter((c) => c.weekday === weekday),
-    [classes, weekday],
+    () =>
+      (classes ?? []).filter(
+        (c) =>
+          c.weekday === weekday &&
+          (!groupFilter || c.group_id === groupFilter) &&
+          (!hallFilter || c.room === hallFilter),
+      ),
+    [classes, weekday, groupFilter, hallFilter],
   )
   const selectedClass = classesThisDay.find((c) => c.id === classId) ?? classesThisDay[0]
 
@@ -68,10 +81,10 @@ export function Attendance() {
       byMember.set(row.member_id, s)
     }
     return (members ?? [])
-      .filter((m) => m.role === 'student' && m.status !== 'left')
+      .filter((m) => m.role === 'student' && m.status !== 'left' && (!groupFilter || m.group_id === groupFilter))
       .map((m) => ({ member: m, ...(byMember.get(m.id) ?? { present: 0, total: 0 }) }))
       .sort((a, b) => b.present / (b.total || 1) - a.present / (a.total || 1))
-  }, [history, members])
+  }, [history, members, groupFilter])
 
   const weekdayNames = t('schedule.weekdays', { returnObjects: true }) as string[]
   const dateLabel = new Date(`${date}T00:00:00`).toLocaleDateString(i18n.resolvedLanguage, {
@@ -129,6 +142,39 @@ export function Attendance() {
         )}
       </div>
 
+      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+        <span className="font-display uppercase tracking-[0.2em] text-muted">{t('admin.attendance.filterGroup')}</span>
+        {[{ id: '', name: t('admin.attendance.all') }, ...(groups ?? [])].map((g) => (
+          <button
+            key={g.id || 'all'}
+            type="button"
+            onClick={() => setGroupFilter(g.id)}
+            className={`rounded-full px-3 py-1.5 font-display uppercase tracking-wide transition-colors ${
+              groupFilter === g.id ? 'bg-ink text-shiro' : 'border border-ink/15 text-muted hover:text-ink'
+            }`}
+          >
+            {g.name}
+          </button>
+        ))}
+        {halls.length > 0 && (
+          <>
+            <span className="ml-2 font-display uppercase tracking-[0.2em] text-muted">{t('admin.attendance.filterHall')}</span>
+            {['', ...halls].map((h) => (
+              <button
+                key={h || 'all-halls'}
+                type="button"
+                onClick={() => setHallFilter(h)}
+                className={`rounded-full px-3 py-1.5 font-display uppercase tracking-wide transition-colors ${
+                  hallFilter === h ? 'bg-kin text-ink' : 'border border-ink/15 text-muted hover:text-ink'
+                }`}
+              >
+                {h || t('admin.attendance.all')}
+              </button>
+            ))}
+          </>
+        )}
+      </div>
+
       {classesThisDay.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {classesThisDay.map((c) => {
@@ -143,6 +189,7 @@ export function Attendance() {
                 }`}
               >
                 {c.start_time.slice(0, 5)} · {c.title}
+                {c.room && <span className="opacity-60"> · {c.room}</span>}
               </button>
             )
           })}
@@ -202,15 +249,16 @@ export function Attendance() {
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     <span
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-display text-xs font-semibold transition-colors ${
-                        current === 'present'
-                          ? 'bg-jade text-shiro'
-                          : current === 'absent'
-                            ? 'bg-aka text-shiro'
-                            : 'bg-ink/8 text-muted'
+                      className={`shrink-0 rounded-full ring-2 ring-offset-1 ring-offset-shiro transition-colors ${
+                        current === 'present' ? 'ring-jade' : current === 'absent' ? 'ring-aka' : 'ring-transparent'
                       }`}
                     >
-                      {initials(member.full_name)}
+                      <MemberAvatar
+                        name={member.full_name}
+                        photoPath={member.photo_path}
+                        tone={current === 'present' ? 'bg-jade' : current === 'absent' ? 'bg-aka' : 'bg-muted'}
+                        className="h-9 w-9 text-xs"
+                      />
                     </span>
                     <span className="truncate text-sm text-ink">{member.full_name}</span>
                   </div>

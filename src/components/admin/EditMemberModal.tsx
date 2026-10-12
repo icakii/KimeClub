@@ -2,11 +2,15 @@ import { motion } from 'framer-motion'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  useAdminMembers,
   useUpdateMemberContact,
   useUploadMemberPhoto,
   type AdminMember,
   type MemberContact,
 } from '../../hooks/useAdminMembers'
+import { useBelts } from '../../hooks/useBelts'
+import { useGroups, useUpdateStudent } from '../../hooks/useClubAdmin'
+import { beltLabel } from '../../lib/belts'
 import { MemberAvatar } from './MemberAvatar'
 
 const fieldClass =
@@ -17,14 +21,29 @@ const labelClass = 'block text-[10px] font-semibold uppercase tracking-[0.2em] t
 // Name, belt, group, fee and status are not here on purpose (Hub only).
 export function EditMemberModal({
   clubId,
-  member,
+  member: initial,
+  selfService,
   onClose,
 }: {
   clubId: string
   member: AdminMember
+  selfService: boolean
   onClose: () => void
 }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  // Read the live row so a new photo shows up right away.
+  const { data: members } = useAdminMembers(clubId)
+  const member = members?.find((m) => m.id === initial.id) ?? initial
+  const { data: belts } = useBelts(clubId)
+  const { data: groups } = useGroups(clubId)
+  const updateStudent = useUpdateStudent(clubId)
+  const canManage = selfService && member.role === 'student'
+  const [training, setTraining] = useState({
+    belt_id: initial.belt?.id ?? '',
+    group_id: initial.group_id ?? '',
+    fee: initial.monthly_fee_cents != null ? String(initial.monthly_fee_cents / 100) : '',
+    status: initial.status,
+  })
   const updateContact = useUpdateMemberContact(clubId)
   const uploadPhoto = useUploadMemberPhoto(clubId)
   const fileRef = useRef<HTMLInputElement>(null)
@@ -52,6 +71,17 @@ export function EditMemberModal({
     setError(null)
     try {
       await updateContact.mutateAsync({ memberId: member.id, contact: form })
+      if (canManage) {
+        await updateStudent.mutateAsync({
+          memberId: member.id,
+          updates: {
+            belt_id: training.belt_id || null,
+            group_id: training.group_id || null,
+            monthly_fee_cents: training.fee ? Math.round(Number(training.fee) * 100) : null,
+            status: training.status,
+          },
+        })
+      }
       onClose()
     } catch {
       setError(t('admin.edit.error'))
@@ -118,6 +148,48 @@ export function EditMemberModal({
         </div>
 
         <form onSubmit={onSubmit} className="mt-6 space-y-5">
+          {canManage && (
+            <fieldset className="grid gap-3 sm:grid-cols-2">
+              <legend className="mb-2 font-display text-sm uppercase tracking-wide text-ink">{t('admin.edit.training')}</legend>
+              <label>
+                <span className={labelClass}>{t('admin.edit.belt')}</span>
+                <select value={training.belt_id} onChange={(e) => setTraining((s) => ({ ...s, belt_id: e.target.value }))} className={fieldClass}>
+                  <option value="">-</option>
+                  {belts?.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {beltLabel(b, i18n.resolvedLanguage)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span className={labelClass}>{t('admin.edit.group')}</span>
+                <select value={training.group_id} onChange={(e) => setTraining((s) => ({ ...s, group_id: e.target.value }))} className={fieldClass}>
+                  <option value="">-</option>
+                  {groups?.map((g) => (
+                    <option key={g.id} value={g.id}>
+                      {g.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span className={labelClass}>{t('admin.edit.fee')}</span>
+                <input type="number" min={0} step="0.01" value={training.fee} onChange={(e) => setTraining((s) => ({ ...s, fee: e.target.value }))} className={fieldClass} />
+              </label>
+              <label>
+                <span className={labelClass}>{t('admin.edit.status')}</span>
+                <select value={training.status} onChange={(e) => setTraining((s) => ({ ...s, status: e.target.value as AdminMember['status'] }))} className={fieldClass}>
+                  {(['active', 'trial', 'paused', 'left'] as const).map((st) => (
+                    <option key={st} value={st}>
+                      {t(`admin.status.${st}`)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </fieldset>
+          )}
+
           <fieldset className="grid gap-3 sm:grid-cols-2">
             <legend className="mb-2 font-display text-sm uppercase tracking-wide text-ink">
               {t('admin.members.contact')}
@@ -166,7 +238,7 @@ export function EditMemberModal({
             </button>
             <button
               type="submit"
-              disabled={updateContact.isPending}
+              disabled={updateContact.isPending || updateStudent.isPending}
               className="min-h-12 rounded-xl bg-aka font-display text-sm uppercase tracking-wide text-shiro shadow-[0_12px_24px_-12px_rgba(194,54,31,0.9)] disabled:opacity-60"
             >
               {updateContact.isPending ? '...' : t('admin.edit.save')}

@@ -8,6 +8,7 @@ import { PaymentShowcase } from '../components/landing/PaymentShowcase'
 import { Schedule } from '../components/landing/Schedule'
 import { BeltLadder } from '../components/landing/BeltLadder'
 import { Coaches } from '../components/landing/Coaches'
+import { News } from '../components/landing/News'
 import { Gallery } from '../components/landing/Gallery'
 import { Contact } from '../components/landing/Contact'
 import { Footer } from '../components/landing/Footer'
@@ -38,6 +39,7 @@ export function Landing() {
       <PaymentShowcase />
       <Schedule clubId={club.id} />
       <BeltLadder clubId={club.id} />
+      <News />
       <Gallery />
       <Coaches coaches={club.theme.coaches} />
       <Contact />

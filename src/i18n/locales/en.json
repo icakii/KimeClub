@@ -2,7 +2,8 @@
   "nav": {
     "schedule": "Schedule",
     "coaches": "Coaches",
-    "contact": "Contact"
+    "contact": "Contact",
+    "news": "News"
   },
   "hero": {
     "subtitle": "Karate Club",
@@ -454,13 +455,15 @@
       "allBelts": "All belts",
       "allStatuses": "All statuses",
       "contact": "Contact",
-      "guardian": "Parent / guardian"
+      "guardian": "Parent / guardian",
+      "selfServiceNote": "Add students, change belts and groups and manage the schedule yourself. We create a new student’s app login."
     },
     "nav": {
       "members": "Members",
       "subscription": "Subscription",
       "attendance": "Attendance",
-      "payments": "Payments"
+      "payments": "Fee payments",
+      "schedule": "Schedule"
     },
     "payments": {
       "title": "Payments",
@@ -484,7 +487,11 @@
       "noFee": "No fee set yet",
       "undo": "Undo",
       "undoHint": "Removes the last recorded month",
-      "undoConfirm": "Remove the last recorded payment for {{name}}?"
+      "undoConfirm": "Remove the last recorded payment for {{name}}?",
+      "paidUntil": "Paid until {{date}}",
+      "unpaidSince": "Unpaid since {{date}}",
+      "longBehind": "3+ months unpaid: have they quit?",
+      "markPaid": "Paid"
     },
     "attendance": {
       "title": "Attendance",
@@ -498,7 +505,10 @@
       "marked": "{{present}} of {{total}} present",
       "markRest": "Mark the rest present",
       "last30": "Last 30 days",
-      "noHistory": "No sessions marked in the last 30 days yet."
+      "noHistory": "No sessions marked in the last 30 days yet.",
+      "filterGroup": "Group",
+      "filterHall": "Hall",
+      "all": "All"
     },
     "subscription": {
       "title": "Subscription",
@@ -524,7 +534,37 @@
       "save": "Save",
       "cancel": "Cancel",
       "error": "Could not save. Try again.",
-      "photoError": "The photo was not uploaded. Try another one."
+      "photoError": "The photo was not uploaded. Try another one.",
+      "training": "Training",
+      "belt": "Belt",
+      "group": "Group",
+      "fee": "Monthly fee (€)",
+      "status": "Status"
+    },
+    "add": {
+      "button": "Add student",
+      "title": "New student",
+      "note": "We will create their app login once you add them.",
+      "name": "Full name",
+      "birthYear": "Birth year",
+      "parentName": "Parent",
+      "parentPhone": "Parent phone",
+      "submit": "Add"
+    },
+    "schedule": {
+      "title": "Schedule",
+      "add": "New class",
+      "edit": "Edit class",
+      "name": "Name",
+      "day": "Day",
+      "time": "Start",
+      "duration": "Duration (min)",
+      "everyone": "Everyone",
+      "room": "Hall (optional)",
+      "roomPlaceholder": "e.g. Hall 1",
+      "delete": "Delete",
+      "confirmDelete": "Delete “{{name}}”?",
+      "min": "min"
     }
   },
   "offline": {
@@ -545,6 +585,24 @@
     "two": {
       "caption": "The bow",
       "alt": "Bowing before the start of class"
+    }
+  },
+  "news": {
+    "title": "Club news",
+    "placeholder": "Photo soon",
+    "posts": {
+      "grading": {
+        "title": "Belt grading on 15 November",
+        "body": "Sign up with your coach by 8 November. We are working on kata and kihon in every class until then."
+      },
+      "medals": {
+        "title": "3 medals at the Regional Championship",
+        "body": "Gold in kata under 16 and two bronzes in kumite. Well done, competition team!"
+      },
+      "kids": {
+        "title": "New group for kids from age 5",
+        "body": "We start Saturday at 10:00 in Hall 1. The first class is free, just come in comfortable clothes."
+      }
     }
   }
 }

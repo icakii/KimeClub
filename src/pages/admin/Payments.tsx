@@ -1,17 +1,23 @@
-import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { initials, Pill, StatCard } from '../../components/admin/ui'
+import { MemberAvatar } from '../../components/admin/MemberAvatar'
+import { Pill, StatCard } from '../../components/admin/ui'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { useAdminMembers } from '../../hooks/useAdminMembers'
 import { usePaidThrough, useRecordPayment, useUndoLastPayment } from '../../hooks/useAdminPayments'
 import { useClub } from '../../hooks/useClub'
 
-const METHODS = ['cash', 'card', 'bank', 'online'] as const
-
 function formatEur(cents: number): string {
   return `${(cents / 100).toFixed(2)} EUR`
 }
 
+function daysBetween(fromIso: string, to: Date): number {
+  return Math.floor((to.getTime() - new Date(`${fromIso}T00:00:00`).getTime()) / 86_400_000)
+}
+
+// Deliberately simple: red row = not paid, one green button to mark the month
+// paid (cash), a small undo for mistakes. Three months behind gets a flag so
+// the coach can check whether the student has quit.
 export function Payments() {
   const { t } = useTranslation()
   const { data: club } = useClub()
@@ -19,26 +25,22 @@ export function Payments() {
   const { data: paidThrough } = usePaidThrough(club?.id)
   const recordPayment = useRecordPayment(club?.id)
   const undoPayment = useUndoLastPayment(club?.id)
-  const [methodByMember, setMethodByMember] = useState<Record<string, (typeof METHODS)[number]>>(
-    {},
-  )
 
-  const today = new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  const today = now.toISOString().slice(0, 10)
   const students = (members ?? []).filter((m) => m.role === 'student' && m.status !== 'left')
-  const paidUp = students.filter((m) => (paidThrough?.get(m.id) ?? '') >= today).length
+  const isPaid = (id: string) => (paidThrough?.get(id) ?? '') >= today
+  const paidUp = students.filter((m) => isPaid(m.id)).length
   const expected = students.reduce((sum, m) => sum + (m.monthly_fee_cents ?? 0), 0)
+  // Unpaid first, so the list reads as a to-do.
+  const sorted = [...students].sort((a, b) => Number(isPaid(a.id)) - Number(isPaid(b.id)))
 
   return (
     <div className="px-5 py-6">
       <PageHeader kanji="金" title={t('admin.payments.title')} tone="bg-kin" />
 
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <StatCard
-          label={t('admin.payments.paidUp')}
-          value={`${paidUp} / ${students.length}`}
-          kanji="済"
-          tone="bg-jade"
-        />
+        <StatCard label={t('admin.payments.paidUp')} value={`${paidUp} / ${students.length}`} kanji="済" tone="bg-jade" />
         <StatCard label={t('admin.payments.behind')} value={students.length - paidUp} kanji="未" tone="bg-aka" />
         <div className="col-span-2 sm:col-span-1">
           <StatCard label={t('admin.payments.expected')} value={formatEur(expected)} kanji="月" tone="bg-kin" />
@@ -46,69 +48,42 @@ export function Payments() {
       </div>
 
       <Stagger className="mt-5 space-y-2">
-        {students.map((m) => {
+        {sorted.map((m) => {
           const through = paidThrough?.get(m.id)
-          const current = !!through && through >= today
-          const method = methodByMember[m.id] ?? 'cash'
+          const paid = isPaid(m.id)
+          // Behind for 3+ months: last paid period ended over ~90 days ago.
+          const longBehind = !paid && !!through && daysBetween(through, now) >= 90
           return (
             <StaggerItem key={m.id}>
-              <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-ink/10 bg-shiro/95 p-3 pl-4 shadow-[0_16px_32px_-26px_rgba(31,27,22,0.55)]">
-                <span
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-display text-xs font-semibold text-shiro ${
-                    current ? 'bg-jade' : 'bg-aka'
-                  }`}
-                >
-                  {initials(m.full_name)}
-                </span>
+              <motion.div
+                layout
+                className={`flex flex-wrap items-center gap-3 rounded-2xl border p-3 pl-4 transition-colors ${
+                  paid ? 'border-jade/25 bg-shiro/95' : 'border-aka/35 bg-aka/6'
+                }`}
+              >
+                <MemberAvatar name={m.full_name} photoPath={m.photo_path} tone={paid ? 'bg-jade' : 'bg-aka'} className="h-11 w-11 text-xs" />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-ink">{m.full_name}</p>
-                  <p className="text-xs text-muted">
-                    {m.monthly_fee_cents != null
-                      ? formatEur(m.monthly_fee_cents)
-                      : t('admin.payments.noFee')}
-                    {through && ` · ${t('admin.payments.throughDate', { date: through })}`}
+                  <p className="truncate font-medium text-ink">{m.full_name}</p>
+                  <p className={`text-xs ${paid ? 'text-jade' : 'text-aka-text'}`}>
+                    {paid
+                      ? t('admin.payments.paidUntil', { date: through })
+                      : through
+                        ? t('admin.payments.unpaidSince', { date: through })
+                        : t('admin.payments.neverPaid')}
+                    {m.monthly_fee_cents != null && <span className="text-muted"> · {formatEur(m.monthly_fee_cents)}</span>}
                   </p>
+                  {longBehind && (
+                    <span className="mt-1.5 inline-block">
+                      <Pill tone="kin">{t('admin.payments.longBehind')}</Pill>
+                    </span>
+                  )}
                 </div>
-                <Pill tone={current ? 'jade' : through ? 'aka' : 'kin'}>
-                  {current
-                    ? t('admin.payments.statusPaid')
-                    : through
-                      ? t('admin.payments.statusOverdue')
-                      : t('admin.payments.neverPaid')}
-                </Pill>
-                <div className="flex w-full items-center gap-2 sm:w-auto">
-                  <select
-                    value={method}
-                    onChange={(e) =>
-                      setMethodByMember((prev) => ({
-                        ...prev,
-                        [m.id]: e.target.value as (typeof METHODS)[number],
-                      }))
-                    }
-                    className="min-h-10 flex-1 rounded-xl border border-ink/15 bg-kuro px-2 text-xs text-ink outline-none focus:border-aka-text sm:flex-none"
-                  >
-                    {METHODS.map((meth) => (
-                      <option key={meth} value={meth}>
-                        {t(`admin.payments.methods.${meth}`)}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    type="button"
-                    disabled={m.monthly_fee_cents == null || recordPayment.isPending}
-                    onClick={() =>
-                      recordPayment.mutate({
-                        memberId: m.id,
-                        amountCents: m.monthly_fee_cents ?? 0,
-                        method,
-                        paidThrough: through,
-                      })
-                    }
-                    className="min-h-10 flex-1 rounded-xl bg-ink px-4 font-display text-[11px] uppercase tracking-wide text-shiro transition-transform active:scale-95 disabled:opacity-40 sm:flex-none"
-                  >
-                    {t('admin.payments.recordPayment')}
-                  </button>
-                  {through && (
+
+                {paid ? (
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-jade/15 px-3 py-1.5 font-display text-[11px] uppercase tracking-wide text-jade">
+                      ✓ {t('admin.payments.statusPaid')}
+                    </span>
                     <button
                       type="button"
                       disabled={undoPayment.isPending}
@@ -117,13 +92,30 @@ export function Payments() {
                       onClick={() => {
                         if (confirm(t('admin.payments.undoConfirm', { name: m.full_name }))) undoPayment.mutate(m.id)
                       }}
-                      className="min-h-10 rounded-xl border border-ink/15 px-3 font-display text-[11px] uppercase tracking-wide text-muted transition-colors hover:border-aka-text hover:text-aka-text disabled:opacity-40"
+                      className="h-9 w-9 rounded-full border border-ink/15 text-muted transition-colors hover:border-aka-text hover:text-aka-text"
                     >
-                      ↺<span className="hidden sm:inline"> {t('admin.payments.undo')}</span>
+                      ↺
                     </button>
-                  )}
-                </div>
-              </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={m.monthly_fee_cents == null || recordPayment.isPending}
+                    title={m.monthly_fee_cents == null ? t('admin.payments.noFee') : undefined}
+                    onClick={() =>
+                      recordPayment.mutate({
+                        memberId: m.id,
+                        amountCents: m.monthly_fee_cents ?? 0,
+                        method: 'cash',
+                        paidThrough: through,
+                      })
+                    }
+                    className="min-h-11 rounded-xl bg-jade px-5 font-display text-xs uppercase tracking-wide text-shiro shadow-[0_10px_20px_-12px_rgba(47,107,79,0.9)] transition-transform active:scale-95 disabled:opacity-40"
+                  >
+                    {t('admin.payments.markPaid')}
+                  </button>
+                )}
+              </motion.div>
             </StaggerItem>
           )
         })}

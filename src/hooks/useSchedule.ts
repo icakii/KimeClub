@@ -12,6 +12,8 @@ export interface ClassRow {
   group_id: string | null
   // Hall/room: the class's own, else its group's.
   room: string | null
+  // The class's own hall, before falling back to the group's.
+  own_room: string | null
 }
 
 // groupId filters to that group's classes plus any ungrouped (visible to
@@ -35,8 +37,8 @@ export function useSchedule(clubId: string | undefined, groupId?: string | null)
 
       const { data, error } = await query.order('weekday').order('start_time')
       if (error) throw error
-      return (data as unknown as (Omit<ClassRow, 'room'> & { room: string | null; group: { room: string | null } | null })[]).map(
-        ({ group, ...cls }) => ({ ...cls, room: cls.room ?? group?.room ?? null }),
+      return (data as unknown as (Omit<ClassRow, 'room' | 'own_room'> & { room: string | null; group: { room: string | null } | null })[]).map(
+        ({ group, ...cls }) => ({ ...cls, own_room: cls.room, room: cls.room ?? group?.room ?? null }),
       )
     },
     enabled: !!clubId,

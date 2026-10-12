@@ -12,12 +12,14 @@ export default defineConfig({
         runtimeCaching: [
           {
             // Schedule, belts, own payment status, notifications, etc. all
-            // go through this one Supabase REST endpoint. Caching it lets
-            // the student home open offline with the last-known data.
+            // go through this one Supabase REST endpoint. NetworkFirst: fresh
+            // data whenever online (StaleWhileRevalidate served the old
+            // response right after a change), cached copy only when offline.
             urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/.*/,
-            handler: 'StaleWhileRevalidate',
+            handler: 'NetworkFirst',
             options: {
               cacheName: 'supabase-api-cache',
+              networkTimeoutSeconds: 5,
               expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 7 },
               cacheableResponse: { statuses: [0, 200] },
             },
