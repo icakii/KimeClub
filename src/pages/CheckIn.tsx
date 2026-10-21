@@ -29,7 +29,7 @@ export function CheckIn() {
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center px-6 py-12 text-center">
       <KanjiBackdrop parallax={0.2} baseAlpha={0.06} />
-      <div className="relative w-full max-w-sm">
+      <div className="relative w-full max-w-sm rounded-3xl border border-ink/10 bg-shiro/95 px-6 py-10 shadow-[0_24px_48px_-32px_rgba(31,27,22,0.6)]">
         <Emblem className="mx-auto h-14 w-14" />
 
         {checkIn.isPending && (

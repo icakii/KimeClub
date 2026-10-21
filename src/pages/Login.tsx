@@ -34,7 +34,8 @@ export function Login() {
       setError(t('auth.error'))
       return
     }
-    navigate('/app', { replace: true })
+    // Back to where the login was asked for (e.g. the hall QR check-in or the store).
+    navigate((location.state as { from?: string })?.from ?? '/app', { replace: true })
   }
 
   return (
