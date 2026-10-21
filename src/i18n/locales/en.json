@@ -698,6 +698,12 @@
     "other1": "Open the browser menu (⋮)",
     "other2": "Choose \"Install app\" or \"Add to home screen\"",
     "iosSafari": "On iPhone this only works from Safari.",
-    "ok": "Got it"
+    "ok": "Got it",
+    "desktop1": "Open the site in Chrome or Edge",
+    "desktop2": "Click the install icon on the right of the address bar (a screen with an arrow)",
+    "desktop3": "Done, the app opens in its own window",
+    "buttonDesktop": "Install the app",
+    "subDesktop": "In its own window, with the club icon",
+    "titleDesktop": "Install on your computer"
   }
 }

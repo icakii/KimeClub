@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useSyncExternalStore } from 'react'
 import { useTranslation } from 'react-i18next'
-import { canPromptInstall, isIOS, isStandalone, promptInstall, subscribeInstall } from '../lib/install'
+import { canPromptInstall, isIOS, isMobile, isStandalone, promptInstall, subscribeInstall } from '../lib/install'
 import { Emblem } from './landing/Emblem'
 
 function ShareIcon() {
@@ -21,8 +21,9 @@ function PlusSquareIcon() {
   )
 }
 
-// "Add to phone": one tap on Android/Chrome (native install prompt), and a
-// short step-by-step sheet on iPhone, where Safari only allows it by hand.
+// "Add to phone": one tap wherever the browser offers its own install
+// prompt (Android, desktop Chrome/Edge); otherwise a short step-by-step
+// sheet: iPhone (Safari only allows it by hand), desktop, other phones.
 export function InstallButton({ className = '' }: { className?: string }) {
   const { t } = useTranslation()
   const canPrompt = useSyncExternalStore(subscribeInstall, canPromptInstall)
@@ -36,6 +37,7 @@ export function InstallButton({ className = '' }: { className?: string }) {
   }
 
   const ios = isIOS()
+  const desktop = !isMobile()
 
   return (
     <>
@@ -48,8 +50,8 @@ export function InstallButton({ className = '' }: { className?: string }) {
           <Emblem className="h-8 w-8" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block font-display text-sm uppercase tracking-wide">{t('install.button')}</span>
-          <span className="block text-xs text-shiro/60">{t('install.sub')}</span>
+          <span className="block font-display text-sm uppercase tracking-wide">{t(desktop ? 'install.buttonDesktop' : 'install.button')}</span>
+          <span className="block text-xs text-shiro/60">{t(desktop ? 'install.subDesktop' : 'install.sub')}</span>
         </span>
         <span className="text-xl transition-transform group-hover:translate-y-0.5" aria-hidden="true">
           ↓
@@ -75,7 +77,7 @@ export function InstallButton({ className = '' }: { className?: string }) {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-md rounded-t-3xl bg-shiro p-6 pb-[max(env(safe-area-inset-bottom),1.5rem)] shadow-2xl sm:rounded-3xl"
             >
-              <p className="font-display text-xl font-semibold uppercase tracking-wide text-ink">{t('install.title')}</p>
+              <p className="font-display text-xl font-semibold uppercase tracking-wide text-ink">{t(desktop ? 'install.titleDesktop' : 'install.title')}</p>
               <ol className="mt-4 space-y-3">
                 {(ios
                   ? [
@@ -87,7 +89,9 @@ export function InstallButton({ className = '' }: { className?: string }) {
                       </>,
                       <>{t('install.ios3')}</>,
                     ]
-                  : [<>{t('install.other1')}</>, <>{t('install.other2')}</>, <>{t('install.ios3')}</>]
+                  : desktop
+                    ? [<>{t('install.desktop1')}</>, <>{t('install.desktop2')}</>, <>{t('install.desktop3')}</>]
+                    : [<>{t('install.other1')}</>, <>{t('install.other2')}</>, <>{t('install.ios3')}</>]
                 ).map((step, i) => (
                   <motion.li
                     key={i}
