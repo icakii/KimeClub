@@ -15,7 +15,9 @@ import { Terms } from './pages/Terms'
 import { Attendance } from './pages/admin/Attendance'
 import { Members } from './pages/admin/Members'
 import { Payments as AdminPayments } from './pages/admin/Payments'
-import { Schedule as AdminSchedule } from './pages/admin/Schedule'
+import { HallQr } from './pages/admin/HallQr'
+import { Reservations } from './pages/admin/Reservations'
+import { CheckIn } from './pages/CheckIn'
 import { Competitions } from './pages/app/Competitions'
 import { Home } from './pages/app/Home'
 import { Payments } from './pages/app/Payments'
@@ -41,6 +43,14 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route
+        path="/checkin/:token"
+        element={
+          <ProtectedRoute>
+            <CheckIn />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/app"
         element={
@@ -68,7 +78,8 @@ function App() {
         <Route index element={<Members />} />
         <Route path="attendance" element={<Attendance />} />
         <Route path="payments" element={<AdminPayments />} />
-        <Route path="schedule" element={<AdminSchedule />} />
+        <Route path="reservations" element={<Reservations />} />
+        <Route path="qr" element={<HallQr />} />
       </Route>
     </Routes>
   )

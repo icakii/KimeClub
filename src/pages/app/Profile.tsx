@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
 import { BeltChip } from '../../components/BeltChip'
 import { MemberAvatar } from '../../components/admin/MemberAvatar'
+import { MyGradesCard } from '../../components/app/MyGradesCard'
+import { MyReservationsCard } from '../../components/app/MyReservationsCard'
+import { InstallButton } from '../../components/InstallButton'
 import { LegalLinks } from '../../components/LegalLinks'
 import { useAuth } from '../../hooks/useAuth'
 import { useClub } from '../../hooks/useClub'
@@ -54,6 +57,22 @@ export function Profile() {
             </div>
           </StaggerItem>
         )}
+
+        {member && club?.grades_enabled && member.role === 'student' && (
+          <StaggerItem>
+            <MyGradesCard memberId={member.id} />
+          </StaggerItem>
+        )}
+
+        {member && club?.store_enabled && (
+          <StaggerItem>
+            <MyReservationsCard memberId={member.id} />
+          </StaggerItem>
+        )}
+
+        <StaggerItem>
+          <InstallButton />
+        </StaggerItem>
 
         <StaggerItem>
           <div className="relative flex rounded-2xl border border-ink/10 bg-shiro/95 p-1">

@@ -346,6 +346,29 @@
         "name": "Belt",
         "desc": "Cotton belt in every rank color, sized to fit."
       }
+    },
+    "loginToReserve": "Log in to reserve",
+    "mine": {
+      "title": "My reservations",
+      "open": "Store",
+      "none": "No reservations.",
+      "cancel": "Cancel reservation",
+      "status": {
+        "new": "Sent",
+        "ready": "Ready, pick it up",
+        "done": "Picked up",
+        "cancelled": "Cancelled"
+      }
+    },
+    "sheet": {
+      "for": "For {{name}}",
+      "age": "age {{age}}",
+      "height": "Height (cm)",
+      "weight": "Weight (kg)",
+      "note": "Note",
+      "notePlaceholder": "e.g. \"one size up, growing fast\"",
+      "error": "The reservation was not sent. Try again.",
+      "pay": "The coach sees the reservation with height and age. You pay and pick it up at the hall."
     }
   },
   "auth": {
@@ -450,20 +473,20 @@
     },
     "members": {
       "title": "Members",
-      "viewOnlyNote": "You can update the photo, contact details and parent info. For a new student, belt, group or fee, message us.",
+      "viewOnlyNote": "Student details (photo, contacts, parents, belt, group) are entered by us. If something needs changing, message us. You mark attendance and paid fees.",
       "searchPlaceholder": "Search by name",
       "allBelts": "All belts",
       "allStatuses": "All statuses",
       "contact": "Contact",
-      "guardian": "Parent / guardian",
-      "selfServiceNote": "Add students, change belts and groups and manage the schedule yourself. We create a new student’s app login."
+      "guardian": "Parent / guardian"
     },
     "nav": {
       "members": "Members",
       "subscription": "Subscription",
       "attendance": "Attendance",
       "payments": "Fee payments",
-      "schedule": "Schedule"
+      "reservations": "Reservations",
+      "qr": "QR check-in"
     },
     "payments": {
       "title": "Payments",
@@ -534,33 +557,7 @@
       "completedNote": "Payment received — your account will be updated shortly. Contact us if it isn't within a day."
     },
     "edit": {
-      "button": "Edit",
-      "changePhoto": "Change photo",
-      "uploading": "Uploading...",
-      "email": "Email",
-      "phone": "Phone",
-      "firstName": "First name",
-      "lastName": "Last name",
-      "save": "Save",
-      "cancel": "Cancel",
-      "error": "Could not save. Try again.",
-      "photoError": "The photo was not uploaded. Try another one.",
-      "training": "Training",
-      "belt": "Belt",
-      "group": "Group",
-      "fee": "Monthly fee (€)",
-      "status": "Status"
-    },
-    "add": {
-      "button": "Add student",
-      "title": "New student",
-      "note": "We will create their app login once you add them.",
-      "name": "Full name",
-      "birthYear": "Birth year",
-      "parentName": "Parent",
-      "parentPhone": "Parent phone",
-      "submit": "Add",
-      "limit": "You have reached the 75-student limit of the Club plan. Message us about Club Pro."
+      "cancel": "Cancel"
     },
     "schedule": {
       "title": "Schedule",
@@ -576,6 +573,63 @@
       "delete": "Delete",
       "confirmDelete": "Delete “{{name}}”?",
       "min": "min"
+    },
+    "detail": {
+      "open": "Details",
+      "openGrades": "Grades",
+      "age": "Age",
+      "height": "Height",
+      "weight": "Weight",
+      "phone": "Phone",
+      "email": "Email",
+      "name": "Name",
+      "close": "Close",
+      "managedNote": "Something wrong or missing? Message us and we will fix it."
+    },
+    "grades": {
+      "title": "Grades",
+      "give": "New grade",
+      "notePlaceholder": "Note (optional), e.g. \"Great technique\"",
+      "save": "Give grade",
+      "error": "The grade was not saved. Try again.",
+      "none": "No grades yet.",
+      "delete": "Delete grade",
+      "count_one": "{{count}} grade",
+      "count_other": "{{count}} grades"
+    },
+    "reservations": {
+      "title": "Store reservations",
+      "note": "What students reserved in the site store, with height and age so you bring the right size. Payment happens at the hall.",
+      "group": "Group",
+      "status": {
+        "new": "New",
+        "ready": "Ready",
+        "done": "Picked up",
+        "cancelled": "Cancelled"
+      },
+      "mark": {
+        "ready": "Ready for pickup",
+        "done": "Handed over"
+      },
+      "cancel": "Cancel",
+      "filter": {
+        "open": "Open",
+        "done": "Handed over",
+        "all": "All"
+      },
+      "empty": "No reservations here."
+    },
+    "qr": {
+      "title": "Hall QR check-in",
+      "note": "Print the code and put it up at the hall entrance. A student scans it with their phone camera and is marked present for the class that is on right now.",
+      "error": "QR check-in is not enabled for this club. Message us to turn it on.",
+      "posterTitle": "Scan when you arrive",
+      "alt": "QR code for attendance check-in",
+      "posterSteps": "Open the camera, point it at the code and tap the link. Log in if asked.",
+      "print": "Print",
+      "rotate": "Change the code",
+      "rotateWarning": "The old code stops working right away. You will need to print the new one.",
+      "rotateConfirm": "Change it"
     }
   },
   "offline": {
@@ -615,5 +669,35 @@
         "body": "We start Saturday at 10:00 in Hall 1. The first class is free, just come in comfortable clothes."
       }
     }
+  },
+  "checkin": {
+    "working": "Checking you in...",
+    "done": "You are checked in!",
+    "already": "Already checked in",
+    "failTitle": "That did not work",
+    "toApp": "Go to the app",
+    "errors": {
+      "bad_code": "This code is not valid. It may have been changed; scan the code in the hall.",
+      "not_member": "This account is not a student of the club.",
+      "no_class": "There is no class for your group right now. Scan up to 45 minutes before it starts.",
+      "unknown": "Something went wrong. Try again or tell your coach."
+    }
+  },
+  "grades": {
+    "title": "My grades from the coach",
+    "none": "No grades yet."
+  },
+  "install": {
+    "button": "Add to phone",
+    "sub": "With the club icon, like a real app",
+    "why": "Open the schedule, payments and news with one tap from your home screen.",
+    "title": "Add to home screen",
+    "ios1": "Tap the Share button",
+    "ios2": "Choose \"Add to Home Screen\"",
+    "ios3": "Done, the club icon is on your phone",
+    "other1": "Open the browser menu (⋮)",
+    "other2": "Choose \"Install app\" or \"Add to home screen\"",
+    "iosSafari": "On iPhone this only works from Safari.",
+    "ok": "Got it"
   }
 }

@@ -20,6 +20,9 @@ export interface Member {
   status: 'active' | 'trial' | 'paused' | 'left'
   group_id: string | null
   photo_path: string | null
+  birth_year: number | null
+  height_cm: number | null
+  weight_kg: number | null
   belt: MemberBelt | null
 }
 
@@ -33,7 +36,7 @@ export function useMember(clubId: string | undefined) {
       const { data, error } = await supabase
         .from('members')
         .select(
-          'id, full_name, role, status, group_id, photo_path, belt:belts(id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en)',
+          'id, full_name, role, status, group_id, photo_path, birth_year, height_cm, weight_kg, belt:belts(id, rank, name_bg, name_en, color_hex, color2_hex, grade_bg, grade_en)',
         )
         .eq('club_id', clubId as string)
         .eq('user_id', userId as string)

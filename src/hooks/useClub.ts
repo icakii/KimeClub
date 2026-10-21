@@ -25,8 +25,10 @@ export interface Club {
   default_locale: 'bg' | 'en'
   theme: ClubTheme
   status: 'draft' | 'live' | 'paused'
-  // "Клуб" plan: staff manage students and the schedule themselves.
-  self_service: boolean
+  // Optional extras, switched on from the Hub.
+  grades_enabled: boolean
+  qr_checkin_enabled: boolean
+  store_enabled: boolean
 }
 
 async function fetchClub(): Promise<Club> {
@@ -35,7 +37,7 @@ async function fetchClub(): Promise<Club> {
   if (slugOverride) {
     const { data, error } = await supabase
       .from('clubs')
-      .select('id, slug, name, default_locale, theme, status, self_service')
+      .select('id, slug, name, default_locale, theme, status, grades_enabled, qr_checkin_enabled, store_enabled')
       .eq('slug', slugOverride)
       .single()
     if (error) throw error
@@ -51,7 +53,7 @@ async function fetchClub(): Promise<Club> {
 
   const { data, error } = await supabase
     .from('clubs')
-    .select('id, slug, name, default_locale, theme, status, self_service')
+    .select('id, slug, name, default_locale, theme, status, grades_enabled, qr_checkin_enabled, store_enabled')
     .eq('id', domain.club_id)
     .single()
   if (error) throw error

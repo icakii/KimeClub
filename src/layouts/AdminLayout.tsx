@@ -23,7 +23,8 @@ export function AdminLayout() {
     { to: '/admin', end: true, label: t('admin.nav.members') },
     { to: '/admin/attendance', end: false, label: t('admin.nav.attendance') },
     { to: '/admin/payments', end: false, label: t('admin.nav.payments') },
-    ...(club?.self_service ? [{ to: '/admin/schedule', end: false, label: t('admin.nav.schedule') }] : []),
+    ...(club?.store_enabled ? [{ to: '/admin/reservations', end: false, label: t('admin.nav.reservations') }] : []),
+    ...(club?.qr_checkin_enabled ? [{ to: '/admin/qr', end: false, label: t('admin.nav.qr') }] : []),
   ]
 
   return (

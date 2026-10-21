@@ -1,15 +1,21 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState, type ReactNode } from 'react'
+import { useState, type FormEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { MyReservationsCard } from '../components/app/MyReservationsCard'
 import { KanjiBackdrop } from '../components/KanjiBackdrop'
+import { useAuth } from '../hooks/useAuth'
+import { useClub } from '../hooks/useClub'
+import { useMember, type Member } from '../hooks/useMember'
+import { useReserve } from '../hooks/useReservations'
 import { Emblem } from '../components/landing/Emblem'
 import { Reveal, SectionHeading } from '../components/landing/Section'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 // Example catalogue: drawn product art instead of photos, prices in EUR.
-// Reserving just says "pay and pick up at the dojo"; there's no online
-// checkout for merchandise.
+// With the club's store option on, a logged-in student reserves an item
+// with the child's measurements and the coach sees it in the admin panel;
+// payment happens at the hall. Without it the page is just a catalogue.
 
 function TeeArt() {
   return (
@@ -96,11 +102,22 @@ const ITEMS: { key: string; price: number; art: ReactNode; bg: string; sizes?: s
   { key: 'belt', price: 12, art: <BeltArt />, bg: 'from-aka/15 to-kin/20', sizes: ['220', '240', '260', '280'] },
 ]
 
-function ProductCard({ item, index }: { item: (typeof ITEMS)[number]; index: number }) {
+type Item = (typeof ITEMS)[number]
+
+function ProductCard({
+  item,
+  index,
+  reserved,
+  onReserve,
+}: {
+  item: Item
+  index: number
+  reserved: boolean
+  onReserve: (item: Item, size: string | undefined) => void
+}) {
   const { t } = useTranslation()
   const reduced = useReducedMotion()
   const [size, setSize] = useState(item.sizes?.[Math.floor((item.sizes.length - 1) / 2)])
-  const [reserved, setReserved] = useState(false)
 
   return (
     <Reveal delay={index * 0.08}>
@@ -163,7 +180,7 @@ function ProductCard({ item, index }: { item: (typeof ITEMS)[number]; index: num
           <div className="mt-auto pt-5">
             <button
               type="button"
-              onClick={() => setReserved(true)}
+              onClick={() => onReserve(item, size)}
               className={`relative min-h-11 w-full overflow-hidden rounded-xl font-display text-sm uppercase tracking-wide transition-colors ${
                 reserved ? 'bg-jade text-shiro' : 'bg-ink text-shiro hover:bg-aka'
               }`}
@@ -187,8 +204,141 @@ function ProductCard({ item, index }: { item: (typeof ITEMS)[number]; index: num
   )
 }
 
+const fieldClass =
+  'mt-1 min-h-11 w-full rounded-xl border border-ink/15 bg-kuro px-3 text-ink outline-none transition-colors focus:border-aka-text'
+
+// The child's measurements go with the reservation so the coach brings the
+// right size; prefilled from what we have on file.
+function ReserveSheet({
+  item,
+  size,
+  member,
+  onDone,
+  onClose,
+}: {
+  item: Item
+  size: string | undefined
+  member: Member
+  onDone: () => void
+  onClose: () => void
+}) {
+  const { t } = useTranslation()
+  const { data: club } = useClub()
+  const reserve = useReserve(club?.id, member.id)
+  const [height, setHeight] = useState(member.height_cm ? String(member.height_cm) : '')
+  const [weight, setWeight] = useState(member.weight_kg ? String(member.weight_kg) : '')
+  const [note, setNote] = useState('')
+  const [error, setError] = useState(false)
+  const age = member.birth_year ? new Date().getFullYear() - member.birth_year : null
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    setError(false)
+    try {
+      await reserve.mutateAsync({
+        item_key: item.key,
+        item_name: t(`store.items.${item.key}.name`),
+        size: size ?? null,
+        price_cents: item.price * 100,
+        height_cm: height ? Number(height) : null,
+        weight_kg: weight ? Number(weight) : null,
+        note: note.trim() || null,
+      })
+      onDone()
+    } catch {
+      setError(true)
+    }
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-40 flex items-end justify-center bg-ink/60 sm:items-center sm:px-6"
+      onClick={onClose}
+    >
+      <motion.form
+        role="dialog"
+        aria-modal="true"
+        onSubmit={onSubmit}
+        initial={{ y: 60 }}
+        animate={{ y: 0 }}
+        exit={{ y: 60 }}
+        transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-md rounded-t-3xl bg-shiro p-6 shadow-2xl sm:rounded-3xl"
+      >
+        <div className="flex items-center gap-4">
+          <div className={`h-20 w-20 shrink-0 rounded-2xl bg-linear-to-br p-2 ${item.bg}`}>{item.art}</div>
+          <div className="min-w-0">
+            <p className="font-display text-xl font-semibold uppercase tracking-wide text-ink">
+              {t(`store.items.${item.key}.name`)}
+            </p>
+            <p className="font-display text-aka-text">
+              {item.price} €{size && <span className="ml-2 rounded-md bg-ink px-2 py-0.5 text-sm text-shiro">{size}</span>}
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-5 text-sm text-muted">
+          {t('store.sheet.for', { name: member.full_name })}
+          {age != null && ` · ${t('store.sheet.age', { age })}`}
+        </p>
+        <div className="mt-3 grid grid-cols-2 gap-3">
+          <label>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{t('store.sheet.height')}</span>
+            <input type="number" min={50} max={230} inputMode="numeric" value={height} onChange={(e) => setHeight(e.target.value)} className={fieldClass} />
+          </label>
+          <label>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{t('store.sheet.weight')}</span>
+            <input type="number" min={10} max={200} inputMode="numeric" value={weight} onChange={(e) => setWeight(e.target.value)} className={fieldClass} />
+          </label>
+        </div>
+        <label className="mt-3 block">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{t('store.sheet.note')}</span>
+          <input maxLength={300} value={note} onChange={(e) => setNote(e.target.value)} placeholder={t('store.sheet.notePlaceholder')} className={fieldClass} />
+        </label>
+        {error && <p className="mt-3 rounded-xl bg-aka/10 px-4 py-3 text-sm text-aka-text">{t('store.sheet.error')}</p>}
+        <p className="mt-4 text-xs text-muted">{t('store.sheet.pay')}</p>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <button type="button" onClick={onClose} className="min-h-12 rounded-xl border border-ink/15 font-display text-sm uppercase tracking-wide text-muted">
+            {t('admin.edit.cancel')}
+          </button>
+          <button
+            type="submit"
+            disabled={reserve.isPending}
+            className="min-h-12 rounded-xl bg-aka font-display text-sm uppercase tracking-wide text-shiro shadow-[0_12px_24px_-12px_rgba(194,54,31,0.9)] disabled:opacity-60"
+          >
+            {reserve.isPending ? '...' : t('store.reserve')}
+          </button>
+        </div>
+      </motion.form>
+    </motion.div>
+  )
+}
+
 export function Store() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { session } = useAuth()
+  const { data: club } = useClub()
+  const { data: member } = useMember(club?.id)
+  const [pending, setPending] = useState<{ item: Item; size: string | undefined } | null>(null)
+  const [reserved, setReserved] = useState<Set<string>>(new Set())
+
+  function onReserve(item: Item, size: string | undefined) {
+    // Without the option the page is just a catalogue example.
+    if (!club?.store_enabled) {
+      setReserved((s) => new Set(s).add(item.key))
+      return
+    }
+    if (!session) {
+      navigate('/login', { state: { from: '/store' } })
+      return
+    }
+    if (member) setPending({ item, size })
+  }
 
   return (
     <div className="relative min-h-screen overflow-x-clip">
@@ -214,12 +364,38 @@ export function Store() {
           </Reveal>
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {ITEMS.map((item, i) => (
-              <ProductCard key={item.key} item={item} index={i} />
+              <ProductCard key={item.key} item={item} index={i} reserved={reserved.has(item.key)} onReserve={onReserve} />
             ))}
           </div>
+          {club?.store_enabled && !session && (
+            <p className="mt-8 text-center text-sm text-muted">
+              <Link to="/login" state={{ from: '/store' }} className="font-semibold text-aka-text underline-offset-4 hover:underline">
+                {t('store.loginToReserve')}
+              </Link>
+            </p>
+          )}
+          {club?.store_enabled && member && (
+            <div className="mx-auto mt-10 max-w-md">
+              <MyReservationsCard memberId={member.id} />
+            </div>
+          )}
           <p className="mt-10 text-center text-sm text-muted-2">{t('store.note')}</p>
         </div>
       </main>
+      <AnimatePresence>
+        {pending && member && (
+          <ReserveSheet
+            item={pending.item}
+            size={pending.size}
+            member={member}
+            onClose={() => setPending(null)}
+            onDone={() => {
+              setReserved((s) => new Set(s).add(pending.item.key))
+              setPending(null)
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

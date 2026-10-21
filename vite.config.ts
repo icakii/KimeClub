@@ -44,6 +44,14 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
           },
+          {
+            // Android crops icons to its own shape; this one keeps the
+            // emblem inside the safe zone.
+            src: '/icons/maskable-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
         ],
       },
     }),

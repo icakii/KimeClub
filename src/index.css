@@ -419,3 +419,21 @@ body {
     opacity: 0;
   }
 }
+
+/* Hall QR page: print only the poster. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .qr-poster,
+  .qr-poster * {
+    visibility: visible;
+  }
+  .qr-poster {
+    position: absolute;
+    inset: 0 0 auto 0;
+    max-width: none;
+    border: none;
+    box-shadow: none;
+  }
+}

@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AddStudentModal } from '../../components/admin/AddStudentModal'
-import { EditMemberModal } from '../../components/admin/EditMemberModal'
+import { MemberDetailModal } from '../../components/admin/MemberDetailModal'
+import { Stars } from '../../components/Stars'
+import { useClubGradeAverages } from '../../hooks/useGrades'
 import { MemberAvatar } from '../../components/admin/MemberAvatar'
 import { Pill, StatCard } from '../../components/admin/ui'
 import { PageHeader, Stagger, StaggerItem } from '../../components/app/ui'
@@ -38,7 +39,7 @@ export function Members() {
   const [beltFilter, setBeltFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
   const [editing, setEditing] = useState<AdminMember | null>(null)
-  const [adding, setAdding] = useState(false)
+  const { data: averages } = useClubGradeAverages(club?.id, !!club?.grades_enabled)
 
   const filtered = useMemo(() => {
     return (members ?? []).filter((m) => {
@@ -55,20 +56,8 @@ export function Members() {
 
   return (
     <div className="px-5 py-6">
-      <PageHeader kanji="人" title={t('admin.members.title')} tone="bg-ai">
-        {club.self_service && (
-          <button
-            type="button"
-            onClick={() => setAdding(true)}
-            className="shrink-0 rounded-full bg-aka px-4 py-2.5 font-display text-xs uppercase tracking-wide text-shiro shadow-[0_10px_20px_-10px_rgba(194,54,31,0.9)] transition-transform active:scale-95"
-          >
-            + {t('admin.add.button')}
-          </button>
-        )}
-      </PageHeader>
-      <p className="mt-2 text-sm text-muted">
-        {club.self_service ? t('admin.members.selfServiceNote') : t('admin.members.viewOnlyNote')}
-      </p>
+      <PageHeader kanji="人" title={t('admin.members.title')} tone="bg-ai" />
+      <p className="mt-2 text-sm text-muted">{t('admin.members.viewOnlyNote')}</p>
 
       <div className="mt-5 grid grid-cols-3 gap-3">
         <StatCard label={t('admin.status.active')} value={count('active')} kanji="活" tone="bg-jade" />
@@ -124,10 +113,19 @@ export function Members() {
                     onClick={() => setEditing(m)}
                     className="rounded-full border border-ink/15 px-3 py-1 font-display text-[11px] uppercase tracking-wide text-muted transition-colors hover:border-aka-text hover:text-aka-text"
                   >
-                    ✎ {t('admin.edit.button')}
+                    {club.grades_enabled && m.role === 'student' ? `★ ${t('admin.detail.openGrades')}` : t('admin.detail.open')}
                   </button>
                 </div>
               </div>
+
+              {averages?.[m.id] && (
+                <div className="mt-3 flex items-center gap-2">
+                  <Stars value={averages[m.id].avg} size="h-4 w-4" />
+                  <span className="text-xs text-muted">
+                    {averages[m.id].avg.toFixed(1)} · {t('admin.grades.count', { count: averages[m.id].count })}
+                  </span>
+                </div>
+              )}
 
               {m.belt && (
                 <div className="mt-3 flex items-center gap-2">
@@ -176,9 +174,13 @@ export function Members() {
       </Stagger>
 
       {editing && (
-        <EditMemberModal clubId={club.id} member={editing} selfService={club.self_service} onClose={() => setEditing(null)} />
+        <MemberDetailModal
+          clubId={club.id}
+          member={editing}
+          gradesEnabled={club.grades_enabled}
+          onClose={() => setEditing(null)}
+        />
       )}
-      {adding && <AddStudentModal clubId={club.id} onClose={() => setAdding(false)} />}
     </div>
   )
 }
